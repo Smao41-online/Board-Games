@@ -132,6 +132,10 @@
   #mission p{font-size:12.5px;color:var(--muted);line-height:1.45}
   .bar{height:6px;border-radius:99px;background:rgba(122,140,255,.15);margin-top:10px;overflow:hidden}
   .bar i{display:block;height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,var(--teal),var(--accent));transition:width .4s}
+  .m-actions{gap:8px;margin-top:11px}
+  .m-actions button{flex:1;background:rgba(122,140,255,.10);border:1px solid var(--border-strong);color:var(--ink);
+    border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer}
+  .m-actions button:hover{background:rgba(122,140,255,.2)}
   /* ---------- modal ---------- */
   #overlay{position:fixed;inset:0;background:rgba(2,4,10,.78);backdrop-filter:blur(6px);z-index:80;display:none;
     align-items:flex-start;justify-content:center;padding:6vh 18px;overflow-y:auto}
@@ -281,6 +285,10 @@
   <h4>🛰️ Mission control</h4>
   <p id="mText">Preparing launch…</p>
   <div class="bar"><i id="mBar"></i></div>
+  <div class="m-actions" id="mActions" style="display:none">
+    <button id="mRetry">🔄 Retry now</button>
+    <button id="mHide">✕ Dismiss</button>
+  </div>
 </div>
 
 <div id="overlay"><div class="modal" id="modal"></div></div>
@@ -400,37 +408,55 @@ for(const g of GAMES) if(g.b && !idMap[norm(g.t)]) idMap[norm(g.t)]=g.b;
    Try direct first (in case that ever changes), then public CORS relays. */
 const BGG_BASE='https://boardgamegeek.com/xmlapi2';
 const ENDPOINTS=[
-  p=>BGG_BASE+p,
-  p=>'https://api.allorigins.win/raw?url='+encodeURIComponent(BGG_BASE+p),
-  p=>'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(BGG_BASE+p),
-  p=>'https://corsproxy.io/?url='+encodeURIComponent(BGG_BASE+p)
+  {name:'BGG direct',     url:p=>BGG_BASE+p,                                                                    unwrap:t=>t},
+  {name:'allorigins',     url:p=>'https://api.allorigins.win/raw?url='+encodeURIComponent(BGG_BASE+p),          unwrap:t=>t},
+  {name:'codetabs',       url:p=>'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(BGG_BASE+p),     unwrap:t=>t},
+  {name:'allorigins-json',url:p=>'https://api.allorigins.win/get?url='+encodeURIComponent(BGG_BASE+p),
+     unwrap:t=>{try{return JSON.parse(t).contents||''}catch(e){return ''}}},
+  {name:'corsproxy.io',   url:p=>'https://corsproxy.io/?url='+encodeURIComponent(BGG_BASE+p),                   unwrap:t=>t},
+  {name:'cors.lol',       url:p=>'https://api.cors.lol/?url='+encodeURIComponent(BGG_BASE+p),                   unwrap:t=>t}
 ];
-let epIdx=0, consecFails=0, offline=false;
+let epIdx=0, consecFails=0, offline=false, pauses=0;
+const epErr={};   /* endpoint name -> last error, shown in the failure report */
 const FAIL='__fail__';
 async function fetchXml(path){
   let ep=epIdx;   /* per-request endpoint cursor: concurrent failures must not poison each other */
-  for(let a=0;a<8;a++){
+  for(let a=0;a<10;a++){
     if(offline)return FAIL;
+    const E=ENDPOINTS[ep];
     try{
-      const res=await fetch(ENDPOINTS[ep](path));
+      const res=await fetch(E.url(path));
       if(res.status===200){
-        const doc=new DOMParser().parseFromString(await res.text(),'text/xml');
+        const doc=new DOMParser().parseFromString(E.unwrap(await res.text()),'text/xml');
         const root=doc.documentElement;
-        if(!root||doc.getElementsByTagName('parsererror').length)throw new Error('bad xml');
+        if(!root||doc.getElementsByTagName('parsererror').length)throw new Error('bad XML');
         if(!/^(items|item|errors|error|message)$/i.test(root.nodeName))throw new Error('unexpected payload');
-        epIdx=ep;consecFails=0;   /* remember the endpoint that works */
+        epIdx=ep;consecFails=0;delete epErr[E.name];   /* remember the endpoint that works */
         return doc;
       }
-      if(res.status===202||res.status===429){await sleep(1200*Math.pow(1.5,a));continue;}
-      throw new Error('http '+res.status);
+      if(res.status===202||res.status===429){
+        epErr[E.name]='HTTP '+res.status;
+        if(a>=2)ep=(ep+1)%ENDPOINTS.length;   /* rate-limited? give another relay a chance */
+        await sleep(1200*Math.pow(1.5,Math.min(a,5)));continue;
+      }
+      throw new Error('HTTP '+res.status);
     }catch(e){
+      epErr[E.name]=(e&&e.message)?e.message:'error';
       ep=(ep+1)%ENDPOINTS.length;   /* rotate: direct → relay 1 → relay 2 → … */
       await sleep(600*Math.min(a+1,4));
     }
   }
   /* whole request failed on every endpoint — count REQUESTS, not attempts, so a single
      pathological game can't trip the breaker while everything else still works */
-  if(++consecFails>=8){offline=true;missionFail();}
+  if(++consecFails>=10){
+    if(enrichRunning&&pauses<3){
+      pauses++;consecFails=0;
+      missionShow(`📡 Relays not responding — pausing 60 s, then continuing (attempt ${pauses}/3)…`,null);
+      await sleep(60000);
+    }else{
+      offline=true;missionFail();
+    }
+  }
   return FAIL;
 }
 async function searchBGG(q,exact){
@@ -532,11 +558,33 @@ function zhOf(g){const z=zhMap[norm(g.t)];return z&&z.thumb?z:null;}
 
 /* ================= mission control ================= */
 const mission=$('mission');
-function missionShow(t,frac){mission.classList.add('show');$('mText').textContent=t;$('mBar').style.width=(frac*100).toFixed(1)+'%';}
-function missionDone(msg){$('mText').textContent=msg||'All systems nominal — galaxy fully mapped. ✨';$('mBar').style.width='100%';
-  setTimeout(()=>mission.classList.remove('show'),9000);}
-function missionFail(){$('mText').textContent='⚠️ Could not reach BoardGameGeek (even via CORS relays) — showing spreadsheet data. I will retry automatically next time you open this page.';
-  $('mBar').style.width='0%';setTimeout(()=>mission.classList.remove('show'),12000);}
+let missionTimer=null;
+function missionShow(t,frac){
+  if(offline)return;   /* a failure report is on screen — do not overwrite it */
+  clearTimeout(missionTimer);
+  mission.classList.add('show');
+  $('mActions').style.display='none';
+  $('mText').textContent=t;
+  if(frac!=null)$('mBar').style.width=(frac*100).toFixed(1)+'%';
+}
+function missionDone(msg){
+  clearTimeout(missionTimer);
+  $('mActions').style.display='none';
+  $('mText').textContent=msg||'All systems nominal — galaxy fully mapped. ✨';
+  $('mBar').style.width='100%';
+  missionTimer=setTimeout(()=>mission.classList.remove('show'),15000);
+}
+function missionFail(){
+  clearTimeout(missionTimer);   /* stays on screen until dismissed — the report must survive */
+  mission.classList.add('show');
+  const errs=ENDPOINTS.map(E=>epErr[E.name]?`${E.name}: ${epErr[E.name]}`:null).filter(Boolean).join(' · ');
+  $('mText').textContent='⚠️ Could not reach BoardGameGeek through any relay — sync paused, progress so far is saved.'
+    +(errs?` Last errors — ${errs}.`:'')
+    +' Check the internet connection / firewall, then hit Retry.';
+  $('mBar').style.width='0%';
+  $('mActions').style.display='flex';
+  console.error('[Board Game Galaxy] BGG sync failed. Endpoint errors:',JSON.parse(JSON.stringify(epErr)));
+}
 
 /* ================= enrichment orchestrator ================= */
 let enrichRunning=false,enrichAgain=false;
@@ -585,7 +633,7 @@ async function enrichCore(){
     for(let i=0;i<chunks.length && !offline;i++){
       missionShow(`Downloading star charts (details & box art)… batch ${i+1}/${chunks.length}`,0.55+(i/chunks.length)*0.45);
       const doc=await fetchXml(`/thing?id=${chunks[i].join(',')}&stats=1`);
-      if(doc)for(const it of doc.querySelectorAll('item'))things[it.getAttribute('id')]=parseThing(it);
+      if(doc&&doc!==FAIL)for(const it of doc.querySelectorAll('item'))things[it.getAttribute('id')]=parseThing(it);
       lsSet(LS_THINGS,things);
       refreshView();
       await sleep(1100);
@@ -593,9 +641,11 @@ async function enrichCore(){
   }
   if(!offline){
     const pool=[...GAMES,...WISHLIST];
-    const matched=pool.filter(g=>idMap[norm(g.t)]>0).length;
+    const detailed=pool.filter(g=>{const id=idMap[norm(g.t)];return id>0&&things[id];}).length;
+    const pending=pool.filter(g=>{const id=idMap[norm(g.t)];return id>0&&!things[id];}).length;
     missionShow('Finalizing…',1);
-    missionDone(`Galaxy mapped — BGG details found for ${matched} of ${pool.length} games ✨`);
+    missionDone(`Galaxy mapped — BGG details loaded for ${detailed} of ${pool.length} games ✨`
+      +(pending?` (${pending} matched but details pending — they will finish on the next visit)`:''));
   }
   refreshView(true);
 }
@@ -812,7 +862,7 @@ $('agSugs').addEventListener('click',async e=>{
   const id=+el.dataset.id;
   $('agStatus').textContent='📡 Downloading attributes from BGG…';
   const doc=await fetchXml(`/thing?id=${id}&stats=1`);
-  const it=doc&&doc.querySelector('item');
+  const it=(doc&&doc!==FAIL)?doc.querySelector('item'):null;
   if(!it){$('agStatus').textContent='⚠️ Could not fetch details — try again, or add manually.';return;}
   addSel=id;addDetails=parseThing(it);
   const d=addDetails,hue=hueOf(d.name||'x');
@@ -1069,6 +1119,8 @@ $('rescan').onclick=()=>{
   if(!confirm('Clear cached BoardGameGeek data and refetch everything?'))return;
   localStorage.removeItem(LS_IDS);localStorage.removeItem(LS_THINGS);localStorage.removeItem(LS_ZH);location.reload();
 };
+$('mRetry').onclick=()=>location.reload();
+$('mHide').onclick=()=>mission.classList.remove('show');
 $('restoreRemoved').onclick=()=>{
   const n=removedStore.C.length+removedStore.W.length;
   if(!n){alert('No removed spreadsheet games to restore.');return;}
