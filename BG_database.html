@@ -39,6 +39,28 @@
   .stars{position:fixed;inset:0;z-index:-2;pointer-events:none}
   .stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff}
   @keyframes twinkle{0%,100%{opacity:.15}50%{opacity:.9}}
+  /* milky way band across the sky */
+  .milkyway{position:fixed;left:-20%;top:6%;width:140%;height:48%;z-index:-2;pointer-events:none;
+    transform:rotate(-18deg);opacity:.6;
+    background:
+      radial-gradient(58% 13% at 50% 50%, rgba(255,246,225,.16), transparent 70%),
+      radial-gradient(72% 7% at 47% 51%, rgba(4,6,15,.55), transparent 75%),
+      radial-gradient(80% 26% at 45% 50%, rgba(185,196,255,.11), transparent 72%),
+      radial-gradient(30% 9% at 63% 47%, rgba(255,219,178,.13), transparent 70%),
+      radial-gradient(24% 8% at 32% 53%, rgba(200,225,255,.12), transparent 70%),
+      radial-gradient(92% 42% at 50% 50%, rgba(118,108,200,.09), transparent 78%)}
+  /* occasional meteors streaking across the page */
+  .meteor{position:fixed;z-index:-1;width:150px;height:2px;border-radius:99px;pointer-events:none;opacity:0;
+    background:linear-gradient(90deg,rgba(255,255,255,.95),rgba(185,205,255,.35),transparent);
+    animation:meteor 11s linear infinite}
+  @keyframes meteor{
+    0%{opacity:0;transform:rotate(26deg) translateX(0)}
+    2%{opacity:.9}
+    9%{opacity:0;transform:rotate(26deg) translateX(-460px)}
+    100%{opacity:0;transform:rotate(26deg) translateX(-460px)}}
+  .meteor.m1{top:13%;left:72%;animation-delay:2s}
+  .meteor.m2{top:38%;left:92%;animation-delay:8s;animation-duration:14s}
+  .meteor.m3{top:5%;left:38%;animation-delay:15s;animation-duration:17s;height:1.5px;width:110px}
   /* ---------- header ---------- */
   header{position:relative;max-width:1240px;margin:0 auto;padding:52px 24px 8px;overflow:visible}
   .kicker{letter-spacing:.35em;text-transform:uppercase;font-size:12px;color:var(--teal);margin-bottom:14px}
@@ -65,6 +87,34 @@
   .o3 .pl{background:radial-gradient(circle at 35% 30%,#efe0ff,#8a5fd0 70%);width:16px;height:16px;top:-8px}
   .o3 .pl::after{content:"";position:absolute;left:-6px;top:5px;width:28px;height:6px;border-radius:50%;
     border:2px solid rgba(220,190,140,.8);transform:rotate(-24deg)}
+  /* asteroid belt between the middle and outer orbits */
+  .belt{position:absolute;left:50%;top:50%;width:250px;height:250px;margin:-125px 0 0 -125px;
+    border-radius:50%;animation:spin 52s linear infinite}
+  .belt i{position:absolute;background:#a2917c;border-radius:42% 58% 55% 45%;
+    box-shadow:inset -1px -1px 2px rgba(0,0,0,.65)}
+  /* incoming asteroids + impact flashes on the planets */
+  .impactor{position:absolute;left:50%;top:50%;width:5px;height:4px;margin:-2px 0 0 -2px;
+    border-radius:45% 55% 60% 40%;background:#c2b49c;opacity:0;
+    box-shadow:0 0 6px rgba(255,220,160,.5);animation:approach 11s linear infinite}
+  .boom{position:absolute;left:50%;top:50%;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;
+    opacity:0;pointer-events:none;
+    background:radial-gradient(circle,#fff 0%,#ffd27a 32%,rgba(255,122,50,.65) 58%,transparent 75%);
+    animation:boom 11s linear infinite}
+  .o3 .impactor{animation-duration:15s;animation-delay:6s}
+  .o3 .boom{animation-duration:15s;animation-delay:6s}
+  @keyframes approach{
+    0%,54%{opacity:0;transform:translate(54px,-46px) scale(.9) rotate(0deg)}
+    56%{opacity:1}
+    69%{opacity:1;transform:translate(2px,-2px) scale(1) rotate(160deg)}
+    70%,100%{opacity:0;transform:translate(0,0) scale(.5) rotate(180deg)}}
+  @keyframes boom{
+    0%,69%{opacity:0;transform:scale(.1)}
+    71%{opacity:1;transform:scale(.55)}
+    79%{opacity:.7;transform:scale(1.2)}
+    88%,100%{opacity:0;transform:scale(1.55)}}
+  @media(prefers-reduced-motion:reduce){
+    .orbit,.belt,.impactor,.boom,.meteor,.stars i{animation:none!important}
+    .impactor,.boom,.meteor{display:none}}
   @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
   .sun-add{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34px;height:34px;
     border:0;border-radius:50%;background:transparent;color:rgba(90,45,0,.55);font-size:24px;font-weight:800;
@@ -227,15 +277,18 @@
   <input id="cmd" type="text" spellcheck="false" autocomplete="off" placeholder="">
 </div>
 <div class="space"></div>
+<div class="milkyway"></div>
 <div class="stars" id="stars"></div>
+<div class="meteor m1"></div><div class="meteor m2"></div><div class="meteor m3"></div>
 
 <header>
   <div class="solar">
     <div class="sun"></div>
     <button class="sun-add" id="addBtn" title="Add a new game" aria-label="Add a new game">+</button>
     <div class="orbit o1"><span class="pl"></span></div>
-    <div class="orbit o2"><span class="pl"></span></div>
-    <div class="orbit o3"><span class="pl"></span></div>
+    <div class="orbit o2"><span class="pl"><i class="impactor"></i><i class="boom"></i></span></div>
+    <div class="belt" id="belt"></div>
+    <div class="orbit o3"><span class="pl"><i class="impactor"></i><i class="boom"></i></span></div>
   </div>
   <div class="kicker">Ušákova sbírka · Board Game Database</div>
   <h1>Board Game<br>Galaxy</h1>
@@ -373,6 +426,27 @@ for(const g of userStore.W){g.us=1;WISHLIST.push(g);}
       `opacity:${.15+Math.random()*.6};animation:twinkle ${2+Math.random()*5}s ease-in-out ${Math.random()*4}s infinite`;
     holder.appendChild(s);
   }
+  /* dense faint stars concentrated along the milky way band */
+  const tints=['#ffffff','#dfe7ff','#ffeedd','#e8f4ff'];
+  for(let i=0;i<190;i++){
+    const t=Math.random();
+    const jitter=(Math.random()+Math.random()-1)*9;   /* cluster around the band line */
+    const x=t*112-6, y=14+t*52+jitter;
+    const s=document.createElement('i');
+    s.style.cssText=`left:${x}%;top:${y}%;width:1px;height:1px;background:${tints[i%4]};`+
+      `opacity:${.08+Math.random()*.4};animation:twinkle ${3+Math.random()*6}s ease-in-out ${Math.random()*5}s infinite`;
+    holder.appendChild(s);
+  }
+  /* asteroid belt rocks */
+  const belt=document.getElementById('belt');
+  if(belt)for(let i=0;i<16;i++){
+    const a=Math.random()*Math.PI*2, r=118+Math.random()*14, sz=2+Math.random()*3;
+    const rock=document.createElement('i');
+    rock.style.cssText=`left:${(125+Math.cos(a)*r-sz/2).toFixed(1)}px;top:${(125+Math.sin(a)*r-sz/2).toFixed(1)}px;`+
+      `width:${sz.toFixed(1)}px;height:${(sz*0.8).toFixed(1)}px;opacity:${(.35+Math.random()*.5).toFixed(2)};`+
+      `transform:rotate(${(Math.random()*360)|0}deg)`;
+    belt.appendChild(rock);
+  }
 })();
 
 /* ================= helpers ================= */
@@ -424,8 +498,11 @@ async function fetchXml(path){
   for(let a=0;a<10;a++){
     if(offline)return FAIL;
     const E=ENDPOINTS[ep];
+    const ctrl=new AbortController();
+    const kill=setTimeout(()=>ctrl.abort(),12000);   /* slow links: skip a hanging relay after 12 s */
     try{
-      const res=await fetch(E.url(path));
+      const res=await fetch(E.url(path),{signal:ctrl.signal});
+      clearTimeout(kill);
       if(res.status===200){
         const doc=new DOMParser().parseFromString(E.unwrap(await res.text()),'text/xml');
         const root=doc.documentElement;
@@ -441,7 +518,8 @@ async function fetchXml(path){
       }
       throw new Error('HTTP '+res.status);
     }catch(e){
-      epErr[E.name]=(e&&e.message)?e.message:'error';
+      clearTimeout(kill);
+      epErr[E.name]=(e&&e.name==='AbortError')?'timeout (12s)':((e&&e.message)?e.message:'error');
       ep=(ep+1)%ENDPOINTS.length;   /* rotate: direct → relay 1 → relay 2 → … */
       await sleep(600*Math.min(a+1,4));
     }
@@ -542,7 +620,10 @@ let zhMap=lsGet(LS_ZH); // normTitle -> 1 (bgg id found) | {thumb} | 0 (nothing 
 async function zhLookup(key,url){
   if(zhMap[key]!==undefined)return null;
   try{
-    const res=await fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(url));
+    const ctrl=new AbortController();
+    const kill=setTimeout(()=>ctrl.abort(),12000);
+    const res=await fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(url),{signal:ctrl.signal});
+    clearTimeout(kill);
     if(res.status!==200)throw new Error('http '+res.status);
     const html=await res.text();
     const m=html.match(/boardgamegeek\.com\/(?:boardgame|boardgameexpansion)\/(\d+)/);
