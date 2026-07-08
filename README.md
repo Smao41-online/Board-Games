@@ -5,8 +5,9 @@ A solar-system-themed, single-file database of the board game collection
 
 ## How to use
 
-Just open **`BoardGames.html`** in any browser — no server, no build step, no dependencies.
-(`index.html` is the original read-only version; `BoardGames.html` adds the ability to add games.)
+Just open **`BG_database.html`** in any browser — no server, no build step, no dependencies.
+(`index.html` is the original read-only version; `BoardGames.html` adds the add-game feature;
+`BG_database.html` is the latest and adds remove-any-game plus spreadsheet import.)
 
 - 🔭 **Search** by English or Czech title
 - 🌍 **Filter** by language, player count, and genre
@@ -18,6 +19,13 @@ Just open **`BoardGames.html`** in any browser — no server, no build step, no 
   (box art, players, age, play time, rating, genre) is filled in automatically. Works for
   both Collection and Wishlist; your additions are saved in the browser (`localStorage`),
   marked with a ✦ *added* badge, and can be removed again from their detail view
+- 🗑 **Remove any game** (`BG_database.html`): every game's detail view has a Remove button.
+  Removals are remembered in the browser; a *Restore removed games* button in the footer undoes them
+- 📦 **Import an updated spreadsheet** (`BG_database.html`): type
+  **`usakova sbirka board game database`** into the command line at the very top row of the page.
+  Pick the new `.xlsx` — it is parsed and compared with the database behind the scenes, and only
+  the **delta** (games not yet in the database) is shown with checkboxes, separately for
+  Collection and Wishlist. Confirm, and the newcomers are added and enriched from BGG automatically
 
 ## Where the extra data comes from
 
@@ -34,7 +42,8 @@ Games without a thumbnail (or not found on BGG) get a procedurally colored plane
 
 | File | Purpose |
 |---|---|
-| `BoardGames.html` | The full app — database, theme, enrichment engine **and add-game feature** |
+| `BG_database.html` | **Latest version** — everything below plus remove-any-game and xlsx delta import |
+| `BoardGames.html` | Database + add-game via the hidden `+` in the sun |
 | `index.html` | Original read-only version of the database |
 | `data/games.json` | Clean JSON extract of the spreadsheet (collection + wishlist) |
 
