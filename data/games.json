@@ -1,0 +1,5783 @@
+{
+ "collection": [
+  {
+   "t": "5 Minute Chase",
+   "c": "5 Minute Chase",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/5-minute-chase-8179/"
+  },
+  {
+   "t": "7 Wonders: Duel",
+   "c": "7 Divů světa: Duel",
+   "l": "CZ",
+   "p": "2",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/7-divu-sveta-duel-5005/"
+  },
+  {
+   "t": "A Feast for Odin",
+   "c": "Hostina pro Ódina",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/hostina-pro-odina-6120/"
+  },
+  {
+   "t": "A GoT: Catan – Brotherhood of the Watch",
+   "c": "Catan: Hra o trůny - Noční hlídka",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/catan-hra-o-truny-nocni-hlidka-7083/"
+  },
+  {
+   "t": "A little wordy",
+   "c": "A little wordy",
+   "l": "EN",
+   "p": "2",
+   "a": "10+",
+   "u": "https://boardgamegeek.com/boardgame/335869/a-little-wordy",
+   "b": 335869
+  },
+  {
+   "t": "A tale of pirates",
+   "c": "Příběhy pirátů",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pribehy-piratu-7288/"
+  },
+  {
+   "t": "A Viking´s Tale",
+   "c": "A Viking´s Tale",
+   "l": "EN",
+   "p": "2–4",
+   "a": "12+",
+   "n": "Kickstarter",
+   "u": "https://www.kickstarter.com/projects/runeraccoon/a-viking-s-tale-tactial-card-game"
+  },
+  {
+   "t": "ABC Game",
+   "c": "ABC Game",
+   "l": "EN",
+   "p": "1–4",
+   "a": "4+",
+   "u": "https://boardgamegeek.com/boardgame/13108/abc-game",
+   "b": 13108
+  },
+  {
+   "t": "Abluxxen",
+   "c": "Kořist",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/korist-4197/"
+  },
+  {
+   "t": "Abyss",
+   "c": "Abyss",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "14+",
+   "n": "Zajic 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/abyss-3999/"
+  },
+  {
+   "t": "Activity kids",
+   "c": "Activity děti",
+   "l": "CZ",
+   "p": "3–16",
+   "a": "4+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/activity-deti-2525/"
+  },
+  {
+   "t": "Adrenaline",
+   "c": "Adrenalin",
+   "l": "CZ",
+   "p": "3–5",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/adrenalin-5964/"
+  },
+  {
+   "t": "Aeon's End",
+   "c": "Konec věků",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/konec-veku-6551/"
+  },
+  {
+   "t": "After Us",
+   "c": "Svět po nás",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/svet-po-nas-14976/"
+  },
+  {
+   "t": "Age of Galaxy",
+   "c": "Galaktické aliance",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/galakticke-aliance-13693/"
+  },
+  {
+   "t": "Agricola revised edition",
+   "c": "Agricola",
+   "l": "EN",
+   "p": "1–5",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/agricola-203/"
+  },
+  {
+   "t": "Akropolis",
+   "c": "Akropolis",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/akropolis-13611/"
+  },
+  {
+   "t": "Aldebaran Duel",
+   "c": "Aldebaran Duel",
+   "l": "CZ",
+   "p": "1–2",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/aldebaran-duel-14995/"
+  },
+  {
+   "t": "Amytis",
+   "c": "Amytis: Visuté zahrady",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/amytis-visute-zahrady-12425/"
+  },
+  {
+   "t": "Animals of Baker Street",
+   "c": "Zvířátka pana Holmese",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "10+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zviratka-pana-holmese-13533/"
+  },
+  {
+   "t": "Ankh Gods of Egypt",
+   "c": "Ankh: Bohové Egypta",
+   "l": "EN",
+   "p": "2–5",
+   "a": "12+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/ankh-bohove-egypta-9462/"
+  },
+  {
+   "t": "Anno 1800",
+   "c": "Anno 1800",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/anno-1800-10953/"
+  },
+  {
+   "t": "Aramini Circus",
+   "c": "Cirkus na kolečkách",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "n": "ZH aukce",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/cirkus-na-koleckach-5473/"
+  },
+  {
+   "t": "Arboretum",
+   "c": "Arboretum",
+   "l": "EN",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/arboretum-5133/"
+  },
+  {
+   "t": "Architects of the West Kingdom",
+   "c": "Architekti Západního království",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "12+",
+   "n": "ZH aukce",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/architekti-zapadniho-kralovstvi-7866/"
+  },
+  {
+   "t": "Architects of the West Kingdom: Age of Artisans",
+   "c": "Architekti Západního království: Rozkvět řemesel",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "12+",
+   "n": "není ve sbirce!",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/architekti-zapadniho-kralovstvi-rozkvet-remesel-9450/"
+  },
+  {
+   "t": "Architects of the West Kingdom: Works of Wonder",
+   "c": "Architekti Západního království: Majestátní Monumenty",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/architekti-zapadniho-kralovstvi-majestatni-monumenty-11312/"
+  },
+  {
+   "t": "Ark Nova",
+   "c": "Archa Nova",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "n": "Promo deska 2ks",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/archa-nova-12398/"
+  },
+  {
+   "t": "Arkham Horror 3. edition",
+   "c": "Arkham Horror 3. edice",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/arkham-horror-treti-edice-8296/"
+  },
+  {
+   "t": "Armadillo",
+   "c": "Pásovec",
+   "l": "NL",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pasovec-14908/"
+  },
+  {
+   "t": "Armageddon",
+   "c": "Armageddon",
+   "l": "EN",
+   "p": "3–4",
+   "a": "12+",
+   "n": "Zajic 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/armageddon-6369/"
+  },
+  {
+   "t": "Amritsar: The Golden Temple",
+   "c": "Amritsar: The Golden Temple",
+   "l": "EN",
+   "p": "1–4",
+   "a": "14+",
+   "n": "Macka 05/25",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/amritsar-the-golden-temple-16503/"
+  },
+  {
+   "t": "Aton",
+   "c": "Aton",
+   "l": "CZ",
+   "p": "2",
+   "a": "10+",
+   "n": "Macka 04/24 , v sacku",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/aton-407/"
+  },
+  {
+   "t": "Azul",
+   "c": "Azul",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/azul-7282/"
+  },
+  {
+   "t": "Azul: Crystal mosaic expansion",
+   "c": "Azul: Křišťálová mozaika",
+   "l": "EN",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/azul-kristalova-mozaika-10200/"
+  },
+  {
+   "t": "Bang!",
+   "c": "Bang!",
+   "l": "CZ",
+   "p": "4–7",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/bang-12/"
+  },
+  {
+   "t": "Bang!: expansions",
+   "c": "Bang!: všechna rozšíření",
+   "l": "CZ",
+   "p": "3–8",
+   "a": "8+",
+   "n": "do roku 2021 vcetne",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/bang-12/"
+  },
+  {
+   "t": "Barcelona",
+   "c": "Barcelona",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/barcelona-15083/"
+  },
+  {
+   "t": "Barrage",
+   "c": "Přehrada",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/prehrada-8722/"
+  },
+  {
+   "t": "Barrage: Leeghwater Project",
+   "c": "Přehrada: Projekt Leeghwater",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/prehrada-projekt-leeghwater-9314/"
+  },
+  {
+   "t": "Bastille",
+   "c": "Bastille",
+   "l": "EN",
+   "p": "3–4",
+   "a": "12+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/bastille-9369/"
+  },
+  {
+   "t": "Beer & Bread",
+   "c": "Pivo a chléb",
+   "l": "CZ",
+   "p": "2",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pivo-a-chleb-13767/"
+  },
+  {
+   "t": "Belaad: The Land of Swords and Quills",
+   "c": "Belaad: Země učenců a bojovníků",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/belaad-zeme-ucencu-a-bojovniku-13538/"
+  },
+  {
+   "t": "Betrayal at House on the Hill",
+   "c": "Betrayal at House on the Hill",
+   "l": "EN",
+   "p": "3–6",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/betrayal-at-house-on-the-hill-3rd-edition-15021/"
+  },
+  {
+   "t": "Betrayal at House on the Hill: Widow's Walk",
+   "c": "Betrayal at House on the Hill: Widow's Walk",
+   "l": "EN",
+   "p": "3–6",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/betrayal-at-house-on-the-hill-widow-s-walk-6517/"
+  },
+  {
+   "t": "Between Two Castles of Mad King Ludwig",
+   "c": "Mezi dvěma zámky šíleného krále Ludvíka",
+   "l": "CZ",
+   "p": "2–7",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mezi-dvema-zamky-sileneho-krale-ludvika-8351/"
+  },
+  {
+   "t": "Birdwatcher",
+   "c": "Ptačí říše",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/ptaci-rise-14996/"
+  },
+  {
+   "t": "Bitoku",
+   "c": "Bitoku",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/bitoku-12408/"
+  },
+  {
+   "t": "Black Orchestra",
+   "c": "Atentát na Hitlera",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/atentat-na-hitlera-6780/"
+  },
+  {
+   "t": "Blokus",
+   "c": "Blokus",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/blokus-414/"
+  },
+  {
+   "t": "Blokus for 2",
+   "c": "Blokus pro dva",
+   "l": "EN",
+   "p": "2",
+   "a": "6+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/blokus-duo-2848/"
+  },
+  {
+   "t": "Blood Rage",
+   "c": "Blood Rage",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/blood-rage-4706/"
+  },
+  {
+   "t": "Bloqs",
+   "c": "Bloqs",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/bloqs-8207/"
+  },
+  {
+   "t": "Bonfire",
+   "c": "Bonfire",
+   "l": "EN",
+   "p": "1–4",
+   "a": "12+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/bonfire-10721/"
+  },
+  {
+   "t": "Books of Time",
+   "c": "Books of Time",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/books-of-time-14933/"
+  },
+  {
+   "t": "Bot Factory",
+   "c": "Bot Factory",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/bot-factory-12717/"
+  },
+  {
+   "t": "Brains Toverdrank",
+   "c": "Brains Toverdrank",
+   "l": "EN",
+   "p": "1",
+   "a": "8+",
+   "n": "NL krabice",
+   "u": "https://www.999games.nl/product/brains-toverdrank/8719214424909"
+  },
+  {
+   "t": "Brass: Birmingham",
+   "c": "Brass: Birmingham",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/brass-birmingham-6906/"
+  },
+  {
+   "t": "Brazil: Imperial",
+   "c": "Brazil: Imperial",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/brazil-imperial-12426/"
+  },
+  {
+   "t": "Brazil: Imperial – Autômato",
+   "c": "Brazil: Imperial – Autômato + kovové mince",
+   "l": "CZ",
+   "p": "1–3",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/brazil-imperial-automato-14988/"
+  },
+  {
+   "t": "Brian Boru: High King of Ireland",
+   "c": "Brian Boru: Velkokrál Irska",
+   "l": "CZ",
+   "p": "3–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/brian-boru-velkokral-irska-12587/"
+  },
+  {
+   "t": "Bunny Kingdom",
+   "c": "Králíkovství",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kralikovstvi-5617/"
+  },
+  {
+   "t": "Café",
+   "c": "Café",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "n": "Game on! soutez",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/cafe-10801/"
+  },
+  {
+   "t": "Call to Adventure",
+   "c": "Osud dobrodruha",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/osud-dobrodruha-9074/"
+  },
+  {
+   "t": "Camel (C)up",
+   "c": "Velbloudí dostihy",
+   "l": "CZ",
+   "p": "2–8",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/velbloudi-dostihy-4015/"
+  },
+  {
+   "t": "Canvas",
+   "c": "Canvas",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/canvas-10583/"
+  },
+  {
+   "t": "Captain Silver",
+   "c": "Captain Silver",
+   "l": "EN",
+   "p": "2–4",
+   "a": "6+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/captain-silver-6641/"
+  },
+  {
+   "t": "Caral",
+   "c": "Caral",
+   "l": "EN",
+   "p": "2–4",
+   "a": "12+",
+   "n": "Macka 05/25",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/caral-17525/"
+  },
+  {
+   "t": "Carcassonne: 1 exp",
+   "c": "Carcassonne: 1 hostince a katedrály",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/carcassonne-1-rozsireni-hostince-a-katedraly-26/"
+  },
+  {
+   "t": "Carcassonne: 10 exp",
+   "c": "Carcassonne: 10 cirkus",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/carcassonne-10-rozsireni-cirkus-7055/"
+  },
+  {
+   "t": "Carcassonne: 2 exp",
+   "c": "Carcassonne: 2 kupci a stavitelé",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/carcassonne-2-rozsireni-kupci-a-stavitele-9/"
+  },
+  {
+   "t": "Carcassonne: 3 exp",
+   "c": "Carcassonne: 3 princezna a drak",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/carcassonne-3-rozsireni-princezna-a-drak-24/"
+  },
+  {
+   "t": "Carcassonne: 4 exp",
+   "c": "Carcassonne: 4 věž",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/carcassonne-4-rozsireni-vez-23/"
+  },
+  {
+   "t": "Carcassonne: 5 exp",
+   "c": "Carcassonne: 5 opatství a starosta",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/carcassonne-5-rozsireni-opatstvi-a-starosta-93/"
+  },
+  {
+   "t": "Carcassonne: 6 exp",
+   "c": "Carcassonne: 6 král, hrabě a řeka",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/carcassonne-6-rozsireni-kral-hrabe-a-reka-94/"
+  },
+  {
+   "t": "Carcassonne: 7 exp",
+   "c": "Carcassonne: 7 katapult",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "8+",
+   "n": "není ve sbirce!",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/carcassonne-7-rozsireni-katapult-518/"
+  },
+  {
+   "t": "Carcassonne: 8 exp",
+   "c": "Carcassonne: 8 mosty a hrady",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/carcassonne-8-rozsireni-mosty-a-hrady-1277/"
+  },
+  {
+   "t": "Carcassonne: 9 exp",
+   "c": "Carcassonne: 9 ovce a kopce",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/carcassonne-9-rozsireni-ovce-a-kopce-4104/"
+  },
+  {
+   "t": "Carcassonne: Big Box",
+   "c": "Carcassonne: Big Box",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/carcassonne-big-box-2017-7022/"
+  },
+  {
+   "t": "Carcassonne: Game",
+   "c": "Carcassonne: Základní hra",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/carcassonne-8/"
+  },
+  {
+   "t": "Carcassonne: Kids of Carcassonne",
+   "c": "Carcassonne: Děti z Carcassonne",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "4+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/deti-z-carcassonne-594/"
+  },
+  {
+   "t": "Carcata",
+   "c": "Carcata",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/carcata-11787/"
+  },
+  {
+   "t": "Cardline: Dinosaurs",
+   "c": "Cardline: Dinosauři",
+   "l": "CZ",
+   "p": "2–8",
+   "a": "7+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/cardline-dinosauri-7084/"
+  },
+  {
+   "t": "Carta Impera Victoria",
+   "c": "Carta Impera Victoria",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/civ-carta-impera-victoria-16777/"
+  },
+  {
+   "t": "Cartographers Heroes",
+   "c": "Kartografové: Hrdinové",
+   "l": "CZ",
+   "p": "1-100",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kartografove-hrdinove-10794/"
+  },
+  {
+   "t": "Cartographers: A Roll Player Tale",
+   "c": "Kartografové",
+   "l": "CZ",
+   "p": "1-100",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kartografove-9473/"
+  },
+  {
+   "t": "Cashflow",
+   "c": "Cashflow",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/cashflow-898/"
+  },
+  {
+   "t": "Castellum: Maastricht",
+   "c": "Castellum: Maastricht",
+   "l": "EN",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/castellum-maastricht-8584/"
+  },
+  {
+   "t": "Catan: card game",
+   "c": "Catan: karetní hra",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/osadnici-z-katanu-rychla-karetni-hra-2467/"
+  },
+  {
+   "t": "Cave Evil",
+   "c": "Cave Evil",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "16+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/cave-evil-2430/"
+  },
+  {
+   "t": "Checkpoint Charlie",
+   "c": "Checkpoint Charlie",
+   "l": "CZ",
+   "p": "3–5",
+   "a": "10+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/checkpoint-charlie-9370/"
+  },
+  {
+   "t": "Chronicles of Avel",
+   "c": "Kroniky Avelu",
+   "l": "PL",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kroniky-avelu-12570/"
+  },
+  {
+   "t": "Chronicles of Crime: The Millennium Series – 2400",
+   "c": "Kronika zločinu: Série Milénium – 2400",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kronika-zlocinu-serie-milenium-2400-11034/"
+  },
+  {
+   "t": "Churchill",
+   "c": "Churchill",
+   "l": "CZ",
+   "p": "1–3",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/churchill-3426/"
+  },
+  {
+   "t": "Civilization: A New Dawn",
+   "c": "Civilizace: Nový úsvit",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/sid-meier-s-civilization-novy-usvit-7244/"
+  },
+  {
+   "t": "Claim 2",
+   "c": "Trůn 2",
+   "l": "CZ",
+   "p": "2",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/trun-2-10861/"
+  },
+  {
+   "t": "Clank! In! Space!",
+   "c": "Břink: Velká galaktická loupež",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/brink-ve-vesmiru-7206/"
+  },
+  {
+   "t": "Clans and Glory",
+   "c": "Klání klanů",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/klani-klanu-16395/"
+  },
+  {
+   "t": "Clash of Cultures: Monumental Edition",
+   "c": "Střet civilizací: Monumentální vydání",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "14+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/stret-civilizaci-monumentalni-vydani-10637/"
+  },
+  {
+   "t": "Clash of the Cards",
+   "c": "Clash of the Cards",
+   "l": "EN",
+   "p": "3–6",
+   "a": "8+",
+   "u": "https://boardgamegeek.com/boardgame/192496/clash-of-the-cards",
+   "b": 192496
+  },
+  {
+   "t": "Cluedo",
+   "c": "Cluedo",
+   "l": "EN",
+   "p": "3–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/cluedo-498/"
+  },
+  {
+   "t": "Cluedo card game",
+   "c": "Cluedo karertní hra",
+   "l": "CZ",
+   "p": "3–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/cluedo-karetni-hra-11174/"
+  },
+  {
+   "t": "Coatl",
+   "c": "Coatl",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/coatl-10098/"
+  },
+  {
+   "t": "Code names",
+   "c": "Krycí jména",
+   "l": "EN",
+   "p": "2–8",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kryci-jmena-4961/"
+  },
+  {
+   "t": "Code names: Duet",
+   "c": "Krycí jména: Duet",
+   "l": "EN",
+   "p": "2–4",
+   "a": "11+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kryci-jmena-duet-7223/"
+  },
+  {
+   "t": "Codenames: Pictures",
+   "c": "Krycí jména: Obrázky",
+   "l": "CZ",
+   "p": "2-99",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kryci-jmena-obrazky-5967/"
+  },
+  {
+   "t": "Cold Case: A Pinch of Murder",
+   "c": "Odložené případy: Špetka vraždy",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/odlozene-pripady-spetka-vrazdy-15124/"
+  },
+  {
+   "t": "Cold Case: A Story to Die for",
+   "c": "Odložené případy: Smrtící příběh",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/odlozene-pripady-smrtici-pribeh-14937/"
+  },
+  {
+   "t": "Cold Case: Murder With Interest",
+   "c": "Odložené případy: Vražda s úroky",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/odlozene-pripady-vrazda-s-uroky-16488/"
+  },
+  {
+   "t": "Complices",
+   "c": "2Gether",
+   "l": "CZ",
+   "p": "2",
+   "a": "8+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/2gether-14645/"
+  },
+  {
+   "t": "Conflict of Heroes: Storms of Steel – Kursk 1943 (Third Edition)",
+   "c": "Conflict of Heroes: Bouře oceli – Kursk 1943 (3. edice)",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "12+",
+   "n": "Zajic 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/conflict-of-heroes-boure-oceli-kursk-1943-3-edice-10433/"
+  },
+  {
+   "t": "Cooper Island",
+   "c": "Cooper Island",
+   "l": "EN",
+   "p": "2–4",
+   "a": "12+",
+   "n": "Macka 05/25",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/cooper-island-9602/"
+  },
+  {
+   "t": "Copenhagen",
+   "c": "Copenhagen",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/copenhagen-8876/"
+  },
+  {
+   "t": "Coral",
+   "c": "Korál",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/koral-14021/"
+  },
+  {
+   "t": "Corrosion",
+   "c": "Corrosion",
+   "l": "EN",
+   "p": "1–4",
+   "a": "12+",
+   "n": "Macka 05/25",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/corrosion-12701/"
+  },
+  {
+   "t": "Coup",
+   "c": "Coup",
+   "l": "EN",
+   "p": "2–6",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/coup-15443/"
+  },
+  {
+   "t": "Crescent Moon",
+   "c": "Ve svitu půlměsíce",
+   "l": "CZ",
+   "p": "4–5",
+   "a": "14+",
+   "n": "Zajic 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/ve-svitu-pulmesice-13417/"
+  },
+  {
+   "t": "Crew: The Deep Sea Mission",
+   "c": "Odysea: Společně do hlubin oceánu",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/odysea-spolecne-do-hlubin-oceanu-11427/"
+  },
+  {
+   "t": "Crew: The Quest for Planet Nine",
+   "c": "Odysea: Společně k deváté planetě",
+   "l": "EN",
+   "p": "2–5",
+   "a": "10+",
+   "n": "EN i CZ vydani",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/odysea-spolecne-k-devate-planete-10312/"
+  },
+  {
+   "t": "Crime Zoom: A Deadly Writer",
+   "c": "Zaostřeno na zločin: Vražedný autor",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zaostreno-na-zlocin-vrazedny-autor-13940/"
+  },
+  {
+   "t": "Crime Zoom: Bird of Ill Omen",
+   "c": "Zaostřeno na zločin: Posel špatných zpráv",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zaostreno-na-zlocin-posel-spatnych-zprav-11121/"
+  },
+  {
+   "t": "Crime Zoom: His Last Card",
+   "c": "Zaostřeno na zločin: Jeho poslední karta",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zaostreno-na-zlocin-jeho-posledni-karta-11078/"
+  },
+  {
+   "t": "Critical: Sanctuary – Season 1",
+   "c": "Critical: Svatyně",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/critical-svatyne-15840/"
+  },
+  {
+   "t": "Crown of Ash: Deluxe package",
+   "c": "Koruna z popela: Deluxe",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/koruna-z-popela-14747/"
+  },
+  {
+   "t": "Crown of Emara",
+   "c": "Crown of Emara",
+   "l": "EN",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/crown-of-emara-8670/"
+  },
+  {
+   "t": "Cthulhu Wars: Duel",
+   "c": "Cthulhu Wars: Duel",
+   "l": "CZ",
+   "p": "2",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/cthulhu-wars-duel-12133/"
+  },
+  {
+   "t": "Cthulhu: Death May Die",
+   "c": "Cthulhu: I smrt může zemřít",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/cthulhu-i-smrt-muze-zemrit-8221/"
+  },
+  {
+   "t": "Cthulhu: Death May Die – Black Goat of the Woods",
+   "c": "Cthulhu: I smrt může zemřít - Shub-Niggurath, Černá koza z lesů",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/cthulhu-i-smrt-muze-zemrit-shub-niggurath-cerna-koza-z-lesu-13064/"
+  },
+  {
+   "t": "Cthulhu: Death May Die – Yog-Sothoth",
+   "c": "Cthulhu: I smrt může zemřít - Yog-Sothoth",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/cthulhu-i-smrt-muze-zemrit-yog-sothoth-13065/"
+  },
+  {
+   "t": "Dark Souls",
+   "c": "Dark Souls",
+   "l": "EN",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/dark-souls-the-board-game-5846/"
+  },
+  {
+   "t": "Dark Souls: Gaping Dragon",
+   "c": "Dark Souls: Gaping Dragon",
+   "l": "EN",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/dark-souls-the-board-game-gaping-dragon-boss-expansion-11056/"
+  },
+  {
+   "t": "Dark Souls: Iron Keep Expansion",
+   "c": "Dark Souls: Iron Keep Expansion",
+   "l": "EN",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/dark-souls-the-board-game-iron-keep-expansion-10287/"
+  },
+  {
+   "t": "Darwin's Journey",
+   "c": "Darwinovy cesty",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/darwinovy-cesty-11019/"
+  },
+  {
+   "t": "Deal with the Devil",
+   "c": "Smlouva s ďáblem",
+   "l": "CZ",
+   "p": "4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/smlouva-s-dablem-13634/"
+  },
+  {
+   "t": "Decrypto",
+   "c": "Decrypto",
+   "l": "CZ",
+   "p": "3–8",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/decrypto-7837/"
+  },
+  {
+   "t": "Delta",
+   "c": "Delta",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "12+",
+   "n": "Zajic 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/delta-14959/"
+  },
+  {
+   "t": "Detective Club",
+   "c": "Klub detektivů",
+   "l": "CZ",
+   "p": "4–8",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/klub-detektivu-8692/"
+  },
+  {
+   "t": "Detective: A Modern Crime Board Game",
+   "c": "Detektiv: Po stopách zločinu",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "16+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/detektiv-po-stopach-zlocinu-8124/"
+  },
+  {
+   "t": "Dig Your Way Out",
+   "c": "Útěk z vězení",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "16+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/utek-z-vezeni-11239/"
+  },
+  {
+   "t": "Dinogang",
+   "c": "Dinogang",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "6+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/dinogang-13305/"
+  },
+  {
+   "t": "Discordia",
+   "c": "Discordia",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/discordia-13958/"
+  },
+  {
+   "t": "Disney Gargoyles: Awakening",
+   "c": "Disney Gargoyles: Awakening",
+   "l": "EN",
+   "p": "2–5",
+   "a": "10+",
+   "u": "https://boardgamegeek.com/boardgame/337929/disney-gargoyles-awakening/files",
+   "b": 337929
+  },
+  {
+   "t": "Distilled",
+   "c": "Palírna",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/palirna-12324/"
+  },
+  {
+   "t": "District Noir",
+   "c": "Zákon ulice",
+   "l": "CZ",
+   "p": "2",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zakon-ulice-14033/"
+  },
+  {
+   "t": "Djinn",
+   "c": "Džin",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/dzin-15939/"
+  },
+  {
+   "t": "Dobble",
+   "c": "Dobble",
+   "l": "CZ",
+   "p": "2–8",
+   "a": "6+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/dobble-1826/"
+  },
+  {
+   "t": "Dobble 123",
+   "c": "Dobble 123",
+   "l": "CZ",
+   "p": "2–8",
+   "a": "6+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/dobble-1826/"
+  },
+  {
+   "t": "Dominant Species: Marine",
+   "c": "Dominant Species: Mořská říše",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "14+",
+   "n": "Macka 05/25",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/dominant-species-morska-rise-11487/"
+  },
+  {
+   "t": "Doodle Dungeon",
+   "c": "Doodle Dungeon",
+   "l": "EN",
+   "p": "2–4",
+   "a": "10+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/doodle-dungeon-12662/"
+  },
+  {
+   "t": "Dorfromantik: The Board Game",
+   "c": "Dorfromantik: Desková hra",
+   "l": "EN",
+   "p": "1–6",
+   "a": "8+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/dorfromantik-deskova-hra-14497/"
+  },
+  {
+   "t": "Dr. Microbe",
+   "c": "Dr. Bacilová",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/dr-bacilova-6658/"
+  },
+  {
+   "t": "Draftosaurus",
+   "c": "Draftosaurus",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "8+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/draftosaurus-9271/"
+  },
+  {
+   "t": "Dragon Castle: New Challenges",
+   "c": "Dračí hrad: Nové výzvy",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/draci-hrad-nove-vyzvy-13741/"
+  },
+  {
+   "t": "Dragonbond: Lords of Vaala",
+   "c": "Dragonbond: Lords of Vaala",
+   "l": "EN",
+   "p": "1–4",
+   "a": "14+",
+   "n": "Kickstarter",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/dragonbond-lords-of-vaala-12130/"
+  },
+  {
+   "t": "Dragonbond: Lords of Vaala & Legends of Valerna",
+   "c": "Dragonbond: Lords of Vaala & Legends of Valerna",
+   "l": "EN",
+   "p": "1–6",
+   "a": "14+",
+   "n": "Kickstarter",
+   "u": "https://boardgamegeek.com/boardgame/350068/dragonbond-lords-of-vaala-legends-of-valerna",
+   "b": 350068
+  },
+  {
+   "t": "Dragonbond: Lords of Vaala: Armies of Blood & Dreams",
+   "c": "Dragonbond: Lords of Vaala: Armies of Blood & Dreams",
+   "l": "EN",
+   "p": "1–4",
+   "a": "14+",
+   "n": "Kickstarter",
+   "u": "https://boardgamegeek.com/boardgame/350065/dragonbond-lords-of-vaala-armies-of-blood-and-drea",
+   "b": 350065
+  },
+  {
+   "t": "Dragons & Chickens",
+   "c": "Dragons & Chickens",
+   "l": "EN",
+   "p": "2–5",
+   "a": "8+",
+   "u": "https://boardgamegeek.com/boardgame/205080/dragons-and-chickens",
+   "b": 205080
+  },
+  {
+   "t": "Drako: Dragon & Dwarves",
+   "c": "Drako: drak a trpaslíci",
+   "l": "CZ",
+   "p": "2",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/drako-drak-a-trpaslici-2408/"
+  },
+  {
+   "t": "Dune: Betrayal",
+   "c": "Duna: Zrada",
+   "l": "CZ",
+   "p": "4–8",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/duna-zrada-13359/"
+  },
+  {
+   "t": "Dune Imperium",
+   "c": "Duna: Impérium",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "n": "vc. deluxe package",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/duna-imperium-10925/"
+  },
+  {
+   "t": "Dune Imperium: Immortality",
+   "c": "Duna Impérium: Nesmrtelnost",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/duna-imperium-nesmrtelnost-13637/"
+  },
+  {
+   "t": "Dune Imperium: Rise of Ix",
+   "c": "Duna Impérium: vzestup Iksu",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/duna-imperium-vzestup-iksu-12035/"
+  },
+  {
+   "t": "Dune: House Secrets",
+   "c": "Duna: Tajemství rodu",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "n": "Bonusovy balicek v CZ",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/duna-tajemstvi-rodu-12422/"
+  },
+  {
+   "t": "Dungeon Lords",
+   "c": "Vládci podzemí",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vladci-podzemi-843/"
+  },
+  {
+   "t": "Dungeon Roll",
+   "c": "Dungeon Roll",
+   "l": "EN",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/dungeon-roll-3510/"
+  },
+  {
+   "t": "Dungeons of Infinity: Deluxe edition",
+   "c": "Dungeons of Infinity",
+   "l": "EN",
+   "p": "1–5",
+   "a": "12+",
+   "n": "Kickstarter",
+   "u": "https://boardgamegeek.com/boardgame/193715/dungeons-of-infinity",
+   "b": 193715
+  },
+  {
+   "t": "Dungeons of Infinity: Kingdom cost",
+   "c": "Dungeons of Infinity: Kingdom cost",
+   "l": "EN",
+   "p": "1–5",
+   "a": "12+",
+   "n": "Kickstarter",
+   "u": "https://boardgamegeek.com/boardgame/305126/dungeons-of-infinity-kingdom-cost",
+   "b": 305126
+  },
+  {
+   "t": "Earth",
+   "c": "Zelená planeta",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zelena-planeta-14519/"
+  },
+  {
+   "t": "East India Companies",
+   "c": "East India Companies",
+   "l": "EN",
+   "p": "2–4",
+   "a": "14+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/east-india-companies-14604/"
+  },
+  {
+   "t": "Ecos: First Continent",
+   "c": "Ecos: První kontinent",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "14+",
+   "n": "Macka 05/25",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/ecos-prvni-kontinent-9705/"
+  },
+  {
+   "t": "Empire",
+   "c": "Empire",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/empire-5313/"
+  },
+  {
+   "t": "Encyclopedia",
+   "c": "Encyklopedie",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "n": "Macka 05/25",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/encyklopedie-13239/"
+  },
+  {
+   "t": "Escape Tales: Children of Wyrmwoods",
+   "c": "Únikové příběhy: Potomci lesa",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "16+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/unikove-pribehy-potomci-lesa-11387/"
+  },
+  {
+   "t": "Evacuation",
+   "c": "Evakuace",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/evakuace-14755/"
+  },
+  {
+   "t": "Evenfall",
+   "c": "Soumrak",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "n": "Macka 05/25",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/soumrak-15624/"
+  },
+  {
+   "t": "Evolution: New World",
+   "c": "Evoluce: Nový svět",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "11+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/evoluce-novy-svet-14727/"
+  },
+  {
+   "t": "Exit",
+   "c": "Exit: zapovězený hrad",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/exit-unikova-hra-zapovezeny-hrad-7655/"
+  },
+  {
+   "t": "Exit",
+   "c": "Exit: loupež na Mississippi",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/exit-unikova-hra-loupez-na-mississippi-11697/"
+  },
+  {
+   "t": "Expeditions",
+   "c": "Expedice",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/expedice-14408/"
+  },
+  {
+   "t": "Exploding Minions",
+   "c": "Výbušní mimoni",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "7+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vybusni-mimoni-13123/"
+  },
+  {
+   "t": "Fantastic park",
+   "c": "Fantastic park",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "7+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/fantastic-park-6668/"
+  },
+  {
+   "t": "Fantasy Realms",
+   "c": "Tajuplné říše",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "14+",
+   "n": "vc. rozsireni Proklety Poklad",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tajuplne-rise-7603/"
+  },
+  {
+   "t": "Faraway",
+   "c": "Osmero",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/osmero-15563/"
+  },
+  {
+   "t": "Farmini",
+   "c": "Farmini",
+   "l": "EN",
+   "p": "1–4",
+   "a": "5+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/farmini-9527/"
+  },
+  {
+   "t": "First Empires",
+   "c": "První říše",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/prvni-rise-13061/"
+  },
+  {
+   "t": "First Martians: Adventures on the Red Planet",
+   "c": "První Marťané: Dobrodružství na Rudé planetě",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/prvni-martane-dobrodruzstvi-na-rude-planete-5624/"
+  },
+  {
+   "t": "Fish Tank",
+   "c": "Akvárko",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "7+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/akvarko-13240/"
+  },
+  {
+   "t": "Flip Over Frog",
+   "c": "Žabky",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "6+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zabky-11081/"
+  },
+  {
+   "t": "For Sale",
+   "c": "Na Prodej",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/na-prodej-250/"
+  },
+  {
+   "t": "Forbidden Bridge",
+   "c": "Forbidden Bridge",
+   "l": "EN",
+   "p": "2–4",
+   "a": "7+",
+   "u": "https://boardgamegeek.com/boardgame/3945/forbidden-bridge",
+   "b": 3945
+  },
+  {
+   "t": "Forbidden Desert",
+   "c": "Zakázaná poušť",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zakazana-poust-3397/"
+  },
+  {
+   "t": "Forbidden Island",
+   "c": "Zakázaný ostrov",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zakazany-ostrov-1238/"
+  },
+  {
+   "t": "Forgotten Waters",
+   "c": "Na vlnách neznáma",
+   "l": "CZ",
+   "p": "3–7",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/na-vlnach-neznama-10190/"
+  },
+  {
+   "t": "Fort",
+   "c": "Fort",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/fort-10534/"
+  },
+  {
+   "t": "Forum Trajanum",
+   "c": "Forum Trajanum",
+   "l": "EN",
+   "p": "2–4",
+   "a": "12+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/forum-trajanum-8327/"
+  },
+  {
+   "t": "Four Gardens",
+   "c": "Čtyři zahrady",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/ctyri-zahrady-9900/"
+  },
+  {
+   "t": "Fresco",
+   "c": "Fresco",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/fresco-1323/"
+  },
+  {
+   "t": "Froggit",
+   "c": "Skokani",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "6+",
+   "n": "Macka 04/24",
+   "u": "https://boardgamegeek.com/boardgame/301442/froggit",
+   "b": 301442
+  },
+  {
+   "t": "Frostpunk",
+   "c": "Frostpunk",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "16+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/frostpunk-the-board-game-10538/"
+  },
+  {
+   "t": "Fruit Ninja",
+   "c": "Fruit Ninja",
+   "l": "EN",
+   "p": "3–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/fruit-ninja-combo-party-9521/"
+  },
+  {
+   "t": "Fuji Koro",
+   "c": "Fuji Koro",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/fuji-koro-9068/"
+  },
+  {
+   "t": "Galileo Galilei",
+   "c": "Galileo Galilei",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/galileo-galilei-15945/"
+  },
+  {
+   "t": "Gap",
+   "c": "Fuk",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "7+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/fuk-15401/"
+  },
+  {
+   "t": "Garden Nation",
+   "c": "Zahradní říše",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "10+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zahradni-rise-12857/"
+  },
+  {
+   "t": "Get on Board",
+   "c": "Nastupovat prosim!",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/nastupovat-prosim-new-york-london-13245/"
+  },
+  {
+   "t": "Ghost Castle",
+   "c": "Strašidelný hrad",
+   "l": "EN",
+   "p": "2–4",
+   "a": "6+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/strasidelny-hrad-5532/"
+  },
+  {
+   "t": "Gillotine",
+   "c": "Gillotine",
+   "l": "EN",
+   "p": "2–5",
+   "a": "12+",
+   "u": "https://boardgamegeek.com/boardgame/116/guillotine",
+   "b": 116
+  },
+  {
+   "t": "Gingerbread House",
+   "c": "Gingerbread House",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/gingerbread-house-8477/"
+  },
+  {
+   "t": "Glen More II: Chronicles",
+   "c": "Glen More II: Chronicles",
+   "l": "EN",
+   "p": "2–4",
+   "a": "12+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/glen-more-ii-chronicles-9216/"
+  },
+  {
+   "t": "Gloomhaven",
+   "c": "Gloomhaven",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/gloomhaven-5203/"
+  },
+  {
+   "t": "Gloomhaven: Jaws of the Lion",
+   "c": "Gloomhaven: Lví chřtán",
+   "l": "EN",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/gloomhaven-lvi-chrtan-10327/"
+  },
+  {
+   "t": "Glory: A Game of Knights",
+   "c": "Glory: A Game of Knights",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/glory-a-game-of-knights-9875/"
+  },
+  {
+   "t": "Gobbit",
+   "c": "Gobbit",
+   "l": "CZ",
+   "p": "2–8",
+   "a": "6+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/gobbit-7075/"
+  },
+  {
+   "t": "Goblin Coaster",
+   "c": "Goblin Coaster",
+   "l": "EN",
+   "p": "1–6",
+   "a": "8+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/goblin-coaster-16296/"
+  },
+  {
+   "t": "Gold River",
+   "c": "Zlatá řeka",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zlata-reka-10030/"
+  },
+  {
+   "t": "Golden Horn",
+   "c": "Golden Horn",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/golden-horn-erweiterung-dominio-da-mar-10302/"
+  },
+  {
+   "t": "Gorynich",
+   "c": "Dračí strážce",
+   "l": "CZ",
+   "p": "3–7",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/draci-strazce-15203/"
+  },
+  {
+   "t": "Great Plains",
+   "c": "Širé pláně",
+   "l": "CZ",
+   "p": "2",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/sire-plane-12123/"
+  },
+  {
+   "t": "Great Western Trail: Argentina",
+   "c": "Great Western Trail: Argentina",
+   "l": "EN",
+   "p": "1–4",
+   "a": "12+",
+   "n": "Macka 05/25",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/great-western-trail-argentina-13505/"
+  },
+  {
+   "t": "Grove",
+   "c": "Citrusy",
+   "l": "CZ",
+   "p": "1",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/citrusy-12443/"
+  },
+  {
+   "t": "Hadrian's Wall",
+   "c": "Hadriánův val",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/hadrianuv-val-11084/"
+  },
+  {
+   "t": "Hamlet: The Village Building Game",
+   "c": "Vesnička",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "10+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vesnicka-hra-o-budovani-osady-13151/"
+  },
+  {
+   "t": "Happy City",
+   "c": "Šťastné městečko",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/stastne-mestecko-13056/"
+  },
+  {
+   "t": "Harrow County: The Game of Gothic Conflict",
+   "c": "Pochmurný kraj",
+   "l": "CZ",
+   "p": "1–3",
+   "a": "12+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pochmurny-kraj-13794/"
+  },
+  {
+   "t": "Harry Potter: Hogwarts Battle – Defence Against the Dark Arts",
+   "c": "Harry Potter: Boj o Bradavice – Obrana proti černé magii",
+   "l": "CZ",
+   "p": "2",
+   "a": "11+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/harry-potter-boj-o-bradavice-obrana-proti-cerne-magii-9528/"
+  },
+  {
+   "t": "Heat: Pedal to the Metal",
+   "c": "Heat",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/heat-13497/"
+  },
+  {
+   "t": "Heaven & Ale",
+   "c": "Heaven & Ale",
+   "l": "EN",
+   "p": "2–4",
+   "a": "12+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/heaven-ale-7453/"
+  },
+  {
+   "t": "Hegemony: Lead Your Class to Victory",
+   "c": "Hegemonie: Doveďte svou třídu k vítězství",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/hegemonie-dovedte-svou-tridu-k-vitezstvi-12632/"
+  },
+  {
+   "t": "Hellapagos",
+   "c": "Trosečníci",
+   "l": "CZ",
+   "p": "3–12",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/trosecnici-9747/"
+  },
+  {
+   "t": "Hidden Leaders",
+   "c": "Dědicové trůnu",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "10+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/dedicove-trunu-12121/"
+  },
+  {
+   "t": "Hoarders",
+   "c": "Hamouni",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/hamouni-10225/"
+  },
+  {
+   "t": "Hokito",
+   "c": "Hokito",
+   "l": "CZ",
+   "p": "2",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/hokito-15176/"
+  },
+  {
+   "t": "Horizon: Zero Dawn",
+   "c": "Horizon: Zero Dawn",
+   "l": "EN",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/horizon-zero-dawn-the-board-game-8432/"
+  },
+  {
+   "t": "House of danger",
+   "c": "House of danger",
+   "l": "EN",
+   "p": "1-99",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/choose-your-own-adventure-house-of-danger-11099/"
+  },
+  {
+   "t": "Imagenius",
+   "c": "Imagenius",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/imagenius-12272/"
+  },
+  {
+   "t": "Immortals",
+   "c": "Immortals",
+   "l": "EN",
+   "p": "3–5",
+   "a": "14+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/immortals-7007/"
+  },
+  {
+   "t": "Imperial Miners",
+   "c": "Horníci impéria",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/hornici-imperia-14480/"
+  },
+  {
+   "t": "Imperial Settlers",
+   "c": "Settlers: Zrod impéria",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/settlers-zrod-imperia-4053/"
+  },
+  {
+   "t": "Imperial Settlers: Rise of the Empire",
+   "c": "Settlers: Zrod impéria - Rozkvět impéria",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/settlers-zrod-imperia-rozkvet-imperia-11097/"
+  },
+  {
+   "t": "Imperium: Legends",
+   "c": "Imperium: Legendy",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "n": "Zajic 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/imperium-legendy-11974/"
+  },
+  {
+   "t": "In the Hall of the Mountain King",
+   "c": "In the Hall of the Mountain King",
+   "l": "EN",
+   "p": "1–5",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/in-the-hall-of-the-mountain-king-9990/"
+  },
+  {
+   "t": "In the Palm of Your Hand",
+   "c": "Život na dlani",
+   "l": "CZ",
+   "p": "2–8",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zivot-na-dlani-10979/"
+  },
+  {
+   "t": "Influentia",
+   "c": "Influentia",
+   "l": "EN",
+   "p": "3–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/influentia-11085/"
+  },
+  {
+   "t": "IQ Fitness",
+   "c": "IQ Fitness: Grafické rébusy",
+   "l": "CZ",
+   "p": "1",
+   "a": "12+",
+   "u": "https://www.svet-her.cz/spolecenske-hry/iq-fitness-graficke-rebusy"
+  },
+  {
+   "t": "IQ Fitness junior",
+   "c": "IQ Fitness junior: začátečník",
+   "l": "CZ",
+   "p": "1",
+   "a": "6+"
+  },
+  {
+   "t": "IQ Fitness junior",
+   "c": "IQ Fitness junior: pokročilý",
+   "l": "CZ",
+   "p": "1",
+   "a": "6+"
+  },
+  {
+   "t": "It's a Wonderful Kingdom",
+   "c": "Království divů",
+   "l": "CZ",
+   "p": "1–2",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kralovstvi-divu-11247/"
+  },
+  {
+   "t": "It's a Wonderful World: Leisure & Decadence",
+   "c": "Svět divů: Pohodlí & úpadek",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/svet-divu-pohodli-upadek-14453/"
+  },
+  {
+   "t": "It's a Wonderful World: War or Peace",
+   "c": "Svět divů: Válka nebo mír",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/svet-divu-valka-nebo-mir-10960/"
+  },
+  {
+   "t": "It´s a Wonderful World",
+   "c": "Svět divů",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/svet-divu-9275/"
+  },
+  {
+   "t": "Jaipur",
+   "c": "Jaipur",
+   "l": "NL",
+   "p": "2",
+   "a": "12+",
+   "n": "i jako PnP verze",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/jaipur-1251/"
+  },
+  {
+   "t": "Jantaris",
+   "c": "Jantaris",
+   "l": "CZ",
+   "p": "3–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/jantaris-563/"
+  },
+  {
+   "t": "John Company",
+   "c": "John Company",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/john-company-7264/"
+  },
+  {
+   "t": "Juicy Fruits",
+   "c": "Ovocný ráj",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/ovocny-raj-12189/"
+  },
+  {
+   "t": "Jumanji",
+   "c": "Jumanji",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/jumanji-5630/"
+  },
+  {
+   "t": "Jurassic World: The Boardgame",
+   "c": "Jurassic World: The Boardgame",
+   "l": "EN",
+   "p": "2–6",
+   "a": "12+",
+   "u": "https://boardgamegeek.com/boardgame/260329/jurassic-world-the-boardgame",
+   "b": 260329
+  },
+  {
+   "t": "Kabaleo",
+   "c": "Kabaleo",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kabaleo-6508/"
+  },
+  {
+   "t": "Kabo",
+   "c": "Kabo: Hra o hledání jednorožce",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kabo-8341/"
+  },
+  {
+   "t": "Karak",
+   "c": "Karak",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "7+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/karak-7162/"
+  },
+  {
+   "t": "Karak: Goblin",
+   "c": "Karak: Goblin",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/karak-goblin-12167/"
+  },
+  {
+   "t": "Karak: Regent",
+   "c": "Karak: Regent",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "7+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/karak-regent-9692/"
+  },
+  {
+   "t": "Karak: Sidhar Kirima & Elspeth",
+   "c": "Karak: Sidhar Kirima & Elspeth",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "7+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/karak-sidhar-kirima-a-elspeth-11982/"
+  },
+  {
+   "t": "Kemet: Blut und Sand",
+   "c": "Kemet: Krev a písek",
+   "l": "DE",
+   "p": "2–5",
+   "a": "13+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kemet-krev-a-pisek-10532/"
+  },
+  {
+   "t": "Keys to the Castle",
+   "c": "Klíče od hradu",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/klice-od-hradu-13540/"
+  },
+  {
+   "t": "Keystone: North America (Deluxe edition)",
+   "c": "Divočina Severní Ameriky (Deluxe verze)",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "10+",
+   "n": "Zajic 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/divocina-severni-ameriky-deluxe-verze-13745/"
+  },
+  {
+   "t": "Khôra: Rise of an Empire",
+   "c": "Khôra: Zlatý věk",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "14+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/khora-zlaty-vek-12350/"
+  },
+  {
+   "t": "Kids Chronicles: Quest for the Moon Stones",
+   "c": "Kronika Dobrodružství: Cesta za měsíčními kameny",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "7+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kronika-dobrodruzstvi-cesta-za-mesicnimi-kameny-14265/"
+  },
+  {
+   "t": "Kill the Unicorns",
+   "c": "Sejmi jednorožce!",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/sejmi-jednorozce-7503/"
+  },
+  {
+   "t": "King is Dead",
+   "c": "Král je mrtev",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "14+",
+   "n": "2nd edition",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kral-je-mrtev-10985/"
+  },
+  {
+   "t": "King of 12",
+   "c": "12 Říší",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/12-risi-12785/"
+  },
+  {
+   "t": "King's Vineyard",
+   "c": "King's Vineyard",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "n": "Macka 05/25",
+   "u": "https://boardgamegeek.com/boardgame/82449/kings-vineyard",
+   "b": 82449
+  },
+  {
+   "t": "Kingdom Rush: Rift in Time",
+   "c": "Kingdom Rush: Trhlina v čase",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kingdom-rush-trhlina-v-case-9231/"
+  },
+  {
+   "t": "Kingdomino",
+   "c": "Kingdomino",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kingdomino-6209/"
+  },
+  {
+   "t": "Kites",
+   "c": "Drakiáda: Čas letí",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/drakiada-cas-leti-13558/"
+  },
+  {
+   "t": "Klondike 1896",
+   "c": "Klondike 1896",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/klondike-1896-2417/"
+  },
+  {
+   "t": "Knock! Knock! Dungeon",
+   "c": "Ťuk! Ťuk! Podzemí",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "7+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tuk-tuk-podzemi-10526/"
+  },
+  {
+   "t": "Knockdown: Volume III",
+   "c": "Poslední úder: Avalon",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/posledni-uder-avalon-13402/"
+  },
+  {
+   "t": "Kraken Attack!",
+   "c": "Kraken zuří!",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "7+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kraken-zuri-13047/"
+  },
+  {
+   "t": "Kulami",
+   "c": "Kulami",
+   "l": "CZ",
+   "p": "2",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kulami-3576/"
+  },
+  {
+   "t": "Kutna Hora: The City of Silver",
+   "c": "Kutná Hora: Město stříbra",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kutna-hora-mesto-stribra-14736/"
+  },
+  {
+   "t": "Kvantum",
+   "c": "Kvantum",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kvantum-13232/"
+  },
+  {
+   "t": "La Granja: Deluxe Master Set",
+   "c": "La Granja: Deluxe Master Set",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/la-granja-deluxe-master-set-12913/"
+  },
+  {
+   "t": "Labyrinth",
+   "c": "Labyrinth",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/labyrinth-697/"
+  },
+  {
+   "t": "Lancaster",
+   "c": "Lancaster",
+   "l": "EN",
+   "p": "2–5",
+   "a": "10+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/lancaster-2102/"
+  },
+  {
+   "t": "Lancaster: The New Laws",
+   "c": "Lancaster: The New Laws",
+   "l": "EN",
+   "p": "2–5",
+   "a": "10+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/lancaster-the-new-laws-2380/"
+  },
+  {
+   "t": "Land vs Sea",
+   "c": "Moře a souš",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/more-a-sous-12477/"
+  },
+  {
+   "t": "Last Message",
+   "c": "Poslední zpráva",
+   "l": "CZ",
+   "p": "3–8",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/posledni-zprava-13227/"
+  },
+  {
+   "t": "Leo",
+   "c": "Leo musí ke kadeřníkovi",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "6+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/leo-musi-ke-kadernikovi-5915/"
+  },
+  {
+   "t": "Les Animaux Fantastiques",
+   "c": "Fantastická zvířata a kde je najít",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "4+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/fantasticka-zvirata-a-kde-je-najit-14396/"
+  },
+  {
+   "t": "Letter Jam",
+   "c": "Letter Jam",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/letter-jam-9557/"
+  },
+  {
+   "t": "Liberatores: The Conspiracy to Liberate Rome",
+   "c": "Liberatores: The Conspiracy to Liberate Rome",
+   "l": "EN",
+   "p": "3–6",
+   "a": "13+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/liberatores-the-conspiracy-to-liberate-rome-8870/"
+  },
+  {
+   "t": "Libertalia",
+   "c": "Libertalia: Piráti Vzduchomoří",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/libertalia-pirati-vzduchomori-12897/"
+  },
+  {
+   "t": "Liguria",
+   "c": "Liguria",
+   "l": "SK",
+   "p": "2–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/liguria-5303/"
+  },
+  {
+   "t": "Little Battle",
+   "c": "Little Battle",
+   "l": "EN",
+   "p": "3–5",
+   "a": "5+",
+   "u": "https://boardgamegeek.com/boardgame/277481/little-battle",
+   "b": 277481
+  },
+  {
+   "t": "Little Monster",
+   "c": "Little Monster",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/little-monster-that-came-for-lunch-and-stayed-for-tea-11435/"
+  },
+  {
+   "t": "Little Town",
+   "c": "Naše osada",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/nase-osada-9340/"
+  },
+  {
+   "t": "Lords of Ragnarök",
+   "c": "Lords of Ragnarök",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/lords-of-ragnarok-12231/"
+  },
+  {
+   "t": "Lost Ruins of Arnak",
+   "c": "Arnak: Ztracený ostrov",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/ztraceny-ostrov-arnak-10528/"
+  },
+  {
+   "t": "Lost Ruins of Arnak: Expedition Leaders",
+   "c": "Arnak: Velitelé expedic",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/ztraceny-ostrov-arnak-velitele-expedic-12011/"
+  },
+  {
+   "t": "Lost Ruins of Arnak: The Missing Expedition",
+   "c": "Arnak: Po stopách expedice",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/ztraceny-ostrov-arnak-po-stopach-expedice-14657/"
+  },
+  {
+   "t": "Lupos",
+   "c": "Lupos",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "7+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/lupos-12116/"
+  },
+  {
+   "t": "Luxor: Forgotten Treasures",
+   "c": "Luxor: Zapomenuté poklady",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/luxor-zapomenute-poklady-7721/"
+  },
+  {
+   "t": "Machi Koro",
+   "c": "Machi Koro",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "7+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/machi-koro-3788/"
+  },
+  {
+   "t": "Mage Knight: Ultimate Edition",
+   "c": "Mage Knight: Ultimátní edice",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "14+",
+   "n": "Zajic 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mage-knight-ultimatni-edice-8266/"
+  },
+  {
+   "t": "Magic Maze Kids",
+   "c": "Magic Maze Kids",
+   "l": "EN",
+   "p": "2–4",
+   "a": "5+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/magic-maze-kids-8417/"
+  },
+  {
+   "t": "Mandala",
+   "c": "Mandala",
+   "l": "CZ",
+   "p": "2",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mandala-9496/"
+  },
+  {
+   "t": "Mangrovia",
+   "c": "Mangrovia",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mangrovia-4423/"
+  },
+  {
+   "t": "Mariposas",
+   "c": "Mariposas",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mariposas-9988/"
+  },
+  {
+   "t": "Marvel Dice Throne",
+   "c": "Marvel Dice Throne",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "n": "Sada CZ 1+2",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/marvel-dice-throne-cz-sada-1-16581/"
+  },
+  {
+   "t": "Marvel Remix",
+   "c": "Marvel Remix",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/marvel-remix-14360/"
+  },
+  {
+   "t": "Master Word",
+   "c": "Mazaný Lišák",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mazany-lisak-10642/"
+  },
+  {
+   "t": "Mastermind",
+   "c": "Mastermind",
+   "l": "EN",
+   "p": "2",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/logik-2818/"
+  },
+  {
+   "t": "Mazescape: Ariadne",
+   "c": "Mazescape: Ariadne",
+   "l": "CZ",
+   "p": "1",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mazescape-ariadna-13534/"
+  },
+  {
+   "t": "Mazescape: Labýrinthos",
+   "c": "Mazescape: Labyrint",
+   "l": "CZ",
+   "p": "1",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mazescape-labyrint-12531/"
+  },
+  {
+   "t": "McJohny's",
+   "c": "McJohny's",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "10+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mcjohny-s-4305/"
+  },
+  {
+   "t": "Medieval: Jan Žižka",
+   "c": "Jan Žižka: Zrod vojevůdce",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/jan-zizka-zrod-vojevudce-14992/"
+  },
+  {
+   "t": "Mercado",
+   "c": "Mercado",
+   "l": "EN",
+   "p": "2–4",
+   "a": "10+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mercado-8747/"
+  },
+  {
+   "t": "Merchants Cove",
+   "c": "Zátoka obchodníků",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zatoka-obchodniku-11499/"
+  },
+  {
+   "t": "Merchants Cove: The Oracle",
+   "c": "Zátoka obchodníků: Vědma",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zatoka-obchodniku-vedma-12706/"
+  },
+  {
+   "t": "Merchants Cove: The Secret Stash",
+   "c": "Zátoka obchodníků: Tajná skrýš",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zatoka-obchodniku-tajna-skrys-12705/"
+  },
+  {
+   "t": "Merchants Cove: The Innkeeper",
+   "c": "Zátoka obchodníků: Hostinský",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zatoka-obchodniku-hostinsky-12707/"
+  },
+  {
+   "t": "Messina 1347",
+   "c": "Messina 1347",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/messina-1347-11913/"
+  },
+  {
+   "t": "Metro",
+   "c": "Metro",
+   "l": "SK",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/metro-592/"
+  },
+  {
+   "t": "MicroMACRO: Crime City",
+   "c": "microMACRO: Město zločinu",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mikromakro-mesto-zlocinu-11149/"
+  },
+  {
+   "t": "MIND MGMT: The Psychic Espionage",
+   "c": "MIND MGMT: „Hra“ o psychické špionáži",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "13+",
+   "n": "Macka 05/25",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mind-mgmt-hra-o-psychicke-spionazi-12192/"
+  },
+  {
+   "t": "Mindbug",
+   "c": "Mozkožrout",
+   "l": "CZ",
+   "p": "2",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mozkozrout-12630/"
+  },
+  {
+   "t": "Mindbug: Beyond Eternity",
+   "c": "Mozkožrout: Za hranice věčnosti",
+   "l": "CZ",
+   "p": "2",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mozkozrout-za-hranice-vecnosti-15054/"
+  },
+  {
+   "t": "Mindbug: Beyond Evolution",
+   "c": "Mozkožrout: Za hranice evoluce",
+   "l": "CZ",
+   "p": "2",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mozkozrout-za-hranice-evoluce-15038/"
+  },
+  {
+   "t": "Momiji",
+   "c": "Momidži",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/momidzi-12912/"
+  },
+  {
+   "t": "Monkey palace",
+   "c": "Opičí palác",
+   "l": "NL",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/opici-palac-16892/"
+  },
+  {
+   "t": "Monopoly",
+   "c": "Monopoly",
+   "l": "CZ",
+   "p": "2–8",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/monopoly-800/"
+  },
+  {
+   "t": "Monopoly Bid",
+   "c": "Monopoly Bid (karetní hra)",
+   "l": "EN",
+   "p": "2–5",
+   "a": "7+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/monopoly-bid-14013/"
+  },
+  {
+   "t": "Monopoly: Animal crossing",
+   "c": "Monopoly: Animal crossing",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://boardgamegeek.com/boardgame/348250/monopoly-animal-crossing-new-horizons",
+   "b": 348250
+  },
+  {
+   "t": "Monopoly: Builder",
+   "c": "Monopoly: Stavitelé",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://boardgamegeek.com/boardgame/341308/monopoly-builder",
+   "b": 341308
+  },
+  {
+   "t": "Monopoly: Cheaters edition",
+   "c": "Monopoly: Cheaters edition",
+   "l": "EN",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/monopoly-cheaters-editions-11178/"
+  },
+  {
+   "t": "Monopoly: Empire",
+   "c": "Monopoly: Empire",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/monopoly-empire-4460/"
+  },
+  {
+   "t": "Monopoly: Game of Thrones",
+   "c": "Monopoly: Game of Thrones",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/monopoly-game-of-thrones-11222/"
+  },
+  {
+   "t": "Monopoly: Spiderman",
+   "c": "Monopoly: Spiderman",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://boardgamegeek.com/boardgame/31100/monopoly-spider-man",
+   "b": 31100
+  },
+  {
+   "t": "Monopoly: Transformers",
+   "c": "Monopoly: Transformers",
+   "l": "EN",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://boardgamegeek.com/boardgame/29924/monopoly-transformers",
+   "b": 29924
+  },
+  {
+   "t": "Monster Baby Rescue!",
+   "c": "Zachraňte příšerky!",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "8+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zachrante-priserky-9559/"
+  },
+  {
+   "t": "Monster Slaughter",
+   "c": "Děsnej krvák",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/desnej-krvak-7397/"
+  },
+  {
+   "t": "Monster's Coffee",
+   "c": "Kavárna příšer",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kavarna-priser-11413/"
+  },
+  {
+   "t": "Monsters Tower",
+   "c": "Monsters Tower",
+   "l": "EN",
+   "p": "2–4",
+   "a": "6+",
+   "n": "Macka 04/24",
+   "u": "https://boardgamegeek.com/boardgame/173100/monsters-tower",
+   "b": 173100
+  },
+  {
+   "t": "Mortum: Medieval Detective",
+   "c": "Mortum: Středověká detektivka",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mortum-stredoveka-detektivka-12586/"
+  },
+  {
+   "t": "Mount Rushmore",
+   "c": "Mount Rushmore",
+   "l": "EN",
+   "p": "2–10",
+   "a": "8+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mount-rushmore-13466/"
+  },
+  {
+   "t": "Munchkin",
+   "c": "Munchkin",
+   "l": "CZ",
+   "p": "2–8",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/munchkin-211/"
+  },
+  {
+   "t": "Munchkin 2",
+   "c": "Munchkin 2: Neskutečná Sekera",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/munchkin-2-neskutecna-sekera-212/"
+  },
+  {
+   "t": "Munchkin 3",
+   "c": "Munchkin 3: Kněžské poklesky",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/munchkin-3-knezske-poklesky-2892/"
+  },
+  {
+   "t": "Munchkin 4",
+   "c": "Munchkin 4: Království za oře",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/munchkin-4-kralovstvi-za-ore-2894/"
+  },
+  {
+   "t": "Munchkin 5",
+   "c": "Munchkin 5: Vedle jak ta jedle",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/munchkin-5-vedle-jak-ta-jedle-4686/"
+  },
+  {
+   "t": "Munchkin 6",
+   "c": "Munchkin 6: Ujeté jeskyně",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/munchkin-6-ujete-jeskyne-5486/"
+  },
+  {
+   "t": "Munchkin 7",
+   "c": "Munchkin 7: Švindluj obouruč",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/munchkin-7-svindluj-obouruc-5488/"
+  },
+  {
+   "t": "Munchkin 8",
+   "c": "Munchkin 8: Půlkůň jede",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/munchkin-8-pulkun-jede-5489/"
+  },
+  {
+   "t": "Munchkin 9",
+   "c": "Munchkin 9: Jurský párek",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/munchkin-9-jursky-parek-10268/"
+  },
+  {
+   "t": "Munchkin: Big box",
+   "c": "Munchkin: Big box",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/munchkin-6-ujete-jeskyne-5486/"
+  },
+  {
+   "t": "My Farm Shop",
+   "c": "My Farm Shop",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/my-farm-shop-12057/"
+  },
+  {
+   "t": "My First Castle Panic",
+   "c": "Můj první nedobytný hrad",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "4+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/muj-prvni-nedobytny-hrad-11581/"
+  },
+  {
+   "t": "My Little Scythe",
+   "c": "Šampioni Jablečného království",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/sampioni-jablecneho-kralovstvi-8274/"
+  },
+  {
+   "t": "Mysterium Kids: Captain Echo's Treasure",
+   "c": "Mysterium Kids: Poklad Kapitána Skřípa",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "6+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mysterium-kids-poklad-kapitana-skripa-15002/"
+  },
+  {
+   "t": "Nelly",
+   "c": "Nelly",
+   "l": "SK",
+   "p": "2–4",
+   "a": "6+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/nelly-14883/"
+  },
+  {
+   "t": "Newton",
+   "c": "Newton",
+   "l": "EN",
+   "p": "2–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/newton-8305/"
+  },
+  {
+   "t": "Next station: London",
+   "c": "Příští stanice: Londýn",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pristi-stanice-londyn-13361/"
+  },
+  {
+   "t": "Next station: London",
+   "c": "Příští stanice: Londýn - Den otevřených dveří",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pristi-stanice-londyn-den-otevrenych-dveri-15095/"
+  },
+  {
+   "t": "Ninja Academy",
+   "c": "Škola nindžů",
+   "l": "CZ",
+   "p": "3–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/skola-nindzu-9972/"
+  },
+  {
+   "t": "Noah's Ark",
+   "c": "Noemova archa",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "5+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/noemova-archa-8653/"
+  },
+  {
+   "t": "Noe",
+   "c": "Noe",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/noe-2690/"
+  },
+  {
+   "t": "Northgard: Uncharted Lands",
+   "c": "Northgard: Země nepoznané",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/northgard-zeme-nepoznane-9646/"
+  },
+  {
+   "t": "Northgard: Uncharted Lands – Warchiefs",
+   "c": "Northgard: Náčelníci",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/northgard-zeme-nepoznane-nacelnici-14848/"
+  },
+  {
+   "t": "Northgard: Uncharted Lands – Wilderness",
+   "c": "Northgard: Divočina",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/northgard-zeme-nepoznane-divocina-14847/"
+  },
+  {
+   "t": "Nova luna",
+   "c": "Nova luna",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/nova-luna-9651/"
+  },
+  {
+   "t": "Nova Roma",
+   "c": "Nova Roma",
+   "l": "EN",
+   "p": "1–4",
+   "a": "14+",
+   "n": "Macka 05/25",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/nova-roma-16639/"
+  },
+  {
+   "t": "Nucleum",
+   "c": "Nukleum",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/nukleum-15065/"
+  },
+  {
+   "t": "Nucleum: Court of Progress",
+   "c": "Nukleum: Pokrok nezastavíš",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/nukleum-pokrok-nezastavis-17325/"
+  },
+  {
+   "t": "Nucleum: Patrons Set",
+   "c": "Nukleum: Mecenáši",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/nukleum-mecenasi-16903/"
+  },
+  {
+   "t": "Oak",
+   "c": "Pradub: Deluxe edice",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pradub-deluxe-14336/"
+  },
+  {
+   "t": "Oath",
+   "c": "Oath",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/oath-kroniky-rise-a-vyhnanstvi-9751/"
+  },
+  {
+   "t": "Old London Bridge",
+   "c": "Old London Bridge",
+   "l": "EN",
+   "p": "2–4",
+   "a": "10+",
+   "n": "Zajic 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/old-london-bridge-14309/"
+  },
+  {
+   "t": "One Night Ultimate Werewolf: Daybreak",
+   "c": "Vlkodlaci za úsvitu",
+   "l": "CZ",
+   "p": "3–7",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vlkodlaci-za-usvitu-4820/"
+  },
+  {
+   "t": "Orichalcum",
+   "c": "Ostrovy Titánů",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "10+",
+   "n": "vcetne solo rozsireni",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/ostrovy-titanu-14254/"
+  },
+  {
+   "t": "OSUD",
+   "c": "Změňte OSUD: strouha plná krve",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zmente-osud-strouha-plna-krve-9385/"
+  },
+  {
+   "t": "OSUD",
+   "c": "Změňte OSUD: kletba minulosti",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zmente-osud-kletba-z-minulosti-9386/"
+  },
+  {
+   "t": "Outback",
+   "c": "Outback",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "n": "Macka 04/24 , v sacku",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/outback-8270/"
+  },
+  {
+   "t": "Overbooking",
+   "c": "Overbooking",
+   "l": "EN",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/overbooking-16361/"
+  },
+  {
+   "t": "Pablo Escobar: The Boardgame",
+   "c": "Pablo Escobar: The Boardgame",
+   "l": "EN",
+   "p": "2–4",
+   "a": "18+",
+   "u": "https://boardgamegeek.com/boardgame/263074/pablo-escobar-the-boardgame",
+   "b": 263074
+  },
+  {
+   "t": "Pakal",
+   "c": "Pakal",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pakal-11418/"
+  },
+  {
+   "t": "Paladins of the West Kingdom",
+   "c": "Paladinové Západního království",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/paladinove-zapadniho-kralovstvi-9207/"
+  },
+  {
+   "t": "Paladins of the West Kingdom: City of Crowns",
+   "c": "Paladinové Západního království: Sídla šlechticů",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/paladinove-zapadniho-kralovstvi-sidla-slechticu-11311/"
+  },
+  {
+   "t": "Paladins of the West Kingdom: The Vassals Mini-Expansion",
+   "c": "Paladinové Západního království: Vazalové minirozšíření",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/paladinove-zapadniho-kralovstvi-vazalove-11442/"
+  },
+  {
+   "t": "Pandemic",
+   "c": "Pandemic",
+   "l": "EN",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pandemic-238/"
+  },
+  {
+   "t": "Paper Dungeons: Sidequest Expansion",
+   "c": "Papírové Doupě: Nová dobrodružství",
+   "l": "CZ",
+   "p": "1–8",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/papirove-doupe-nova-dobrodruzstvi-14758/"
+  },
+  {
+   "t": "Paris",
+   "c": "Paris",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/paris-10363/"
+  },
+  {
+   "t": "Paris",
+   "c": "Paris: l'Étoile",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/paris-l-etoile-12117/"
+  },
+  {
+   "t": "Passengers",
+   "c": "Podsvětí",
+   "l": "CZ",
+   "p": "4–8",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/podsveti-14953/"
+  },
+  {
+   "t": "Patchwork",
+   "c": "Patchwork",
+   "l": "CZ",
+   "p": "2",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/patchwork-4403/"
+  },
+  {
+   "t": "Pax Pamir 2nd edition",
+   "c": "Pax Pamir",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pax-pamir-druha-edice-9344/"
+  },
+  {
+   "t": "Peaky Blinders: Under new management",
+   "c": "Peaky Blinders: Under new management",
+   "l": "EN",
+   "p": "2–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/peaky-blinders-under-new-management-11138/"
+  },
+  {
+   "t": "Pendulum",
+   "c": "Kyvadlo",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kyvadlo-10527/"
+  },
+  {
+   "t": "Petrichor",
+   "c": "Petrichor",
+   "l": "EN",
+   "p": "1–4",
+   "a": "10+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/petrichor-7891/"
+  },
+  {
+   "t": "Pharaon",
+   "c": "Pharaon",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "12+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pharaon-9794/"
+  },
+  {
+   "t": "Pirate Box",
+   "c": "Pirátský poklad",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/piratsky-poklad-12383/"
+  },
+  {
+   "t": "Pirates",
+   "c": "Pirates",
+   "l": "EN",
+   "p": "3–5",
+   "a": "14+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pirates-16280/"
+  },
+  {
+   "t": "Piratissimo",
+   "c": "Piratissimo",
+   "l": "EN",
+   "p": "2–4",
+   "a": "6+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/piratissimo-11039/"
+  },
+  {
+   "t": "Platformer",
+   "c": "Plošinovka",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/plosinovka-14938/"
+  },
+  {
+   "t": "Point Salad",
+   "c": "Zbodni salát",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zbodni-salat-9469/"
+  },
+  {
+   "t": "Port Royal",
+   "c": "Port Royal",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/port-royal-3956/"
+  },
+  {
+   "t": "Port Royal: Big Box",
+   "c": "Port Royal: Big Box",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/port-royal-big-box-11498/"
+  },
+  {
+   "t": "Pot pourri",
+   "c": "Pot pourri",
+   "l": "CZ",
+   "p": "3–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pot-pourri-13598/"
+  },
+  {
+   "t": "Potion Explosion",
+   "c": "Výbušné lektvary",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vybusne-lektvary-5278/"
+  },
+  {
+   "t": "Power Plants",
+   "c": "Válka květů: Deluxe edice",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/valka-kvetu-13482/"
+  },
+  {
+   "t": "Praga Caput Regni",
+   "c": "Praga Caput Regni",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/praga-caput-regni-10340/"
+  },
+  {
+   "t": "Princess Bride: Adventure Book Game",
+   "c": "Princess Bride: Adventure Book Game",
+   "l": "EN",
+   "p": "1–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/princess-bride-adventure-book-game-the-14557/"
+  },
+  {
+   "t": "Project L",
+   "c": "Projekt L",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/project-l-8434/"
+  },
+  {
+   "t": "Pulsar 2849",
+   "c": "Pulsar 2849",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "14+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pulsar-2849-7257/"
+  },
+  {
+   "t": "Pursuit of Happiness",
+   "c": "Cesta za štěstím",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/cesta-za-stestim-5675/"
+  },
+  {
+   "t": "Pylos",
+   "c": "Pylos",
+   "l": "CZ",
+   "p": "2",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pylos-515/"
+  },
+  {
+   "t": "Pyramido",
+   "c": "Pyramido",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pyramido-14362/"
+  },
+  {
+   "t": "Quadropolis",
+   "c": "Quadropolis",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/quadropolis-5493/"
+  },
+  {
+   "t": "Quartermaster General WW2",
+   "c": "Armádní generál: Velitel zásobování",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/armadni-general-velitel-zasobovani-12558/"
+  },
+  {
+   "t": "Queen's Architect",
+   "c": "Queen's Architect",
+   "l": "EN",
+   "p": "2–4",
+   "a": "10+",
+   "n": "Zajic 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/queen-s-architect-4610/"
+  },
+  {
+   "t": "Quest",
+   "c": "Výprava",
+   "l": "CZ",
+   "p": "4–10",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vyprava-12907/"
+  },
+  {
+   "t": "Quizoo",
+   "c": "Quizoo",
+   "l": "CZ",
+   "p": "2–8",
+   "a": "6+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/quizoo-6687/"
+  },
+  {
+   "t": "Qwirkle",
+   "c": "Qwirkle",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "6+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/qwirkle-2381/"
+  },
+  {
+   "t": "Raccoon Robbers",
+   "c": "Raccoon Robbers",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/raccoon-robbers-13223/"
+  },
+  {
+   "t": "Radlands",
+   "c": "Radlands: Gangy pustiny",
+   "l": "CZ",
+   "p": "2",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/radlands-gangy-pustiny-11351/"
+  },
+  {
+   "t": "Railroad Ink: Green edition",
+   "c": "Railroad Ink: Bohatě zelená edice",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/railroad-ink-bohate-zelena-edice-10344/"
+  },
+  {
+   "t": "Railroad Ink: Yellow edition",
+   "c": "Railroad Ink - Žlutá edice",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/railroad-ink-zarive-zluta-edice-10343/"
+  },
+  {
+   "t": "Rajas of the Ganges",
+   "c": "Rajas of the Ganges",
+   "l": "EN",
+   "p": "2–4",
+   "a": "12+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/rajas-of-the-ganges-7363/"
+  },
+  {
+   "t": "Red Rising",
+   "c": "Rudý úsvit",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/rudy-usvit-11329/"
+  },
+  {
+   "t": "Regine",
+   "c": "Regine",
+   "l": "EN",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://boardgamegeek.com/boardgame/363089/regine",
+   "b": 363089
+  },
+  {
+   "t": "Reign: The Final Battle Royale",
+   "c": "Reign: The Final Battle Royale",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://boardgamegeek.com/boardgame/315584/reign",
+   "b": 315584
+  },
+  {
+   "t": "Relic Hunters",
+   "c": "Lovci relikvií",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/lovci-relikvii-14639/"
+  },
+  {
+   "t": "Relics of Rajavihara",
+   "c": "Relics of Rajavihara",
+   "l": "EN",
+   "p": "1",
+   "a": "12+",
+   "n": "Kickstarter",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/relics-of-rajavihara-12002/"
+  },
+  {
+   "t": "Relics of Rajavihara: Montalo's Revenge Expansion",
+   "c": "Relics of Rajavihara: Montalo's Revenge Expansion",
+   "l": "EN",
+   "p": "1",
+   "a": "12+",
+   "n": "Kickstarter",
+   "u": "https://boardgamegeek.com/boardgame/339895/relics-of-rajavihara-montalos-revenge",
+   "b": 339895
+  },
+  {
+   "t": "Rent a Hero",
+   "c": "Hledá se hrdina",
+   "l": "CZ",
+   "p": "3–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/hleda-se-hrdina-4098/"
+  },
+  {
+   "t": "Res Arcana",
+   "c": "Res Arcana",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/res-arcana-9062/"
+  },
+  {
+   "t": "Resafa",
+   "c": "Resafa",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "n": "Macka 05/25",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/resafa-16245/"
+  },
+  {
+   "t": "Revive",
+   "c": "Obleva",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/obleva-13688/"
+  },
+  {
+   "t": "Rivals for Catan",
+   "c": "Catan: Knížata z Katanu",
+   "l": "CZ",
+   "p": "2",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/catan-duel-1548/"
+  },
+  {
+   "t": "Robin Hood and the Merry Men Deluxe edition",
+   "c": "Robin Hood and the Merry Men Deluxe edition",
+   "l": "EN",
+   "p": "2–4",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/robin-hood-and-the-merry-men-7820/"
+  },
+  {
+   "t": "Robinson Crusoe: Adventures on the Cursed Island",
+   "c": "Robinson Crusoe: Dobrodružství na Prokletém ostrově",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/robinson-crusoe-dobrodruzstvi-na-prokletem-ostrove-3102/"
+  },
+  {
+   "t": "Roll Player",
+   "c": "Hrdina v kostce",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/hrdina-v-kostce-5823/"
+  },
+  {
+   "t": "Roll Player: Fiends & Familiars",
+   "c": "Hrdina v kostce: Ďáblíci a společníci",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/hrdina-v-kostce-dablici-a-spolecnici-9110/"
+  },
+  {
+   "t": "Roll Player: Monsters & Minions",
+   "c": "Hrdina v kostce: Bestiář",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/hrdina-v-kostce-bestiar-6987/"
+  },
+  {
+   "t": "Rome in a Day",
+   "c": "Boj o Řím",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/boj-o-rim-14440/"
+  },
+  {
+   "t": "Rooster Run",
+   "c": "Kohoutí námluvy",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "7+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kohouti-namluvy-6660/"
+  },
+  {
+   "t": "Rulebenders",
+   "c": "Rulebenders",
+   "l": "EN",
+   "p": "2–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/rulebenders-12756/"
+  },
+  {
+   "t": "Rumble in the Dungeon",
+   "c": "Kobky plné chaosu",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kobky-plne-chaosu-4761/"
+  },
+  {
+   "t": "Rummikub",
+   "c": "Rummikub",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/rummikub-1765/"
+  },
+  {
+   "t": "Rune Stones",
+   "c": "Rune Stones",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "10+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/rune-stones-9599/"
+  },
+  {
+   "t": "Saboteur",
+   "c": "Sabotér",
+   "l": "CZ",
+   "p": "3–10",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/saboter-396/"
+  },
+  {
+   "t": "Saboteur: The Dark Cave",
+   "c": "Sabotér: Temná jeskyně",
+   "l": "CZ",
+   "p": "2–8",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/saboter-temna-jeskyne-14046/"
+  },
+  {
+   "t": "Saboteur: The Duel",
+   "c": "Sabotér: Duel",
+   "l": "CZ",
+   "p": "1–2",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/saboter-duel-4730/"
+  },
+  {
+   "t": "Safari bar",
+   "c": "Safari bar",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/safari-bar-4429/"
+  },
+  {
+   "t": "Safari bar 2",
+   "c": "Safari bar 2: Nové šelmy před barem",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/safari-bar-nove-selmy-pred-barem-5265/"
+  },
+  {
+   "t": "Safari bar 3",
+   "c": "Safari bar 3: Další šelmy na tahu",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/safari-bar-dalsi-selmy-na-tahu-10253/"
+  },
+  {
+   "t": "Safari Splash",
+   "c": "Cáklé safari!",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "5+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/cakle-safari-15633/"
+  },
+  {
+   "t": "Samarkand Bazaar",
+   "c": "Samarkand Bazaar",
+   "l": "EN",
+   "p": "2–5",
+   "a": "9+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/samarkand-bazaar-16574/"
+  },
+  {
+   "t": "San Francisco",
+   "c": "San Francisco",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/san-francisco-13531/"
+  },
+  {
+   "t": "Sanctum",
+   "c": "Sanctum",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/sanctum-9140/"
+  },
+  {
+   "t": "Savana",
+   "c": "Savana",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/savana-11186/"
+  },
+  {
+   "t": "Save the Treasure of Fairy Tales",
+   "c": "Zachráňme rozprávky",
+   "l": "EN",
+   "p": "2–4",
+   "a": "5+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/save-the-treasure-of-fairy-tales-11748/"
+  },
+  {
+   "t": "Schöne Sch#!?e: Stroke of Luck",
+   "c": "Podělaná smůla",
+   "l": "CZ",
+   "p": "3–7",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/podelana-smula-15842/"
+  },
+  {
+   "t": "Scout",
+   "c": "Cirkus",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "9+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/cirkus-12559/"
+  },
+  {
+   "t": "Scrabble",
+   "c": "Scrabble",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/scrabble-569/"
+  },
+  {
+   "t": "Scrabble: Twists & Turns",
+   "c": "Scrabble: Twists & Turns",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/scrabble-twists-turns-14788/"
+  },
+  {
+   "t": "Scrap Racer",
+   "c": "Scrap Racer",
+   "l": "EN",
+   "p": "2–6",
+   "a": "8+",
+   "n": "Zajic 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/scrap-racer-12384/"
+  },
+  {
+   "t": "Scrap Racer: Expansion 1",
+   "c": "Scrap Racer: Expansion 1",
+   "l": "EN",
+   "p": "2–8",
+   "a": "8+",
+   "n": "Zajic 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/scrap-racer-expansion-1-14864/"
+  },
+  {
+   "t": "Scythe",
+   "c": "Scythe",
+   "l": "EN",
+   "p": "1–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/scythe-4441/"
+  },
+  {
+   "t": "Scythe:",
+   "c": "Scythe: Nová setkání",
+   "l": "CZ",
+   "p": "1–7",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/scythe-nova-setkani-8483/"
+  },
+  {
+   "t": "Scythe: Invaders from Afar",
+   "c": "Scythe: Invaze z dálek",
+   "l": "EN",
+   "p": "1–7",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/scythe-invaze-z-dalek-5939/"
+  },
+  {
+   "t": "Scythe: The Wind Gambit",
+   "c": "Scythe: Titáni Nebes",
+   "l": "EN",
+   "p": "1–7",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/scythe-titani-nebes-6835/"
+  },
+  {
+   "t": "Sea Salt & Paper",
+   "c": "Papírové moře",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/papirove-more-14005/"
+  },
+  {
+   "t": "Sea Salt & Paper",
+   "c": "Papírové moře: Příliv",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/papirove-more-priliv-15168/"
+  },
+  {
+   "t": "Sequence",
+   "c": "Sequence",
+   "l": "EN",
+   "p": "2–12",
+   "a": "7+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/sequence-2173/"
+  },
+  {
+   "t": "SETI: Search for Extraterrestrial Intelligence",
+   "c": "SETI: Pátrání po mimozemské inteligenci",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/seti-patrani-po-mimozemske-inteligenci-16171/"
+  },
+  {
+   "t": "Settlers of Catan",
+   "c": "Catan: Osadníci z Katanu",
+   "l": "CZ",
+   "p": "3–4",
+   "a": "10+",
+   "n": "i jako kompaktni verze",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/osadnici-z-katanu-6/"
+  },
+  {
+   "t": "Seven Dragons",
+   "c": "Sedm draků",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "6+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/sedm-draku-2200/"
+  },
+  {
+   "t": "Shadow master",
+   "c": "Shadow master",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/shadow-master-6467/"
+  },
+  {
+   "t": "Shards of Infinity",
+   "c": "Úlomky nekonečna",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/ulomky-nekonecna-8012/"
+  },
+  {
+   "t": "Sherlock Holmes vs. Moriarty",
+   "c": "Sherlock Holmes vs. Moriarty",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/sherlock-holmes-vs-moriarty-14483/"
+  },
+  {
+   "t": "Sherlock Holmes: The Challenge Trilogy",
+   "c": "Sherlock Holmes: Trojitá výzva",
+   "l": "CZ",
+   "p": "1–8",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/sherlock-holmes-trojita-vyzva-13009/"
+  },
+  {
+   "t": "Shipyard (2nd edition)",
+   "c": "Loděnice",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/lodenice-druhe-vydani-15700/"
+  },
+  {
+   "t": "Shuffle Heroes",
+   "c": "Shuffle Heroes",
+   "l": "EN",
+   "p": "2",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/shuffle-heroes-4906/"
+  },
+  {
+   "t": "Sierra West",
+   "c": "Sierra West",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/sierra-west-9467/"
+  },
+  {
+   "t": "Skull King",
+   "c": "Skull King: Král lebek",
+   "l": "CZ",
+   "p": "2–8",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/skull-king-kral-lebek-3955/"
+  },
+  {
+   "t": "Sleeping Gods",
+   "c": "Spici bohove",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/spici-bohove-9161/"
+  },
+  {
+   "t": "Small World of Warcraft",
+   "c": "Small World of Warcraft",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/small-world-of-warcraft-10359/"
+  },
+  {
+   "t": "Smart 10",
+   "c": "Desítka",
+   "l": "CZ",
+   "p": "2–8",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/desitka-8413/"
+  },
+  {
+   "t": "Smash Up",
+   "c": "Hustá mela",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/husta-mela-2762/"
+  },
+  {
+   "t": "Smash Up: Sheep",
+   "c": "Hustá mela: Ovce",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/husta-mela-ovce-13429/"
+  },
+  {
+   "t": "So Clover!",
+   "c": "Čtyřmi slovy!",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/ctyrmi-slovy-12322/"
+  },
+  {
+   "t": "Sobek: 2 Players",
+   "c": "Sobek",
+   "l": "CZ",
+   "p": "2",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/sobek-pro-2-hrace-11782/"
+  },
+  {
+   "t": "Sorcerer",
+   "c": "Sorcerer",
+   "l": "EN",
+   "p": "2–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/sorcerer-4732/"
+  },
+  {
+   "t": "Soul Raiders",
+   "c": "Soul Raiders",
+   "l": "EN",
+   "p": "1–4",
+   "a": "13+",
+   "n": "Kickstarter",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/soul-raiders-12047/"
+  },
+  {
+   "t": "Spellbook",
+   "c": "Kniha kouzel",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kniha-kouzel-14993/"
+  },
+  {
+   "t": "Splendor",
+   "c": "Splendor",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/splendor-3957/"
+  },
+  {
+   "t": "Splito",
+   "c": "Splito",
+   "l": "CZ",
+   "p": "3–8",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/splito-13571/"
+  },
+  {
+   "t": "Spooky castle",
+   "c": "Spooky castle",
+   "l": "EN",
+   "p": "2–4",
+   "a": "6+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/spooky-castle-6848/"
+  },
+  {
+   "t": "Sprawlopolis",
+   "c": "Velkoměsto",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/velkomesto-rozsirene-vydani-14366/"
+  },
+  {
+   "t": "Star wars: The deckbuilding game",
+   "c": "Star wars: The deckbuilding game",
+   "l": "CZ",
+   "p": "2",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/star-wars-the-deckbuilding-game-14075/"
+  },
+  {
+   "t": "Starship Captains",
+   "c": "Hvězdní kapitáni",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "12+",
+   "n": "Zajic 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/hvezdni-kapitani-13363/"
+  },
+  {
+   "t": "Starship Interstellar",
+   "c": "Vesmírná loď Interstellar",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vesmirna-lod-interstellar-15015/"
+  },
+  {
+   "t": "Starship Interstellar: Anti Matter",
+   "c": "Vesmírná loď Interstellar: Anti Matter",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vesmirna-lod-interstellar-anti-matter-16845/"
+  },
+  {
+   "t": "Starship Interstellar: Danger from Kuiper",
+   "c": "Vesmírná loď Interstellar: Danger from Kuiper",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vesmirna-lod-interstellar-danger-from-kuiper-16813/"
+  },
+  {
+   "t": "Starship Interstellar: Halley's Comet",
+   "c": "Vesmírná loď Interstellar: Halleys Comet",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/starship-interstellar-halley-s-comet-16853/"
+  },
+  {
+   "t": "Story Cubes",
+   "c": "Story Cubes",
+   "l": "EN",
+   "p": "2–20",
+   "a": "6+",
+   "n": "Batman, Fantasia, Voyages",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pribehy-z-kostek-1839/"
+  },
+  {
+   "t": "Stroganov",
+   "c": "Stroganov",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/stroganov-11383/"
+  },
+  {
+   "t": "Subastral",
+   "c": "Pod hvězdami",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pod-hvezdami-12242/"
+  },
+  {
+   "t": "Super-Vampire",
+   "c": "Super-Vampire",
+   "l": "EN",
+   "p": "2–4",
+   "a": "6+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/super-vampires-7410/"
+  },
+  {
+   "t": "Sushi Go!",
+   "c": "Sushi Go!",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/sushi-go-4533/"
+  },
+  {
+   "t": "T.I.M.E Stories",
+   "c": "T.I.M.E Stories",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/t-i-m-e-stories-5385/"
+  },
+  {
+   "t": "Tabannusi: Builders of Ur",
+   "c": "Tabannusi: Builders of Ur",
+   "l": "EN",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tabannusi-builders-of-ur-12418/"
+  },
+  {
+   "t": "Taco Cat Goat Cheese Pizza",
+   "c": "Taco, kočka, koza, sýr, pizza",
+   "l": "EN",
+   "p": "2–8",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/taco-kocka-koza-syr-pizza-10259/"
+  },
+  {
+   "t": "Taco Cat Goat Cheese Pizza: On The Flip Side",
+   "c": "Taco, kočka, koza, sýr, pizza: na odvrácené straně",
+   "l": "CZ",
+   "p": "2–8",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/taco-kocka-koza-syr-pizza-na-odvracene-strane-13142/"
+  },
+  {
+   "t": "Tainted Grail: The Fall of Avalon",
+   "c": "Tainted Grail: Pád Avalonu",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tainted-grail-pad-avalonu-8774/"
+  },
+  {
+   "t": "Takenokolor",
+   "c": "Takenokolor",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "6+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/takenokolor-16243/"
+  },
+  {
+   "t": "Tales of Glory",
+   "c": "Stezky slávy",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/stezky-slavy-11200/"
+  },
+  {
+   "t": "Talisman: Harry Potter",
+   "c": "Talisman: Harry Potter",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/talisman-harry-potter-12952/"
+  },
+  {
+   "t": "Tank Duel: Enemy in the Crosshairs",
+   "c": "Tankový duel: Nepřítel na dostřel",
+   "l": "CZ",
+   "p": "1–8",
+   "a": "12+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tankovy-duel-nepritel-na-dostrel-9707/"
+  },
+  {
+   "t": "Tapestry",
+   "c": "Tapestry",
+   "l": "EN",
+   "p": "1–5",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tapestry-hra-o-vzestupu-civilizaci-9451/"
+  },
+  {
+   "t": "Tapestry: Plans & Ploys",
+   "c": "Tapestry: Plans & Ploys",
+   "l": "EN",
+   "p": "1–5",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tapestry-plans-and-ploys-10632/"
+  },
+  {
+   "t": "Tawantinsuyu: The Golden Age",
+   "c": "Tawantinsuyu: The Golden Age",
+   "l": "EN",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tawantinsuyu-the-golden-age-13525/"
+  },
+  {
+   "t": "Tawantinsuyu: The Inca Empire",
+   "c": "Tawantinsuyu: The Inca Empire",
+   "l": "EN",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tawantinsuyu-rise-inku-10694/"
+  },
+  {
+   "t": "Tekhenu: Obelisk of the Sun",
+   "c": "Tekhenu: Obelisk of the Sun",
+   "l": "EN",
+   "p": "1–4",
+   "a": "14+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tekhenu-obelisk-of-the-sun-10416/"
+  },
+  {
+   "t": "Tentacolor",
+   "c": "Duhová medúza",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "7+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/duhova-meduza-15201/"
+  },
+  {
+   "t": "Terra Futura",
+   "c": "Terra Futura",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/terra-futura-11764/"
+  },
+  {
+   "t": "Terra Pyramides",
+   "c": "Terra Pyramides",
+   "l": "EN",
+   "p": "1–4",
+   "a": "10+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/terra-pyramides-16270/"
+  },
+  {
+   "t": "Terraforming Mars",
+   "c": "Mars Teraformace",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mars-teraformace-5692/"
+  },
+  {
+   "t": "Terraforming Mars: Ares Expedition",
+   "c": "Mars Teraformace: Expedice Ares",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mars-teraformace-expedice-ares-11277/"
+  },
+  {
+   "t": "Terraforming Mars: Hellas & Elysium",
+   "c": "Mars Teraformace: Hellas & Elysium",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mars-teraformace-hellas-elysium-6594/"
+  },
+  {
+   "t": "Terraforming Mars: Prelude",
+   "c": "Terraforming Mars: Předehra",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mars-teraformace-predehra-7792/"
+  },
+  {
+   "t": "Terraforming Mars: Prelude 2",
+   "c": "Terraforming Mars: Předehra 2",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mars-teraformace-predehra-2-17094/"
+  },
+  {
+   "t": "Terraforming Mars: Turmoil",
+   "c": "Terraforming Mars: Neklid",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mars-teraformace-neklid-9149/"
+  },
+  {
+   "t": "Terraforming Mars: Utopia & Cimmeria",
+   "c": "Terraforming Mars: Utopia & Cimmeria",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mars-teraformace-utopia-cimmeria-17096/"
+  },
+  {
+   "t": "Terraforming Mars: Venus Next",
+   "c": "Terraforming Mars: Venuše",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mars-teraformace-venuse-7021/"
+  },
+  {
+   "t": "Tesseract",
+   "c": "Teserakt",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/teserakt-13883/"
+  },
+  {
+   "t": "The A.R.T. Project",
+   "c": "Projekt A.R.T.: Zachraňte umění",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/projekt-a-r-t-zachrante-umeni-15185/"
+  },
+  {
+   "t": "The Base",
+   "c": "Základna",
+   "l": "CZ",
+   "p": "2",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zakladna-14954/"
+  },
+  {
+   "t": "The Big Book of Madness",
+   "c": "Velká kniha strašlivých čar",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "12+",
+   "n": "ZH aukce",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/velka-kniha-straslivych-car-4629/"
+  },
+  {
+   "t": "The Boldest",
+   "c": "The Boldest",
+   "l": "EN",
+   "p": "2–5",
+   "a": "10+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/boldest-the-8725/"
+  },
+  {
+   "t": "The Dwarf King",
+   "c": "Král trpaslíků",
+   "l": "CZ",
+   "p": "3–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kral-trpasliku-2410/"
+  },
+  {
+   "t": "The Fox in the Forest",
+   "c": "Liška podšitá",
+   "l": "EN",
+   "p": "2",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/liska-podsita-7124/"
+  },
+  {
+   "t": "The Great Wall",
+   "c": "Velká čínská zeď",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "13+",
+   "n": "vc. playmat",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/velka-cinska-zed-10135/"
+  },
+  {
+   "t": "The Guardians of Haversack",
+   "c": "The Guardians of Haversack",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/guardians-of-haversack-14513/"
+  },
+  {
+   "t": "The Hunt",
+   "c": "Štvanice",
+   "l": "CZ",
+   "p": "2",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/stvanice-14414/"
+  },
+  {
+   "t": "The Initiative",
+   "c": "Iniciativa",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/iniciativa-11242/"
+  },
+  {
+   "t": "The Lion King",
+   "c": "Lví král",
+   "l": "EN",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://boardgamegeek.com/boardgame/7327/the-lion-king",
+   "b": 7327
+  },
+  {
+   "t": "The Number",
+   "c": "Číslo",
+   "l": "CZ",
+   "p": "3–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/cislo-14738/"
+  },
+  {
+   "t": "The Palace of Alhambra",
+   "c": "Alhambra",
+   "l": "SK",
+   "p": "2–6",
+   "a": "8+",
+   "n": "revised edition",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/alhambra-15/"
+  },
+  {
+   "t": "The Palaces of Carrara",
+   "c": "Paláce Carrary",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/palace-carrary-12703/"
+  },
+  {
+   "t": "The Quacks of Quedlinburg",
+   "c": "Kvedlalové z Kvedlinburku",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kvedlalove-z-kvedlinburku-8121/"
+  },
+  {
+   "t": "The Red Cathedral",
+   "c": "Katedrála",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/katedrala-11510/"
+  },
+  {
+   "t": "The Two Heirs",
+   "c": "Dva bratři",
+   "l": "CZ",
+   "p": "1–2",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/dva-bratri-13699/"
+  },
+  {
+   "t": "The USA Game",
+   "c": "The USA Game",
+   "l": "EN"
+  },
+  {
+   "t": "The Wandering Towers",
+   "c": "Toulavé věže",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/toulave-veze-13751/"
+  },
+  {
+   "t": "The West Kingdom Tomesaga",
+   "c": "Letopisy Západního království",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/letopisy-zapadniho-kralovstvi-10112/"
+  },
+  {
+   "t": "The White Castle",
+   "c": "Bílý hrad",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/bily-hrad-14960/"
+  },
+  {
+   "t": "The White Castle: Matcha",
+   "c": "Bílý hrad: Matcha",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/bily-hrad-matcha-16406/"
+  },
+  {
+   "t": "The Wolves",
+   "c": "Vlci",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vlci-13873/"
+  },
+  {
+   "t": "This war of mine",
+   "c": "This war of mine",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "18+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/this-war-of-mine-deskova-hra-5837/"
+  },
+  {
+   "t": "Tic Tac Boum",
+   "c": "Tik Tak Bum!",
+   "l": "CZ",
+   "p": "2–10",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tik-tak-bum-1265/"
+  },
+  {
+   "t": "Ticket to Ride Legacy: Legends of the West",
+   "c": "Jízdenky, prosím! Legacy: Legendy Západu",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/jizdenky-prosim-legacy-legendy-zapadu-14903/"
+  },
+  {
+   "t": "Ticket to Ride: Europe",
+   "c": "Jízdenky prosím! Evropa",
+   "l": "EN",
+   "p": "2–5",
+   "a": "8+",
+   "n": "EN i CZ vydani",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/jizdenky-prosim-evropa-231/"
+  },
+  {
+   "t": "Ticket to Ride: First Journey",
+   "c": "Ticket to Ride: First Journey",
+   "l": "EN",
+   "p": "2–4",
+   "a": "6+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/jizdenky-prosim-junior-6054/"
+  },
+  {
+   "t": "Time of Legends: Destinies",
+   "c": "Cesty osudu",
+   "l": "CZ",
+   "p": "1–3",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/cesty-osudu-9577/"
+  },
+  {
+   "t": "TimeBomb",
+   "c": "Pekelný stroj: Moriarty vs. Sherlock",
+   "l": "CZ",
+   "p": "4–8",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pekelny-stroj-moriarty-vs-sherlock-8703/"
+  },
+  {
+   "t": "TimeLine",
+   "c": "Timeline: Česko",
+   "l": "CZ",
+   "p": "2–8",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/timeline-cesko-8185/"
+  },
+  {
+   "t": "TimeLine",
+   "c": "TimeLine: Klasik",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "8+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/timeline-klasik-10737/"
+  },
+  {
+   "t": "TimeLine",
+   "c": "TimeLine: Vynálezy",
+   "l": "CZ",
+   "p": "2–8",
+   "a": "8+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/timeline-vynalezy-10738/"
+  },
+  {
+   "t": "Timeline Twist",
+   "c": "Kdy se to stalo?",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kdy-se-to-stalo-14934/"
+  },
+  {
+   "t": "Timeline Twist: Pop Culture Edition",
+   "c": "Kdy se to stalo? Popkultura",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kdy-se-to-stalo-popkultura-14935/"
+  },
+  {
+   "t": "Tindaya",
+   "c": "Tindaya",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "13+",
+   "n": "vc. setu miniatur",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tindaya-13053/"
+  },
+  {
+   "t": "Tiny Epic Game: Defenders",
+   "c": "Tiny Epic Game: Defenders",
+   "l": "EN",
+   "p": "1–4",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tiny-epic-defenders-5944/"
+  },
+  {
+   "t": "Tiny Epic Game: Defenders the dark war",
+   "c": "Tiny Epic Game: Defenders the dark war",
+   "l": "EN",
+   "p": "1–4",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tiny-epic-defenders-the-dark-war-9194/"
+  },
+  {
+   "t": "Tiny Epic Game: Dinosaurs",
+   "c": "Tiny Epic Game: Dinosaurs",
+   "l": "EN",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tiny-epic-dinosaurs-9608/"
+  },
+  {
+   "t": "Tiny Epic Game: Kingdoms",
+   "c": "Tiny Epic Game: Kingdoms",
+   "l": "EN",
+   "p": "2–5",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mala-velka-kralovstvi-3952/"
+  },
+  {
+   "t": "Tiny Epic Game: Mechs",
+   "c": "Tiny Epic Game: Mechs",
+   "l": "EN",
+   "p": "2–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tiny-epic-mechs-8326/"
+  },
+  {
+   "t": "Tiny Epic Game: Pirates",
+   "c": "Tiny Epic Game: Pirates",
+   "l": "EN",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tiny-epic-pirates-10381/"
+  },
+  {
+   "t": "Tiny Epic Game: Pirates curse of Amdiak",
+   "c": "Tiny Epic Game: Pirates curse of Amdiak",
+   "l": "EN",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tiny-epic-pirates-curse-of-amdiak-11742/"
+  },
+  {
+   "t": "Tiny Epic Game: Tactics",
+   "c": "Tiny Epic Game: Tactics",
+   "l": "EN",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tiny-epic-tactics-9012/"
+  },
+  {
+   "t": "Tiny Epic Game: Tactics map expansion",
+   "c": "Tiny Epic Game: Tactics map expansion",
+   "l": "EN",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tiny-epic-tactics-9012/"
+  },
+  {
+   "t": "Tiny Epic Game: Zombies",
+   "c": "Tiny Epic Game: Zombies",
+   "l": "EN",
+   "p": "1–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/male-velke-zombie-7641/"
+  },
+  {
+   "t": "Tiny Towns",
+   "c": "Městečka na dlani",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mestecka-na-dlani-9206/"
+  },
+  {
+   "t": "Tiny Towns: Tiny Trees",
+   "c": "Městečka na dlani: Památný strom",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/mestecka-na-dlani-pamatny-strom-11278/"
+  },
+  {
+   "t": "Top Gun: Strategy Game",
+   "c": "Top Gun: Strategy Game",
+   "l": "EN",
+   "p": "2–4",
+   "a": "10+",
+   "u": "https://boardgamegeek.com/boardgame/294348/top-gun-strategy-game",
+   "b": 294348
+  },
+  {
+   "t": "Tortuga",
+   "c": "Tortuga",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://boardgamegeek.com/boardgame/153939/tortuga",
+   "b": 153939
+  },
+  {
+   "t": "Trails: A parks game",
+   "c": "Parky: Na cestách",
+   "l": "EN",
+   "p": "2–4",
+   "a": "10+",
+   "n": "EN i CZ vydani",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/parky-na-cestach-12145/"
+  },
+  {
+   "t": "Trailz",
+   "c": "Trailz",
+   "l": "EN",
+   "p": "2",
+   "a": "7+",
+   "u": "https://boardgamegeek.com/boardgame/313603/trailz",
+   "b": 313603
+  },
+  {
+   "t": "Tranquility",
+   "c": "Poklidná plavba",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/poklidna-plavba-11803/"
+  },
+  {
+   "t": "Trapwords",
+   "c": "V pasti",
+   "l": "CZ",
+   "p": "4–8",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/v-pasti-8481/"
+  },
+  {
+   "t": "Treasure Hunter",
+   "c": "Treasure Hunter",
+   "l": "EN",
+   "p": "2–6",
+   "a": "8+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/treasure-hunter-5112/"
+  },
+  {
+   "t": "Treasure Island",
+   "c": "Ostrov pokladů",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/ostrov-pokladu-8496/"
+  },
+  {
+   "t": "Treasure Rush",
+   "c": "Honba za pokladem",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "7+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/honba-za-pokladem-7541/"
+  },
+  {
+   "t": "Trolls and Princesses",
+   "c": "Jak se trollí princezny",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "12+",
+   "n": "Zajic 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/jak-se-trolli-princezny-15331/"
+  },
+  {
+   "t": "Trophies",
+   "c": "Trophies",
+   "l": "EN",
+   "p": "2-30",
+   "a": "8+",
+   "u": "https://boardgamegeek.com/boardgame/292748/trophies",
+   "b": 292748
+  },
+  {
+   "t": "Trouble game",
+   "c": "Trouble game",
+   "l": "EN",
+   "p": "2–4",
+   "a": "4+",
+   "u": "https://boardgamegeek.com/boardgame/1410/trouble",
+   "b": 1410
+  },
+  {
+   "t": "Troublez",
+   "c": "Trablíci",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "7+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/trablici-13415/"
+  },
+  {
+   "t": "Tucano",
+   "c": "Tucano",
+   "l": "EN",
+   "p": "2–4",
+   "a": "6+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tucano-11532/"
+  },
+  {
+   "t": "Turtle Bay",
+   "c": "Turtle Bay",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "6+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/turtle-bay-14426/"
+  },
+  {
+   "t": "Tzolk'in: The Mayan Calendar",
+   "c": "Tzolk'in: Mayský kalendář",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "12+",
+   "n": "Zajic 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/tzolk-in-maysky-kalendar-3080/"
+  },
+  {
+   "t": "Ubongo",
+   "c": "Ubongo (kapesní verze)",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/ubongo-na-cesty-321/"
+  },
+  {
+   "t": "UFO",
+   "c": "UFO: Únosy fascinujících objektů",
+   "l": "CZ",
+   "p": "2–7",
+   "a": "7+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/ufo-13647/"
+  },
+  {
+   "t": "Undaunted: Normandy",
+   "c": "Odhodlaní: Normandie",
+   "l": "CZ",
+   "p": "2",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/odhodlani-normandie-9382/"
+  },
+  {
+   "t": "Undaunted: North Africa",
+   "c": "Odhodlaní: Severní Afrika",
+   "l": "CZ",
+   "p": "2",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/odhodlani-severni-afrika-10220/"
+  },
+  {
+   "t": "Under Falling Skies",
+   "c": "Nebe v plamenech",
+   "l": "CZ",
+   "p": "1",
+   "a": "12+",
+   "n": "vc. promo 4 mest",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/nebe-v-plamenech-10418/"
+  },
+  {
+   "t": "Underwater Cities",
+   "c": "Podmořská města",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "n": "vc. promo Biodome",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/podmorska-mesta-7967/"
+  },
+  {
+   "t": "Underwater Cities: New Discoveries",
+   "c": "Podmořská města: Nové objevy",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/podmorska-mesta-nove-objevy-9617/"
+  },
+  {
+   "t": "Unfair",
+   "c": "Lumpark",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/lumpark-6135/"
+  },
+  {
+   "t": "Unfathomable",
+   "c": "Nevyzpytatelní",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/nevyzpytatelni-11972/"
+  },
+  {
+   "t": "Unfold Kids: Kid's Quest – Mission Cookies",
+   "c": "Superšpunti: Sušenkám na stopě",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/superspunti-susenkam-na-stope-13535/"
+  },
+  {
+   "t": "Unmatched: Beowulf vs. Little Red Riding Hood",
+   "c": "Unmatched: Beowulf vs. Little Red Riding Hood",
+   "l": "EN",
+   "p": "2",
+   "a": "9+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/unmatched-little-red-riding-hood-vs-beowulf-11774/"
+  },
+  {
+   "t": "Unmatched: Brains and Brawn",
+   "c": "Unmatched: Brains and Brawn",
+   "l": "EN",
+   "p": "2–3",
+   "a": "9+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/unmatched-brains-and-brawn-14719/"
+  },
+  {
+   "t": "Unmatched: Buffy the Vampire Slayer",
+   "c": "Unmatched: Buffy the Vampire Slayer",
+   "l": "EN",
+   "p": "2–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/unmatched-buffy-the-vampire-slayer-11587/"
+  },
+  {
+   "t": "Unmatched: Cobble & Fog",
+   "c": "Unmatched: souboj v mlze",
+   "l": "EN",
+   "p": "2–4",
+   "a": "9+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/unmatched-souboj-v-mlze-10564/"
+  },
+  {
+   "t": "Unmatched: Deadpool",
+   "c": "Unmatched: Deadpool",
+   "l": "EN",
+   "p": "2–4",
+   "a": "9+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/unmatched-deadpool-11586/"
+  },
+  {
+   "t": "Unmatched: For King and Country",
+   "c": "Unmatched: For King and Country",
+   "l": "EN",
+   "p": "2–3",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/unmatched-for-king-and-country-13981/"
+  },
+  {
+   "t": "Unmatched: Hell's Kitchen",
+   "c": "Unmatched: Hell's Kitchen",
+   "l": "EN",
+   "p": "2–3",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/unmatched-hell-s-kitchen-13274/"
+  },
+  {
+   "t": "Unmatched: InGen vs The Raptors",
+   "c": "Unmatched: InGen vs The Raptors",
+   "l": "EN",
+   "p": "2",
+   "a": "9+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/unmatched-jurassic-park-ingen-vs-raptors-10561/"
+  },
+  {
+   "t": "Unmatched: Legends vol.1",
+   "c": "Unmatched: souboj legend vol.1",
+   "l": "EN",
+   "p": "2–4",
+   "a": "9+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/unmatched-souboj-legend-9490/"
+  },
+  {
+   "t": "Unmatched: Legends vol.2",
+   "c": "Unmatched: souboj legend vol.2",
+   "l": "EN",
+   "p": "2–4",
+   "a": "9+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/unmatched-battle-of-legends-volume-two-12762/"
+  },
+  {
+   "t": "Unmatched: Park Sattler vs. T-Rex",
+   "c": "Unmatched: Park Sattler vs. T-Rex",
+   "l": "EN",
+   "p": "2",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/unmatched-jurassic-park-dr-sattler-vs-t-rex-13248/"
+  },
+  {
+   "t": "Unmatched: Redemption Row",
+   "c": "Unmatched: Redemption Row",
+   "l": "EN",
+   "p": "2–3",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/unmatched-redemption-row-13272/"
+  },
+  {
+   "t": "Unmatched: Robin Hood vs. Bigfoot",
+   "c": "Unmatched: Robin Hood vs. Bigfoot",
+   "l": "EN",
+   "p": "2",
+   "a": "9+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/unmatched-robin-hood-vs-bigfoot-10562/"
+  },
+  {
+   "t": "Unmatched: Teen Spirit",
+   "c": "Unmatched: Teen Spirit",
+   "l": "EN",
+   "p": "2–3",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/unmatched-teen-spirit-13980/"
+  },
+  {
+   "t": "Valeria: Card Kingdoms",
+   "c": "Království Valerie",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kralovstvi-valerie-karetni-hra-4745/"
+  },
+  {
+   "t": "Valeria: Card Kingdoms – Flames and Frost",
+   "c": "Království Valerie: Karetní hra - Plameny a mráz",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kralovstvi-valerie-karetni-hra-plameny-a-mraz-6760/"
+  },
+  {
+   "t": "Valley of the Kings",
+   "c": "Ve stínu pyramid",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/ve-stinu-pyramid-4010/"
+  },
+  {
+   "t": "Valley of the Vikings",
+   "c": "Valley of the Vikings",
+   "l": "EN",
+   "p": "2–4",
+   "a": "6+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/valley-of-the-vikings-9248/"
+  },
+  {
+   "t": "Vampire The Masquerade: Vendeta",
+   "c": "Vampire The Masquerade: Vendeta",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vampire-the-masquerade-vendeta-10932/"
+  },
+  {
+   "t": "Venezia 2099",
+   "c": "Venezia 2099",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/venezia-2099-4539/"
+  },
+  {
+   "t": "Verdant",
+   "c": "Pokojovky",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pokojovky-12393/"
+  },
+  {
+   "t": "Vienna",
+   "c": "Vienna",
+   "l": "EN",
+   "p": "2–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vienna-18696/"
+  },
+  {
+   "t": "Villainous: Despicable Plots",
+   "c": "Villainous: Despicable Plots",
+   "l": "EN",
+   "p": "2–3",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/disney-villainous-despicable-plots-11922/"
+  },
+  {
+   "t": "Villainous: Disney",
+   "c": "Villainous: Disney",
+   "l": "EN",
+   "p": "2–3",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/disney-villainous-bigger-and-badder-12910/"
+  },
+  {
+   "t": "Villainous: Marvel",
+   "c": "Villainous: Marvel",
+   "l": "EN",
+   "p": "2–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/marvel-villainous-infinite-power-12738/"
+  },
+  {
+   "t": "Villainous: Mischief & Malice",
+   "c": "Villainous: Mischief & Malice",
+   "l": "EN",
+   "p": "2–3",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/marvel-villainous-mischief-malice-12911/"
+  },
+  {
+   "t": "Villainous: Perfectly wretched",
+   "c": "Villainous: Perfectly wretched",
+   "l": "EN",
+   "p": "2–3",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/disney-villainous-perfectly-wretched-10011/"
+  },
+  {
+   "t": "Virtu",
+   "c": "Virtù: Umění vládnout",
+   "l": "CZ",
+   "p": "2–5",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/virtu-umeni-vladnout-14250/"
+  },
+  {
+   "t": "Viscounts of the West Kingdom",
+   "c": "Vikomti Západního království",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vikomti-zapadniho-kralovstvi-10101/"
+  },
+  {
+   "t": "Viscounts of the West Kingdom: Gates of Gold",
+   "c": "Vikomti Západního království: brány bohatství",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vikomti-zapadniho-kralovstvi-brany-bohatstvi-12448/"
+  },
+  {
+   "t": "Viscounts of the West Kingdom: Keeper of Keys",
+   "c": "Vikomti Západního království: královský klíčník",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vikomti-zapadniho-kralovstvi-kralovsky-klicnik-12449/"
+  },
+  {
+   "t": "Viticulture: Essential Edition",
+   "c": "Vinohrad",
+   "l": "EN",
+   "p": "1–6",
+   "a": "13+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vinohrad-5949/"
+  },
+  {
+   "t": "Viticulture: Tuscany Essential Edition",
+   "c": "Vinohrad: Toskánsko rozšíření",
+   "l": "EN",
+   "p": "1–6",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vinohrad-toskansko-6577/"
+  },
+  {
+   "t": "Warp's Edge",
+   "c": "Maximální warp",
+   "l": "CZ",
+   "p": "1",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/maximalni-warp-11552/"
+  },
+  {
+   "t": "Watergate",
+   "c": "Watergate",
+   "l": "EN",
+   "p": "2",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/watergate-9468/"
+  },
+  {
+   "t": "Wayfarers of the South Tigris",
+   "c": "Cestovatelé Jižního Tigridu",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/cestovatele-jizniho-tigridu-12509/"
+  },
+  {
+   "t": "Welcome to the Moon",
+   "c": "Vítejte na měsíci",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vitejte-na-mesici-12260/"
+  },
+  {
+   "t": "Welcome to...",
+   "c": "Vítejte ve svém vysněném domově",
+   "l": "CZ",
+   "p": "1-100",
+   "a": "10+",
+   "n": "Bodoobchod",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vitejte-ve-svem-vysnenem-domove-8073/"
+  },
+  {
+   "t": "Western Legends",
+   "c": "Legendy Západu",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/legendy-zapadu-7605/"
+  },
+  {
+   "t": "Whistle Mountain",
+   "c": "Vzhůru do hor!",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vzhuru-do-hor-10978/"
+  },
+  {
+   "t": "Wild: Serengeti",
+   "c": "Divoká Serengeti",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "n": "Zajic 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/divoka-serengeti-12115/"
+  },
+  {
+   "t": "Wild: Serengeti - Animal Specialist",
+   "c": "Divoká Serengeti: Specialisté",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/divoka-serengeti-specialiste-13750/"
+  },
+  {
+   "t": "Windmill Valley",
+   "c": "Údolí tulipánů",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/udoli-tulipanu-16175/"
+  },
+  {
+   "t": "Witchstone",
+   "c": "Witchstone",
+   "l": "EN",
+   "p": "2–4",
+   "a": "12+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/witchstone-11759/"
+  },
+  {
+   "t": "Wizard",
+   "c": "Čaroděj",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/carodej-177/"
+  },
+  {
+   "t": "Wonder Book",
+   "c": "Čarokniha",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "10+",
+   "n": "Macka 10/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/carokniha-12243/"
+  },
+  {
+   "t": "Woodcraft",
+   "c": "Truhlaříci s.r.o",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "12+",
+   "n": "Macka 10/23",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/truhlarici-s-r-o-13364/"
+  },
+  {
+   "t": "Yahtzee",
+   "c": "Yahtzee",
+   "l": "EN",
+   "p": "2–10",
+   "a": "6+",
+   "u": "https://boardgamegeek.com/boardgame/2243/yahtzee",
+   "b": 2243
+  },
+  {
+   "t": "Yummy Yummy Monster Tummy",
+   "c": "Hladové příšerky",
+   "l": "EN",
+   "p": "2–4",
+   "a": "6+",
+   "n": "Zajic 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/hladove-priserky-13033/"
+  },
+  {
+   "t": "Zapotec",
+   "c": "Zapotec",
+   "l": "EN",
+   "p": "1–4",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zapotec-12639/"
+  },
+  {
+   "t": "Zilence",
+   "c": "Zilence",
+   "l": "EN",
+   "p": "2–4",
+   "a": "6+",
+   "n": "Macka 04/24",
+   "u": "https://boardgamegeek.com/boardgame/412159/zilence",
+   "b": 412159
+  },
+  {
+   "t": "Zombicide: Green Horde",
+   "c": "Zombicide: Zelená horda",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "14+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zombicide-zelena-horda-6946/"
+  },
+  {
+   "t": "ZOO Vadis",
+   "c": "ZOO Vadis",
+   "l": "CZ",
+   "p": "3–7",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zoo-vadis-13618/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Akce X",
+   "l": "CZ",
+   "p": "3–6",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/akce-x-4204/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Balada",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/balada-12113/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Bobří klan",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "7+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/bobri-klan-9475/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Bulánci: Speciální Jednotky",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "7+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/bulanci-specialni-jednotky-13488/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Detektivní únikovka: Sluneční ostrov - Díl 1. Bez známek života",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "16+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/detektivni-unikovka-slunecni-ostrov-dil-1-bez-znamek-zivota-15742/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Detektivní únikovka: Sluneční ostrov - Díl 2. Pod povrchem",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "16+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/detektivni-unikovka-slunecni-ostrov-dil-2-pod-povrchem-15741/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Detektivní únikovka: Sluneční ostrov - Díl 3. Poslední pouť",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "16+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/detektivni-unikovka-slunecni-ostrov-dil-3-posledni-pout-15740/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Dr. Heuréka",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "6+",
+   "n": "Macka 04/24",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/dr-heureka-5490/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "ESCAPE ROOM: Dobrodružné puzzle - Tajemství vědy",
+   "l": "CZ",
+   "p": "1–2",
+   "a": "16+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/escape-room-tajemstvi-vedy-11828/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "iKNOW",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "15+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/iknow-otazky-a-odpovedi-4114/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Jeníček a Mařenka",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "6+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/jenicek-a-marenka-12008/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Kamionem po Česku a Slovensku",
+   "l": "CZ",
+   "p": "2",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/kamionem-po-cesku-a-slovensku-8054/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Lovci pokladů",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/lovci-pokladu-1541/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Paměťovky: Fialová kosatka",
+   "l": "CZ",
+   "p": "1–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pametovky-fialova-kosatka-10262/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Paměťovky: Podezřelá husa",
+   "l": "CZ",
+   "p": "1–5",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pametovky-podezrela-husa-10261/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Párty do kapsy - Vozka",
+   "l": "CZ",
+   "p": "1–10",
+   "a": "18+",
+   "u": "https://albi.cz/party-do-kapsy-vozka/?srsltid=AfmBOorPND5TRiH5u2sw79pnDPjNhzP1AxtWKq91Fxkz0q3lvlFl0gwr"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Párty vtěrka",
+   "l": "CZ",
+   "p": "2–8",
+   "a": "18+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/party-vterka-16169/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Pivní hra",
+   "l": "CZ",
+   "p": "2–10",
+   "a": "18+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pivni-hra-5028/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Pojď si hrát",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "3+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pojd-si-hrat-857/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Prima ZOOM",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/prima-zoom-9739/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Prima ZOOM - Letem světem",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "12+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/prima-zoom-letem-svetem-15375/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Rodinná Trefa",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/rodinna-trefa-13242/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Rychlé šípy - Duel",
+   "l": "CZ",
+   "p": "2",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/rychle-sipy-duel-14403/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Savci pidikarty",
+   "l": "CZ",
+   "p": "2–8",
+   "a": "7+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/pidikarty-savci-14751/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Velká výhra",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "10+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/velka-vyhra-6143/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Vražda k večeři: Opona padla",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "15+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vrazda-k-veceri-opona-padla-15705/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Vražda k večeři: Smrtící hřích",
+   "l": "CZ",
+   "p": "1–6",
+   "a": "15+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/vrazda-k-veceri-smrtici-hrich-15706/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Z pohádky do pohádky",
+   "l": "CZ",
+   "p": "2–6",
+   "a": "6+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/z-pohadky-do-pohadky-858/"
+  },
+  {
+   "t": "zzz: czech only",
+   "c": "Zinga",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "8+",
+   "u": "https://www.zatrolene-hry.cz/spolecenska-hra/zinga-15013/"
+  }
+ ],
+ "wishlist": [
+  {
+   "t": "Unmatched: Bruce Lee",
+   "c": "Unmatched: Bruce Lee"
+  },
+  {
+   "t": "World Wonders",
+   "c": "Monumenty věků",
+   "l": "CZ"
+  },
+  {
+   "t": "Lords of Hellas",
+   "c": "Lords of Hellas",
+   "l": "CZ"
+  },
+  {
+   "t": "Pagan",
+   "c": "Kacíř",
+   "l": "CZ"
+  },
+  {
+   "t": "Too many bones",
+   "c": "Kosti jsou vrženy",
+   "l": "CZ"
+  },
+  {
+   "t": "Unconscious Mind",
+   "c": "Cesta do nevědomí",
+   "l": "CZ"
+  },
+  {
+   "t": "Inferno",
+   "c": "Inferno",
+   "l": "CZ"
+  },
+  {
+   "t": "Dune: War for Arrakis",
+   "c": "Duna: Válka o Arrakis",
+   "l": "CZ"
+  },
+  {
+   "t": "Root",
+   "c": "Root",
+   "l": "CZ"
+  },
+  {
+   "t": "Food Chain Magnate",
+   "c": "Králové rychlého občerstvení",
+   "l": "CZ"
+  },
+  {
+   "t": "ISS Vanguard",
+   "c": "ISS Vanguard",
+   "l": "CZ"
+  },
+  {
+   "t": "Stationfall",
+   "c": "Zkáza na orbitě",
+   "l": "CZ"
+  },
+  {
+   "t": "Dead of winter",
+   "c": "Zima mrtvych"
+  },
+  {
+   "t": "Castles of Burgundy: Special Edition"
+  },
+  {
+   "t": "Eclipse: Second Dawn"
+  }
+ ]
+}
