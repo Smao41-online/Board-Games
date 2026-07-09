@@ -681,6 +681,24 @@ function missionFail(){
   console.error('[Board Game Galaxy] BGG sync failed. Endpoint errors:',JSON.parse(JSON.stringify(epErr)));
 }
 
+/* ============ pre-baked BGG data ============
+   data/bgg.json is generated server-side by GitHub Actions and served
+   same-origin on the hosted site — no CORS, no relays, instant. */
+let bakedLoaded=false;
+async function loadBaked(){
+  if(bakedLoaded)return;
+  bakedLoaded=true;
+  try{
+    const res=await fetch('data/bgg.json',{cache:'no-cache'});
+    if(!res.ok)return;
+    const baked=await res.json();
+    if(baked.ids)for(const k in baked.ids)if(idMap[k]===undefined)idMap[k]=baked.ids[k];
+    if(baked.things)for(const k in baked.things)if(!things[k])things[k]=baked.things[k];
+    if(baked.zh)for(const k in baked.zh)if(zhMap[k]===undefined)zhMap[k]=baked.zh[k];
+    refreshView(true);
+  }catch(e){/* local file or data not published yet — the relay sync takes over */}
+}
+
 /* ================= enrichment orchestrator ================= */
 let enrichRunning=false,enrichAgain=false;
 async function enrich(){
@@ -693,6 +711,7 @@ async function enrich(){
   }
 }
 async function enrichCore(){
+  await loadBaked();
   const all=[...GAMES.map(g=>({title:g.t,czech:g.c,u:g.u})),...WISHLIST.map(g=>({title:g.t,czech:g.c,u:g.u}))];
   const targets=new Map();
   for(const e of all){const k=norm(e.title);if(k && !targets.has(k))targets.set(k,{key:k,...e});}

@@ -1,0 +1,38 @@
+name: Refresh BGG data
+
+# Fetches BoardGameGeek details for every game server-side (no CORS limits)
+# and commits data/bgg.json. The push then triggers the Pages deploy, so the
+# hosted database always has the data baked in.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 4 * * 1'   # weekly, Monday 04:00 UTC
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bgg-data
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/board-game-database-solar-9avghh
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/fetch_bgg.mjs
+      - name: Commit refreshed data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/bgg.json
+          git diff --cached --quiet || git commit -m "Refresh BGG data"
+          git pull --rebase origin claude/board-game-database-solar-9avghh || true
+          git push
