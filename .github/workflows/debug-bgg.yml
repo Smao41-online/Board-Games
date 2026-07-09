@@ -18,31 +18,11 @@ jobs:
             echo "--- body (first 500) ---"
             head -c 500 /tmp/body; echo; echo
           }
-          probe "https://boardgamegeek.com/search/boardgame?q=ark%20nova&showcount=10" "Mozilla/5.0"
-          probe "https://api.geekdo.com/api/geeksearch?query=ark%20nova&objecttype=thing&nosession=1" "Mozilla/5.0"
-          probe "https://api.geekdo.com/api/dynamicinfo?objectid=13&objecttype=thing" "Mozilla/5.0"
-          probe "https://api.geekdo.com/api/geekitem/dynamicinfo?objectid=13&objecttype=thing" "Mozilla/5.0"
-          echo "=== geekitems full field scan"
-          curl -sS -m 20 "https://api.geekdo.com/api/geekitems?objectid=342942&objecttype=thing&nosession=1" -H "User-Agent: Mozilla/5.0" -o /tmp/gi.json || true
-          echo "--- geekitems summary ---"
-          jq '.item | {name, yearpublished, minplayers, maxplayers, minplaytime, maxplaytime, minage, imageurl}' /tmp/gi.json || head -c 300 /tmp/gi.json
-          echo "--- links keys ---";      jq -c '.item.links | keys' /tmp/gi.json || true
-          echo "--- categories ---";      jq -c '[.item.links.boardgamecategory[]?.name]' /tmp/gi.json || true
-          echo "--- mechanics ---";       jq -c '[.item.links.boardgamemechanic[]?.name][:4]' /tmp/gi.json || true
-          echo "--- designers ---";       jq -c '[.item.links.boardgamedesigner[]?.name]' /tmp/gi.json || true
-          echo "--- images keys ---";     jq -c '.item.images | keys' /tmp/gi.json || true
-          echo "--- desc ---";            jq -r '.item.description[0:150]' /tmp/gi.json || true
-
-          import json
-          d=json.load(open('/tmp/gi.json'))
-          it=d.get('item',{})
-          print('top keys:',sorted(it.keys()))
-          print('name:',it.get('name'),'| year:',it.get('yearpublished'),'| players:',it.get('minplayers'),it.get('maxplayers'),'| time:',it.get('minplaytime'),it.get('maxplaytime'),'| age:',it.get('minage'))
-          print('imageurl:',str(it.get('imageurl'))[:100])
-          print('images keys:',sorted((it.get('images') or {}).keys()))
-          links=it.get('links') or {}
-          print('links keys:',sorted(links.keys()))
-          for k in ('boardgamecategory','boardgamemechanic','boardgamedesigner'):
-              print(k,':',[x.get('name') for x in links.get(k,[])][:5])
-          print('desc:',str(it.get('description'))[:120])
-          PYEOF
+          probe "https://api.geekdo.com/api/geeksearch?q=ark%20nova&objecttype=thing" "Mozilla/5.0"
+          probe "https://api.geekdo.com/api/search?q=ark%20nova&objecttype=thing" "Mozilla/5.0"
+          probe "https://api.geekdo.com/api/searchsuggestions?q=ark%20nova" "Mozilla/5.0"
+          probe "https://api.geekdo.com/api/geeksearch?query=ark%20nova&objecttype=thing&showcount=10" "Mozilla/5.0"
+          probe "https://api.geekdo.com/api/typeahead?q=ark%20nova" "Mozilla/5.0"
+          echo "=== dynamicinfo full body"
+          curl -sS -m 20 "https://api.geekdo.com/api/dynamicinfo?objectid=342942&objecttype=thing" -H "User-Agent: Mozilla/5.0" | jq -c '.item | keys' || true
+          curl -sS -m 20 "https://api.geekdo.com/api/dynamicinfo?objectid=342942&objecttype=thing" -H "User-Agent: Mozilla/5.0" | jq -c '{rank: .item.rankinfo[0], stats: .item.stats}' || true
