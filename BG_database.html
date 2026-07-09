@@ -479,86 +479,42 @@ let things=lsGet(LS_THINGS);  // bggId -> details
 for(const g of GAMES) if(g.b && !idMap[norm(g.t)]) idMap[norm(g.t)]=g.b;
 
 /* ================= BGG API ================= */
-/* The BGG XML API sends no CORS headers, so direct browser calls are blocked.
-   Try direct first (in case that ever changes), then public CORS relays. */
-const BGG_BASE='https://boardgamegeek.com/xmlapi2';
-const ENDPOINTS=[
-  {name:'BGG direct',     url:p=>BGG_BASE+p,                                                                    unwrap:t=>t},
-  {name:'allorigins',     url:p=>'https://api.allorigins.win/raw?url='+encodeURIComponent(BGG_BASE+p),          unwrap:t=>t},
-  {name:'codetabs',       url:p=>'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(BGG_BASE+p),     unwrap:t=>t},
-  {name:'cf-worker',      url:p=>'https://test.cors.workers.dev/?'+BGG_BASE+p,                                  unwrap:t=>t},
-  {name:'allorigins-json',url:p=>'https://api.allorigins.win/get?url='+encodeURIComponent(BGG_BASE+p),
-     unwrap:t=>{try{return JSON.parse(t).contents||''}catch(e){return ''}}},
-  {name:'cors.lol',       url:p=>'https://api.cors.lol/?url='+encodeURIComponent(BGG_BASE+p),                   unwrap:t=>t},
-  {name:'corsproxy.io',   url:p=>'https://corsproxy.io/?url='+encodeURIComponent(BGG_BASE+p),                   unwrap:t=>t},
-  {name:'jina.ai',        url:p=>'https://r.jina.ai/'+BGG_BASE+p,
-     unwrap:t=>{const i=t.indexOf('<items');return i>=0?t.slice(i):t;}}
-];
-/* corsproxy.io rejects locally-opened files (Origin null) but works from real websites —
-   when this page is hosted (e.g. GitHub Pages), promote it right behind the direct attempt */
-if(location.protocol==='https:'){
-  const i=ENDPOINTS.findIndex(E=>E.name==='corsproxy.io');
-  const [cp]=ENDPOINTS.splice(i,1);
-  ENDPOINTS.splice(1,0,cp);
-}
-let epIdx=0, consecFails=0, offline=false, pauses=0;
-const epErr={};   /* endpoint name -> last error, shown in the failure report */
-const FAIL='__fail__';
-async function fetchXml(path){
-  let ep=epIdx;   /* per-request endpoint cursor: concurrent failures must not poison each other */
-  for(let a=0;a<10;a++){
-    if(offline)return FAIL;
-    const E=ENDPOINTS[ep];
+/* BGG's classic XML API now requires an API token (HTTP 401 without one), so
+   relays are pointless. The site's own JSON API on api.geekdo.com is open AND
+   sends Access-Control-Allow-Origin: *, so the browser can call it directly. */
+const GAPI='https://api.geekdo.com';
+let consecFails=0, offline=false, lastErr='';
+async function getJson(url){
+  for(let a=0;a<4;a++){
+    if(offline)return null;
     const ctrl=new AbortController();
-    /* escalating patience: 12 s on the first tries, up to 30 s later — slow connections need it */
-    const tmo=12000+6000*Math.min(a,3);
-    const kill=setTimeout(()=>ctrl.abort(),tmo);
+    const kill=setTimeout(()=>ctrl.abort(),15000+5000*a);
     try{
-      const res=await fetch(E.url(path),{signal:ctrl.signal});
+      const res=await fetch(url,{signal:ctrl.signal});
       clearTimeout(kill);
-      if(res.status===200){
-        const doc=new DOMParser().parseFromString(E.unwrap(await res.text()),'text/xml');
-        const root=doc.documentElement;
-        if(!root||doc.getElementsByTagName('parsererror').length)throw new Error('bad XML');
-        if(!/^(items|item|errors|error|message)$/i.test(root.nodeName))throw new Error('unexpected payload');
-        epIdx=ep;consecFails=0;delete epErr[E.name];   /* remember the endpoint that works */
-        return doc;
-      }
-      if(res.status===202||res.status===429){
-        epErr[E.name]='HTTP '+res.status;
-        if(a>=2)ep=(ep+1)%ENDPOINTS.length;   /* rate-limited? give another relay a chance */
-        await sleep(1200*Math.pow(1.5,Math.min(a,5)));continue;
-      }
-      throw new Error('HTTP '+res.status);
+      if(res.status===200){consecFails=0;return await res.json();}
+      if(res.status===429||res.status>=500){lastErr='HTTP '+res.status;await sleep(1200*(a+1));continue;}
+      lastErr='HTTP '+res.status;
+      return {__http:res.status};
     }catch(e){
       clearTimeout(kill);
-      epErr[E.name]=(e&&e.name==='AbortError')?`timeout (${(tmo/1000)|0}s)`:((e&&e.message)?e.message:'error');
-      ep=(ep+1)%ENDPOINTS.length;   /* rotate: direct → relay 1 → relay 2 → … */
-      await sleep(350*Math.min(a+1,3));
+      lastErr=(e&&e.name==='AbortError')?'timeout':((e&&e.message)||'network error');
+      await sleep(700*(a+1));
     }
   }
-  /* whole request failed on every endpoint — count REQUESTS, not attempts, so a single
-     pathological game can't trip the breaker while everything else still works */
-  if(++consecFails>=10){
-    if(enrichRunning&&pauses<3){
-      pauses++;consecFails=0;
-      missionShow(`📡 Relays not responding — pausing 60 s, then continuing (attempt ${pauses}/3)…`,null);
-      await sleep(60000);
-    }else{
-      offline=true;missionFail();
-    }
-  }
-  return FAIL;
+  if(++consecFails>=8){offline=true;missionFail();}
+  return null; /* transport failure — caller must NOT cache "not found" */
 }
-async function searchBGG(q,exact){
-  const doc=await fetchXml(`/search?query=${encodeURIComponent(q)}&type=boardgame,boardgameexpansion${exact?'&exact=1':''}`);
-  if(doc===FAIL||!doc)return null; /* transport failure — caller must NOT cache "not found" */
-  return [...doc.querySelectorAll('item')].map(it=>({
-    id:+it.getAttribute('id'),
-    type:it.getAttribute('type'),
-    name:it.querySelector('name')?.getAttribute('value')||'',
-    year:+(it.querySelector('yearpublished')?.getAttribute('value')||0)
-  }));
+async function searchBGG(q){
+  const d=await getJson(`${GAPI}/search/boardgame?q=${encodeURIComponent(q)}&showcount=20`);
+  if(!d||d.__http)return null;
+  const items=Array.isArray(d)?d:(d.items||[]);
+  return items.map(it=>({
+    id:+(it.objectid||it.id||0),
+    type:it.subtype||it.objecttype||'boardgame',
+    name:typeof it.name==='object'?(it.name?.name||''):String(it.name||''),
+    year:+(it.yearpublished||0)
+  })).filter(x=>x.id);
 }
 function pickCandidate(cands,query){
   const nq=norm(query);
@@ -580,8 +536,7 @@ function pickCandidate(cands,query){
   return bestScore>=1.5?best:null;
 }
 async function resolveId(entry){
-  // entry: {key, title, czech, u} — one fuzzy search per variant; exact matches win via scoring,
-  // so we skip the separate exact=1 round-trips (≈40% fewer requests, matters on slow links)
+  // entry: {key, title, czech, u}
   const tries=[entry.title];
   const short=entry.title.split(/[:(–]/)[0].trim();
   if(short && norm(short)!==norm(entry.title) && short.length>3)tries.push(short);
@@ -589,7 +544,7 @@ async function resolveId(entry){
   let sawFailure=false;
   for(const q of tries){
     if(offline)return null;
-    const cands=await searchBGG(q,0);
+    const cands=await searchBGG(q);
     if(cands===null){sawFailure=true;continue;}
     const hit=pickCandidate(cands,q);
     if(hit)return hit.id;
@@ -597,31 +552,40 @@ async function resolveId(entry){
   }
   return sawFailure?null:0; /* null = temporary failure, retried on next visit; 0 = truly not found */
 }
-function parseThing(it){
-  const attr=(sel,a='value')=>it.querySelector(sel)?.getAttribute(a);
-  const links=t=>[...it.querySelectorAll(`link[type="${t}"]`)].map(l=>l.getAttribute('value'));
-  const desc=(it.querySelector('description')?.textContent||'')
-    .replace(/&#10;/g,'\n').replace(/&mdash;/g,'—').replace(/&ndash;/g,'–')
-    .replace(/&quot;/g,'"').replace(/&amp;/g,'&').replace(/&#(\d+);/g,(_,n)=>String.fromCharCode(n));
-  let rank=null;
-  const r=it.querySelector('rank[name="boardgame"]');
-  if(r && r.getAttribute('value')!=='Not Ranked')rank=+r.getAttribute('value');
+const stripHtml=h=>new DOMParser().parseFromString(String(h||''),'text/html').body.textContent||'';
+const imUrl=x=>typeof x==='string'?x:(x&&(x.url||x.src))||null;
+async function fetchThingJson(id){
+  const gid=await getJson(`${GAPI}/api/geekitems?objectid=${id}&objecttype=thing&nosession=1`);
+  if(!gid||gid.__http||!gid.item)return null;
+  const it=gid.item;
+  let stats=null,rank=null;
+  const dyd=await getJson(`${GAPI}/api/dynamicinfo?objectid=${id}&objecttype=thing`);
+  if(dyd&&dyd.item){
+    stats=dyd.item.stats||null;
+    const r=(dyd.item.rankinfo||[])[0];
+    if(r&&/^\d+$/.test(String(r.rank)))rank=+r.rank;
+  }
+  const links=k=>((it.links||{})[k]||[]).map(x=>stripHtml(x.name)).filter(Boolean);
+  let desc=stripHtml(it.description).replace(/\s+/g,' ').trim();
+  if(desc.length>900)desc=desc.slice(0,900)+'…';
+  const num=v=>{const n=+v;return n||null;};
+  const images=it.images||{};
   return{
-    name:it.querySelector('name[type="primary"]')?.getAttribute('value'),
-    year:+(attr('yearpublished')||0)||null,
-    minP:+(attr('minplayers')||0)||null,
-    maxP:+(attr('maxplayers')||0)||null,
-    time:+(attr('playingtime')||0)||null,
-    age:+(attr('minage')||0)||null,
-    thumb:it.querySelector('thumbnail')?.textContent||null,
-    img:it.querySelector('image')?.textContent||null,
+    name:stripHtml(it.name),
+    year:num(it.yearpublished),
+    minP:num(it.minplayers),
+    maxP:num(it.maxplayers),
+    time:num(it.maxplaytime)||num(it.minplaytime),
+    age:num(it.minage),
+    thumb:imUrl(images.thumb)||imUrl(images.square200)||it.imageurl||null,
+    img:imUrl(images.previewthumb)||it.imageurl||imUrl(images.thumb)||null,
     cats:links('boardgamecategory'),
     mechs:links('boardgamemechanic').slice(0,4),
     designers:links('boardgamedesigner').slice(0,2),
-    rating:(()=>{const v=+(it.querySelector('statistics ratings average')?.getAttribute('value')||0);return v?+v.toFixed(2):null;})(),
-    weight:(()=>{const v=+(it.querySelector('statistics ratings averageweight')?.getAttribute('value')||0);return v?+v.toFixed(2):null;})(),
+    rating:stats&&stats.average?+(+stats.average).toFixed(2):null,
+    weight:stats&&stats.avgweight?+(+stats.avgweight).toFixed(2):null,
     rank,
-    desc:desc.length>900?desc.slice(0,900)+'…':desc
+    desc
   };
 }
 
@@ -671,14 +635,12 @@ function missionDone(msg){
 function missionFail(){
   clearTimeout(missionTimer);   /* stays on screen until dismissed — the report must survive */
   mission.classList.add('show');
-  const errs=ENDPOINTS.map(E=>epErr[E.name]?`${E.name}: ${epErr[E.name]}`:null).filter(Boolean).join(' · ');
-  $('mText').textContent='⚠️ Could not reach BoardGameGeek through any relay — sync paused, progress so far is saved.'
-    +(errs?` Last errors — ${errs}.`:'')
-    +' On a slow connection just hit Retry — the sync continues where it stopped.'
-    +' Tip: some relays refuse locally-opened files; hosting this page on a website (e.g. GitHub Pages) makes more of them work.';
+  $('mText').textContent='⚠️ Could not reach BoardGameGeek\u2019s data API (api.geekdo.com) — sync paused, progress so far is saved.'
+    +(lastErr?` Last error: ${lastErr}.`:'')
+    +' Check the internet connection, then hit Retry — the sync continues where it stopped.';
   $('mBar').style.width='0%';
   $('mActions').style.display='flex';
-  console.error('[Board Game Galaxy] BGG sync failed. Endpoint errors:',JSON.parse(JSON.stringify(epErr)));
+  console.error('[Board Game Galaxy] BGG sync failed. Last error:',lastErr);
 }
 
 /* ============ pre-baked BGG data ============
@@ -692,9 +654,9 @@ async function loadBaked(){
     const res=await fetch('data/bgg.json',{cache:'no-cache'});
     if(!res.ok)return;
     const baked=await res.json();
-    if(baked.ids)for(const k in baked.ids)if(idMap[k]===undefined)idMap[k]=baked.ids[k];
+    if(baked.ids)for(const k in baked.ids)if(!idMap[k])idMap[k]=baked.ids[k];
     if(baked.things)for(const k in baked.things)if(!things[k])things[k]=baked.things[k];
-    if(baked.zh)for(const k in baked.zh)if(zhMap[k]===undefined)zhMap[k]=baked.zh[k];
+    if(baked.zh)for(const k in baked.zh)if(!zhMap[k])zhMap[k]=baked.zh[k];
     refreshView(true);
   }catch(e){/* local file or data not published yet — the relay sync takes over */}
 }
@@ -740,18 +702,19 @@ async function enrichCore(){
     lsSet(LS_IDS,idMap);
   }
   if(offline)return;
-  // phase 2: fetch details in batches
+  // phase 2: fetch details (per game — the JSON API has no batch endpoint;
+  // on the hosted site the pre-baked data covers almost everything anyway)
   const needed=[...new Set(Object.values(idMap).filter(id=>id&&!things[id]))];
   if(needed.length){
-    const chunks=[];for(let i=0;i<needed.length;i+=20)chunks.push(needed.slice(i,i+20));
-    for(let i=0;i<chunks.length && !offline;i++){
-      missionShow(`Downloading star charts (details & box art)… batch ${i+1}/${chunks.length}`,0.55+(i/chunks.length)*0.45);
-      const doc=await fetchXml(`/thing?id=${chunks[i].join(',')}&stats=1`);
-      if(doc&&doc!==FAIL)for(const it of doc.querySelectorAll('item'))things[it.getAttribute('id')]=parseThing(it);
-      lsSet(LS_THINGS,things);
-      refreshView();
-      await sleep(1100);
+    for(let i=0;i<needed.length && !offline;i++){
+      missionShow(`Downloading star charts (details & box art)… ${i+1}/${needed.length}`,0.55+(i/needed.length)*0.45);
+      const t=await fetchThingJson(needed[i]);
+      if(t)things[needed[i]]=t;
+      if(i%10===9){lsSet(LS_THINGS,things);refreshView();}
+      await sleep(500);
     }
+    lsSet(LS_THINGS,things);
+    refreshView();
   }
   if(!offline){
     const pool=[...GAMES,...WISHLIST];
@@ -958,7 +921,7 @@ $('agTitle').addEventListener('input',()=>{
   if(q.length<3){$('agSugs').innerHTML='';$('agStatus').textContent='Start typing a title (3+ letters)…';return;}
   $('agStatus').textContent='🛰️ Scanning BoardGameGeek…';
   addTimer=setTimeout(async()=>{
-    const cands=await searchBGG(q,0);
+    const cands=await searchBGG(q)||[];
     if($('agTitle').value.trim()!==q)return;
     cands.sort((a,b)=>(b.type==='boardgame')-(a.type==='boardgame')||b.year-a.year);
     const top=cands.slice(0,8);
@@ -975,10 +938,9 @@ $('agSugs').addEventListener('click',async e=>{
   el.classList.add('on');
   const id=+el.dataset.id;
   $('agStatus').textContent='📡 Downloading attributes from BGG…';
-  const doc=await fetchXml(`/thing?id=${id}&stats=1`);
-  const it=(doc&&doc!==FAIL)?doc.querySelector('item'):null;
-  if(!it){$('agStatus').textContent='⚠️ Could not fetch details — try again, or add manually.';return;}
-  addSel=id;addDetails=parseThing(it);
+  const det=await fetchThingJson(id);
+  if(!det){$('agStatus').textContent='⚠️ Could not fetch details — try again, or add manually.';return;}
+  addSel=id;addDetails=det;
   const d=addDetails,hue=hueOf(d.name||'x');
   $('agPreview').innerHTML=`
     <div class="m-img" style="width:120px;height:120px;flex:0 0 auto">${d.thumb
@@ -1237,23 +1199,25 @@ $('mRetry').onclick=()=>location.reload();
 $('mHide').onclick=()=>mission.classList.remove('show');
 $('mTest').onclick=async()=>{
   const btn=$('mTest');btn.disabled=true;
+  const checks=[
+    ['baked data (same origin)', async()=>{const r=await fetch('data/bgg.json',{cache:'no-cache'});return r.ok?'✅ OK':'⚠️ HTTP '+r.status;}],
+    ['BGG JSON API (details)', async()=>{const r=await fetch(`${GAPI}/api/geekitems?objectid=13&objecttype=thing&nosession=1`);return r.ok?'✅ OK':'⚠️ HTTP '+r.status;}],
+    ['BGG JSON API (search)', async()=>{const r=await fetch(`${GAPI}/search/boardgame?q=catan&showcount=3`);return r.ok?'✅ OK':'⚠️ HTTP '+r.status;}],
+    ['BGG image CDN', async()=>new Promise(res=>{const im=new Image();
+      const to=setTimeout(()=>res('❌ timeout'),10000);
+      im.onload=()=>{clearTimeout(to);res('✅ OK');};
+      im.onerror=()=>{clearTimeout(to);res('❌ blocked');};
+      im.src='https://cf.geekdo-images.com/thumb/img/8pkbb8-Ez4Wm4t4gnhAqti9Xh_U=/fit-in/200x150/pic2419375.jpg?t='+Date.now();})]
+  ];
   const out=[];
-  for(const E of ENDPOINTS){
-    $('mText').textContent=`🩺 Testing relays… ${out.length+1}/${ENDPOINTS.length} (${E.name})`;
+  for(const [name,fn] of checks){
+    $('mText').textContent=`🩺 Testing connections… ${out.length+1}/${checks.length} (${name})`;
     const t0=Date.now();
-    try{
-      const ctrl=new AbortController();
-      const kill=setTimeout(()=>ctrl.abort(),15000);
-      const res=await fetch(E.url('/search?query=catan&type=boardgame'),{signal:ctrl.signal});
-      clearTimeout(kill);
-      const txt=E.unwrap(await res.text());
-      const ok=res.status===200&&txt.includes('<items');
-      out.push(`${E.name}: ${ok?'✅ OK':'⚠️ HTTP '+res.status} ${((Date.now()-t0)/1000).toFixed(1)}s`);
-    }catch(e){
-      out.push(`${E.name}: ❌ ${(e&&e.name==='AbortError')?'timeout':'blocked'} ${((Date.now()-t0)/1000).toFixed(1)}s`);
-    }
+    let verdict;
+    try{verdict=await fn();}catch(e){verdict='❌ '+((e&&e.name==='AbortError')?'timeout':'blocked');}
+    out.push(`${name}: ${verdict} ${((Date.now()-t0)/1000).toFixed(1)}s`);
   }
-  $('mText').textContent='🩺 Relay test — '+out.join(' · ')+'. Any ✅ means Retry will work.';
+  $('mText').textContent='🩺 Connection test — '+out.join(' · ');
   btn.disabled=false;
 };
 $('restoreRemoved').onclick=()=>{
