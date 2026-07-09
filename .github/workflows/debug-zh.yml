@@ -1,0 +1,29 @@
+name: Debug ZH access
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe zatrolene-hry
+        run: |
+          probe() {
+            echo "=== $1 (UA: ${2:0:20})"
+            curl -sSL -m 25 -D - -o /tmp/body "$1" -H "User-Agent: $2" 2>&1 | head -12 || echo "CURL FAILED"
+            echo "--- body: $(wc -c < /tmp/body) bytes; bgg link: $(grep -o 'boardgamegeek.com/[a-z]*/[0-9]*' /tmp/body | head -1); og:image: $(grep -o 'og:image' /tmp/body | head -1)"
+            echo
+          }
+          probe "https://www.zatrolene-hry.cz/spolecenska-hra/archa-nova-12398/" "BoardGameGalaxy/1.0 (personal collection database)"
+          probe "https://www.zatrolene-hry.cz/spolecenska-hra/archa-nova-12398/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15"
+          probe "https://r.jina.ai/https://www.zatrolene-hry.cz/spolecenska-hra/archa-nova-12398/" "Mozilla/5.0"
+          echo "=== node fetch behavior"
+          node -e "
+            fetch('https://www.zatrolene-hry.cz/spolecenska-hra/archa-nova-12398/',{headers:{'User-Agent':'BoardGameGalaxy/1.0 (personal collection database)'},signal:AbortSignal.timeout(20000)})
+              .then(async r=>{const t=await r.text();console.log('node fetch status:',r.status,'bytes:',t.length,'bgg:',(t.match(/boardgamegeek\.com\/[a-z]*\/[0-9]*/)||['none'])[0]);})
+              .catch(e=>console.log('node fetch error:',e.name,e.message,e.cause?String(e.cause):''));
+          "
