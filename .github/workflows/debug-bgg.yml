@@ -18,10 +18,23 @@ jobs:
             echo "--- body (first 500) ---"
             head -c 500 /tmp/body; echo; echo
           }
-          probe "https://boardgamegeek.com/xmlapi2/thing?id=13" "BoardGameGalaxy/1.0"
-          probe "https://boardgamegeek.com/xmlapi2/thing?id=13" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15"
-          probe "https://api.geekdo.com/xmlapi2/thing?id=13" "Mozilla/5.0"
-          probe "https://boardgamegeek.com/xmlapi/boardgame/13" "Mozilla/5.0"
-          probe "https://api.geekdo.com/api/geekitems?objectid=13&objecttype=thing" "Mozilla/5.0"
-          probe "https://api.allorigins.win/raw?url=https%3A%2F%2Fboardgamegeek.com%2Fxmlapi2%2Fthing%3Fid%3D13" "Mozilla/5.0"
-          probe "https://api.codetabs.com/v1/proxy?quest=https%3A%2F%2Fboardgamegeek.com%2Fxmlapi2%2Fthing%3Fid%3D13" "Mozilla/5.0"
+          probe "https://boardgamegeek.com/search/boardgame?q=ark%20nova&showcount=10" "Mozilla/5.0"
+          probe "https://api.geekdo.com/api/geeksearch?query=ark%20nova&objecttype=thing&nosession=1" "Mozilla/5.0"
+          probe "https://api.geekdo.com/api/dynamicinfo?objectid=13&objecttype=thing" "Mozilla/5.0"
+          probe "https://api.geekdo.com/api/geekitem/dynamicinfo?objectid=13&objecttype=thing" "Mozilla/5.0"
+          echo "=== geekitems full field scan"
+          curl -sS -m 20 "https://api.geekdo.com/api/geekitems?objectid=342942&objecttype=thing&nosession=1" -H "User-Agent: Mozilla/5.0" -o /tmp/gi.json || true
+          python3 - <<'PYEOF'
+          import json
+          d=json.load(open('/tmp/gi.json'))
+          it=d.get('item',{})
+          print('top keys:',sorted(it.keys()))
+          print('name:',it.get('name'),'| year:',it.get('yearpublished'),'| players:',it.get('minplayers'),it.get('maxplayers'),'| time:',it.get('minplaytime'),it.get('maxplaytime'),'| age:',it.get('minage'))
+          print('imageurl:',str(it.get('imageurl'))[:100])
+          print('images keys:',sorted((it.get('images') or {}).keys()))
+          links=it.get('links') or {}
+          print('links keys:',sorted(links.keys()))
+          for k in ('boardgamecategory','boardgamemechanic','boardgamedesigner'):
+              print(k,':',[x.get('name') for x in links.get(k,[])][:5])
+          print('desc:',str(it.get('description'))[:120])
+          PYEOF
