@@ -47,7 +47,17 @@ Games without a thumbnail (or not found on BGG) get a procedurally colored plane
 | `index.html` | Original read-only version of the database |
 | `data/games.json` | Clean JSON extract of the spreadsheet (collection + wishlist) |
 
-## Tip: host it
+## Tip: host it (recommended — fixes relay issues)
 
-Enable **GitHub Pages** for this repo (Settings → Pages → deploy from branch) and the
-database becomes a shareable website.
+A GitHub Actions workflow (`.github/workflows/pages.yml`) already deploys this repo to
+**GitHub Pages** on every push. It currently fails because Pages is unavailable on
+**private** repos under the free plan. To activate it:
+
+1. GitHub → repo **Settings → General → Danger Zone → Change visibility → Make public**
+2. GitHub → **Actions** tab → *Deploy to GitHub Pages* → **Run workflow** (or just push anything)
+3. The database is then live at
+   `https://smao41-online.github.io/Board-Games/BG_database.html`
+
+Hosting matters: some BGG relays (notably corsproxy.io) refuse requests from locally-opened
+files but work fine from a real website, so the hosted copy syncs far more reliably —
+and works from your phone.
