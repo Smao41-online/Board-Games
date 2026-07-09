@@ -1,0 +1,27 @@
+name: Debug BGG access
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe BGG endpoints
+        run: |
+          probe() {
+            echo "=== $1"
+            curl -sS -m 20 -D - -o /tmp/body "$1" -H "User-Agent: $2" || echo "CURL FAILED"
+            echo "--- body (first 500) ---"
+            head -c 500 /tmp/body; echo; echo
+          }
+          probe "https://boardgamegeek.com/xmlapi2/thing?id=13" "BoardGameGalaxy/1.0"
+          probe "https://boardgamegeek.com/xmlapi2/thing?id=13" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15"
+          probe "https://api.geekdo.com/xmlapi2/thing?id=13" "Mozilla/5.0"
+          probe "https://boardgamegeek.com/xmlapi/boardgame/13" "Mozilla/5.0"
+          probe "https://api.geekdo.com/api/geekitems?objectid=13&objecttype=thing" "Mozilla/5.0"
+          probe "https://api.allorigins.win/raw?url=https%3A%2F%2Fboardgamegeek.com%2Fxmlapi2%2Fthing%3Fid%3D13" "Mozilla/5.0"
+          probe "https://api.codetabs.com/v1/proxy?quest=https%3A%2F%2Fboardgamegeek.com%2Fxmlapi2%2Fthing%3Fid%3D13" "Mozilla/5.0"
