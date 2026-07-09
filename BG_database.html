@@ -182,7 +182,7 @@
   #mission p{font-size:12.5px;color:var(--muted);line-height:1.45}
   .bar{height:6px;border-radius:99px;background:rgba(122,140,255,.15);margin-top:10px;overflow:hidden}
   .bar i{display:block;height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,var(--teal),var(--accent));transition:width .4s}
-  .m-actions{gap:8px;margin-top:11px}
+  .m-actions{gap:8px;margin-top:11px;flex-wrap:wrap}
   .m-actions button{flex:1;background:rgba(122,140,255,.10);border:1px solid var(--border-strong);color:var(--ink);
     border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer}
   .m-actions button:hover{background:rgba(122,140,255,.2)}
@@ -340,6 +340,7 @@
   <div class="bar"><i id="mBar"></i></div>
   <div class="m-actions" id="mActions" style="display:none">
     <button id="mRetry">🔄 Retry now</button>
+    <button id="mTest">🩺 Test relays</button>
     <button id="mHide">✕ Dismiss</button>
   </div>
 </div>
@@ -489,8 +490,17 @@ const ENDPOINTS=[
   {name:'allorigins-json',url:p=>'https://api.allorigins.win/get?url='+encodeURIComponent(BGG_BASE+p),
      unwrap:t=>{try{return JSON.parse(t).contents||''}catch(e){return ''}}},
   {name:'cors.lol',       url:p=>'https://api.cors.lol/?url='+encodeURIComponent(BGG_BASE+p),                   unwrap:t=>t},
-  {name:'corsproxy.io',   url:p=>'https://corsproxy.io/?url='+encodeURIComponent(BGG_BASE+p),                   unwrap:t=>t}
+  {name:'corsproxy.io',   url:p=>'https://corsproxy.io/?url='+encodeURIComponent(BGG_BASE+p),                   unwrap:t=>t},
+  {name:'jina.ai',        url:p=>'https://r.jina.ai/'+BGG_BASE+p,
+     unwrap:t=>{const i=t.indexOf('<items');return i>=0?t.slice(i):t;}}
 ];
+/* corsproxy.io rejects locally-opened files (Origin null) but works from real websites —
+   when this page is hosted (e.g. GitHub Pages), promote it right behind the direct attempt */
+if(location.protocol==='https:'){
+  const i=ENDPOINTS.findIndex(E=>E.name==='corsproxy.io');
+  const [cp]=ENDPOINTS.splice(i,1);
+  ENDPOINTS.splice(1,0,cp);
+}
 let epIdx=0, consecFails=0, offline=false, pauses=0;
 const epErr={};   /* endpoint name -> last error, shown in the failure report */
 const FAIL='__fail__';
@@ -1206,6 +1216,27 @@ $('rescan').onclick=()=>{
 };
 $('mRetry').onclick=()=>location.reload();
 $('mHide').onclick=()=>mission.classList.remove('show');
+$('mTest').onclick=async()=>{
+  const btn=$('mTest');btn.disabled=true;
+  const out=[];
+  for(const E of ENDPOINTS){
+    $('mText').textContent=`🩺 Testing relays… ${out.length+1}/${ENDPOINTS.length} (${E.name})`;
+    const t0=Date.now();
+    try{
+      const ctrl=new AbortController();
+      const kill=setTimeout(()=>ctrl.abort(),15000);
+      const res=await fetch(E.url('/search?query=catan&type=boardgame'),{signal:ctrl.signal});
+      clearTimeout(kill);
+      const txt=E.unwrap(await res.text());
+      const ok=res.status===200&&txt.includes('<items');
+      out.push(`${E.name}: ${ok?'✅ OK':'⚠️ HTTP '+res.status} ${((Date.now()-t0)/1000).toFixed(1)}s`);
+    }catch(e){
+      out.push(`${E.name}: ❌ ${(e&&e.name==='AbortError')?'timeout':'blocked'} ${((Date.now()-t0)/1000).toFixed(1)}s`);
+    }
+  }
+  $('mText').textContent='🩺 Relay test — '+out.join(' · ')+'. Any ✅ means Retry will work.';
+  btn.disabled=false;
+};
 $('restoreRemoved').onclick=()=>{
   const n=removedStore.C.length+removedStore.W.length;
   if(!n){alert('No removed spreadsheet games to restore.');return;}
