@@ -70,6 +70,35 @@ async function searchIdsXml(q) {
   return out;
 }
 
+// ---------- Wikidata bulk dump: every P2339 (BGG id) with labels & aliases ----------
+let wdIndex = null;   // norm(label) -> [bggid, …]
+async function loadWikidataDump() {
+  const SPARQL = process.env.SPARQL_BASE || 'https://query.wikidata.org/sparql';
+  const mk = withAliases => `SELECT ?bggid ?l WHERE { ?i wdt:P2339 ?bggid. ${withAliases
+    ? '{ ?i rdfs:label ?l } UNION { ?i skos:altLabel ?l }'
+    : '?i rdfs:label ?l'} FILTER(LANG(?l) IN ("en","cs","de")) }`;
+  for (const q of [mk(true), mk(false)]) {
+    const txt = await get(`${SPARQL}?format=json&query=${encodeURIComponent(q)}`);
+    if (!txt) continue;
+    try {
+      const rows = JSON.parse(txt).results.bindings;
+      const idx = new Map();
+      for (const r of rows) {
+        const id = +r.bggid.value; if (!id) continue;
+        const k = norm(r.l.value); if (!k) continue;
+        const arr = idx.get(k) || [];
+        if (!arr.includes(id)) { arr.push(id); idx.set(k, arr); }
+      }
+      if (idx.size) {
+        wdIndex = idx;
+        console.log(`Wikidata dump loaded: ${rows.length} labels, ${idx.size} unique keys.`);
+        return;
+      }
+    } catch (e) { /* fall through to the simpler query */ }
+  }
+  console.log('Wikidata dump unavailable — using per-title search only.');
+}
+
 // ---------- Wikidata: title -> BGG id (P2339), verified against BGG itself ----------
 async function wikidataCandidates(q, lang) {
   const s = await get(`${WD}/w/api.php?action=wbsearchentities&search=${encodeURIComponent(q)}&language=${lang}&uselang=en&type=item&limit=8&format=json`);
@@ -113,6 +142,18 @@ async function resolveViaWikidata(g) {
   const short = g.t.split(/[:(–]/)[0].trim();
   if (short && norm(short) !== norm(g.t) && short.length > 3) tries.push([short, 'en']);
   if (g.c && norm(g.c) !== norm(g.t)) tries.push([g.c, 'cs']);
+  /* exact-label lookup in the bulk dump first — far better recall than
+     the live top-8 search, and every candidate is still verified below */
+  if (wdIndex) {
+    for (const [q] of tries) {
+      const hits = wdIndex.get(norm(q)) || [];
+      for (const id of hits.slice(0, 4)) {
+        const t = things[id] || await fetchThing(id);
+        if (t && nameMatches(t.name, g)) { things[id] = t; return id; }
+        await sleep(150);
+      }
+    }
+  }
   let sawFailure = false;
   for (const [q, lang] of tries) {
     const cands = await wikidataCandidates(q, lang);
@@ -242,11 +283,13 @@ for (const [k, g] of targets) {
 }
 if (audited) console.log(`Audit: dropped ${audited} previously matched id(s) failing strict verification.`);
 
+await loadWikidataDump();
+
 const MAX_RESOLVE = +(process.env.MAX_RESOLVE || 400);   /* stay well under the job time limit */
 const DEADLINE = Date.now() + (+(process.env.MAX_MINUTES || 70)) * 60000; /* commit cleanly before the job limit */
-/* with a BGG token, also retry titles Wikidata couldn't find — official search can */
+/* with a token or the bulk dump available, also retry earlier 'not found' verdicts */
 let todo = [...targets.entries()].filter(([k]) =>
-  ids[k] === undefined || ids[k] === null || (TOKEN && ids[k] === 0));
+  ids[k] === undefined || ids[k] === null || ((TOKEN || wdIndex) && ids[k] === 0));
 if (todo.length > MAX_RESOLVE) {
   console.log(`Resolving ${MAX_RESOLVE} of ${todo.length} unresolved titles (the rest continues next run)…`);
   todo = todo.slice(0, MAX_RESOLVE);
