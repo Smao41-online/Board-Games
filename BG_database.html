@@ -483,23 +483,42 @@ for(const g of GAMES) if(g.b && !idMap[norm(g.t)]) idMap[norm(g.t)]=g.b;
    relays are pointless. The site's own JSON API on api.geekdo.com is open AND
    sends Access-Control-Allow-Origin: *, so the browser can call it directly. */
 const GAPI='https://api.geekdo.com';
-let consecFails=0, offline=false, lastErr='';
+/* api.geekdo.com serves open JSON but sends no CORS headers on its 200
+   responses, so direct browser calls are blocked — try direct first (in case
+   that changes), then public relays that add the header. */
+const JBUILDERS=[
+  u=>u,
+  u=>'https://api.allorigins.win/raw?url='+encodeURIComponent(u),
+  u=>'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u),
+  u=>'https://r.jina.ai/'+u
+];
+let jIdx=0, consecFails=0, offline=false, lastErr='';
 async function getJson(url){
-  for(let a=0;a<4;a++){
+  let ep=jIdx;
+  for(let a=0;a<6;a++){
     if(offline)return null;
     const ctrl=new AbortController();
-    const kill=setTimeout(()=>ctrl.abort(),15000+5000*a);
+    const kill=setTimeout(()=>ctrl.abort(),15000+3000*a);
     try{
-      const res=await fetch(url,{signal:ctrl.signal});
+      const res=await fetch(JBUILDERS[ep](url),{signal:ctrl.signal});
       clearTimeout(kill);
-      if(res.status===200){consecFails=0;return await res.json();}
-      if(res.status===429||res.status>=500){lastErr='HTTP '+res.status;await sleep(1200*(a+1));continue;}
+      if(res.status===200){
+        let txt=await res.text();
+        const i=txt.indexOf('{');
+        if(i>0)txt=txt.slice(i);   /* some relays wrap the body */
+        const data=JSON.parse(txt); /* parse failure rotates via catch */
+        jIdx=ep;consecFails=0;
+        return data;
+      }
       lastErr='HTTP '+res.status;
-      return {__http:res.status};
+      if(res.status===429||res.status>=500){await sleep(1000*(a+1));continue;}
+      if(ep===0)return {__http:res.status}; /* direct API verdicts are trustworthy */
+      ep=(ep+1)%JBUILDERS.length;
     }catch(e){
       clearTimeout(kill);
       lastErr=(e&&e.name==='AbortError')?'timeout':((e&&e.message)||'network error');
-      await sleep(700*(a+1));
+      ep=(ep+1)%JBUILDERS.length;
+      await sleep(500*(a+1));
     }
   }
   if(++consecFails>=8){offline=true;missionFail();}
@@ -633,7 +652,19 @@ function missionDone(msg){
   missionTimer=setTimeout(()=>mission.classList.remove('show'),15000);
 }
 function missionFail(){
-  clearTimeout(missionTimer);   /* stays on screen until dismissed — the report must survive */
+  clearTimeout(missionTimer);
+  const pool=[...GAMES,...WISHLIST];
+  const detailed=pool.filter(g=>{const id=idMap[norm(g.t)];return id>0&&things[id];}).length;
+  if(detailed>pool.length*0.2){
+    /* the built-in data carries the site — inform quietly instead of alarming */
+    mission.classList.add('show');
+    $('mActions').style.display='none';
+    $('mText').textContent=`ℹ️ Live BGG lookups are not reachable from this network — showing the built-in data (refreshed weekly on the server). ${detailed} games carry full BGG details.`;
+    $('mBar').style.width='100%';
+    missionTimer=setTimeout(()=>mission.classList.remove('show'),10000);
+    return;
+  }
+  /* stays on screen until dismissed — the report must survive */
   mission.classList.add('show');
   $('mText').textContent='⚠️ Could not reach BoardGameGeek\u2019s data API (api.geekdo.com) — sync paused, progress so far is saved.'
     +(lastErr?` Last error: ${lastErr}.`:'')
@@ -1203,11 +1234,14 @@ $('mTest').onclick=async()=>{
     ['baked data (same origin)', async()=>{const r=await fetch('data/bgg.json',{cache:'no-cache'});return r.ok?'✅ OK':'⚠️ HTTP '+r.status;}],
     ['BGG JSON API (details)', async()=>{const r=await fetch(`${GAPI}/api/geekitems?objectid=13&objecttype=thing&nosession=1`);return r.ok?'✅ OK':'⚠️ HTTP '+r.status;}],
     ['BGG JSON API (search)', async()=>{const r=await fetch(`${GAPI}/search/boardgame?q=catan&showcount=3`);return r.ok?'✅ OK':'⚠️ HTTP '+r.status;}],
-    ['BGG image CDN', async()=>new Promise(res=>{const im=new Image();
+    ['BGG image CDN (box art)', async()=>new Promise(res=>{
+      const t=Object.values(things).find(x=>x&&x.thumb&&String(x.thumb).includes('geekdo-images'));
+      if(!t)return res('⚠️ nothing to test yet');
+      const im=new Image();
       const to=setTimeout(()=>res('❌ timeout'),10000);
       im.onload=()=>{clearTimeout(to);res('✅ OK');};
       im.onerror=()=>{clearTimeout(to);res('❌ blocked');};
-      im.src='https://cf.geekdo-images.com/thumb/img/8pkbb8-Ez4Wm4t4gnhAqti9Xh_U=/fit-in/200x150/pic2419375.jpg?t='+Date.now();})]
+      im.src=t.thumb;})]
   ];
   const out=[];
   for(const [name,fn] of checks){
