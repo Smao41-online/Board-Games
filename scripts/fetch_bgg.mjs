@@ -222,6 +222,7 @@ for (const g of all) { const k = norm(g.t); if (k && !targets.has(k)) targets.se
 for (const [k, g] of targets) if (g.b && !ids[k]) ids[k] = g.b;
 
 const MAX_RESOLVE = +(process.env.MAX_RESOLVE || 400);   /* stay well under the job time limit */
+const DEADLINE = Date.now() + (+(process.env.MAX_MINUTES || 70)) * 60000; /* commit cleanly before the job limit */
 /* with a BGG token, also retry titles Wikidata couldn't find — official search can */
 let todo = [...targets.entries()].filter(([k]) =>
   ids[k] === undefined || ids[k] === null || (TOKEN && ids[k] === 0));
@@ -233,6 +234,7 @@ if (todo.length > MAX_RESOLVE) {
 }
 let n = 0;
 for (const [k, g] of todo) {
+  if (Date.now() > DEADLINE) { console.log(`  time budget reached at ${n}/${todo.length} — the rest continues next run`); break; }
   const r = await resolveId(k, g);
   if (r !== null) ids[k] = r;
   if (++n % 25 === 0) { console.log(`  ${n}/${todo.length}`); save(); }
@@ -245,6 +247,7 @@ const needed = [...new Set(Object.values(ids).filter(id => id && !things[id]))];
 console.log(`Fetching details for ${needed.length} games…`);
 let d = 0;
 for (const id of needed) {
+  if (Date.now() > DEADLINE + 10 * 60000) { console.log(`  time budget reached at ${d}/${needed.length}`); break; }
   const t = await fetchThing(id);
   if (t) things[id] = t;
   if (++d % 25 === 0) { console.log(`  ${d}/${needed.length}`); save(); }
