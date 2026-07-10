@@ -222,7 +222,9 @@ for (const g of all) { const k = norm(g.t); if (k && !targets.has(k)) targets.se
 for (const [k, g] of targets) if (g.b && !ids[k]) ids[k] = g.b;
 
 const MAX_RESOLVE = +(process.env.MAX_RESOLVE || 400);   /* stay well under the job time limit */
-let todo = [...targets.entries()].filter(([k]) => ids[k] === undefined || ids[k] === null);
+/* with a BGG token, also retry titles Wikidata couldn't find — official search can */
+let todo = [...targets.entries()].filter(([k]) =>
+  ids[k] === undefined || ids[k] === null || (TOKEN && ids[k] === 0));
 if (todo.length > MAX_RESOLVE) {
   console.log(`Resolving ${MAX_RESOLVE} of ${todo.length} unresolved titles (the rest continues next run)…`);
   todo = todo.slice(0, MAX_RESOLVE);
