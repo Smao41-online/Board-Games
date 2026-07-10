@@ -111,7 +111,7 @@ async function resolveViaWikidata(g) {
     /* verify against BGG itself — details cached for phase 2 only when accepted */
     const t = things[hit.id] || await fetchThing(hit.id);
     if (t && nameMatches(t.name, g)) { things[hit.id] = t; return hit.id; }
-    await sleep(300);
+    await sleep(200);
   }
   return sawFailure ? null : 0;
 }
@@ -221,14 +221,20 @@ const targets = new Map();
 for (const g of all) { const k = norm(g.t); if (k && !targets.has(k)) targets.set(k, g); }
 for (const [k, g] of targets) if (g.b && !ids[k]) ids[k] = g.b;
 
-const todo = [...targets.entries()].filter(([k]) => ids[k] === undefined || ids[k] === null);
-console.log(`Resolving ${todo.length} of ${targets.size} titles…`);
+const MAX_RESOLVE = +(process.env.MAX_RESOLVE || 400);   /* stay well under the job time limit */
+let todo = [...targets.entries()].filter(([k]) => ids[k] === undefined || ids[k] === null);
+if (todo.length > MAX_RESOLVE) {
+  console.log(`Resolving ${MAX_RESOLVE} of ${todo.length} unresolved titles (the rest continues next run)…`);
+  todo = todo.slice(0, MAX_RESOLVE);
+} else {
+  console.log(`Resolving ${todo.length} of ${targets.size} titles…`);
+}
 let n = 0;
 for (const [k, g] of todo) {
   const r = await resolveId(k, g);
   if (r !== null) ids[k] = r;
   if (++n % 25 === 0) { console.log(`  ${n}/${todo.length}`); save(); }
-  await sleep(700);
+  await sleep(400);
 }
 save();
 
@@ -240,7 +246,7 @@ for (const id of needed) {
   const t = await fetchThing(id);
   if (t) things[id] = t;
   if (++d % 25 === 0) { console.log(`  ${d}/${needed.length}`); save(); }
-  await sleep(600);
+  await sleep(400);
 }
 save();
 
