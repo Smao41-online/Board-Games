@@ -94,8 +94,19 @@ async function wikidataCandidates(q, lang) {
   return cands;
 }
 function nameMatches(name, g) {
-  const cand = [{ id: 1, type: 'boardgame', name, year: 1 }];
-  return !!(pickCandidate(cand, g.t) || (g.c && pickCandidate(cand, g.c)));
+  const nn = norm(name);
+  if (!nn) return false;
+  for (const q of [g.t, g.c]) {
+    if (!q) continue;
+    const nq = norm(q);
+    if (nq === nn) return true;
+    /* accept a shorter official name for a verbose spreadsheet title
+       ("Agricola revised edition" vs "Agricola"), but never a LONGER one —
+       that is how spin-offs sneak in ("Terraforming Mars" would otherwise
+       verify against "Terraforming Mars: Ares Expedition") */
+    if (nq.startsWith(nn) && nn.length >= 4) return true;
+  }
+  return false;
 }
 async function resolveViaWikidata(g) {
   const tries = [[g.t, 'en']];
@@ -220,6 +231,16 @@ function save() {
 const targets = new Map();
 for (const g of all) { const k = norm(g.t); if (k && !targets.has(k)) targets.set(k, g); }
 for (const [k, g] of targets) if (g.b && !ids[k]) ids[k] = g.b;
+
+/* audit previously matched ids with the strict rule — drop mismatches so they resolve again */
+let audited = 0;
+for (const [k, g] of targets) {
+  const id = ids[k];
+  if (!id || g.b === id) continue;
+  const t = things[id];
+  if (t && !nameMatches(t.name, g)) { delete ids[k]; audited++; }
+}
+if (audited) console.log(`Audit: dropped ${audited} previously matched id(s) failing strict verification.`);
 
 const MAX_RESOLVE = +(process.env.MAX_RESOLVE || 400);   /* stay well under the job time limit */
 const DEADLINE = Date.now() + (+(process.env.MAX_MINUTES || 70)) * 60000; /* commit cleanly before the job limit */
