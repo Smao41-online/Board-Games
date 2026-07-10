@@ -27,6 +27,16 @@ Just open **`BG_database.html`** in any browser — no server, no build step, no
   the **delta** (games not yet in the database) is shown with checkboxes, separately for
   Collection and Wishlist. Confirm, and the newcomers are added and enriched from BGG automatically
 
+## Optional: 100% BGG coverage with an API token
+
+BGG's classic XML API now requires a personal token
+(see [boardgamegeek.com/using_the_xml_api](https://boardgamegeek.com/using_the_xml_api)).
+Without one, games are matched via Wikidata (verified against BGG, so never wrong — but
+not every game is on Wikidata). For full coverage: create a token in your BGG account,
+then add it in this repo under **Settings → Secrets and variables → Actions →
+New repository secret**, name `BGG_TOKEN`. The next *Refresh BGG data* run will use
+official BGG search and match essentially everything.
+
 ## Where the extra data comes from
 
 The spreadsheet provides title, Czech name, language, players, age, notes and links.
