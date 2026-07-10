@@ -5,12 +5,19 @@
 // uses the site's open JSON endpoints on api.geekdo.com instead:
 //   - details: /api/geekitems?objectid=<id>&objecttype=thing&nosession=1
 //   - stats:   /api/dynamicinfo?objectid=<id>&objecttype=thing
-// IDs are resolved primarily from each game's zatrolene-hry.cz page (which
-// links to BGG), with /search/boardgame?q= as an opportunistic fallback.
+// ID resolution (zatrolene-hry.cz and boardgamegeek.com are both behind
+// Cloudflare bot challenges for datacenter IPs, so neither can be scraped):
+//   1. BGG links already present in the spreadsheet
+//   2. official XML API search when a BGG_TOKEN secret is configured
+//   3. Wikidata (property P2339 = BoardGameGeek ID), verified against the
+//      BGG JSON API so a wrong match can never slip in
 // Incremental: existing data/bgg.json entries are reused.
 import fs from 'node:fs';
 
 const API = process.env.BGG_API_BASE || 'https://api.geekdo.com';
+const XML = process.env.BGG_XML_BASE || 'https://boardgamegeek.com/xmlapi2';
+const WD = process.env.WIKIDATA_BASE || 'https://www.wikidata.org';
+const TOKEN = process.env.BGG_TOKEN || '';
 const OUT = 'data/bgg.json';
 const UA = { 'User-Agent': 'BoardGameGalaxy/1.0 (personal collection database)' };
 
@@ -30,10 +37,10 @@ const unesc = s => String(s || '').replace(/&#(\d+);/g, (_, n) => String.fromCha
   .replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>')
   .replace(/&mdash;/g, '—').replace(/&ndash;/g, '–').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&');
 
-async function get(url) {
+async function get(url, extraHeaders) {
   for (let a = 0; a < 6; a++) {
     try {
-      const res = await fetch(url, { headers: UA, signal: AbortSignal.timeout(25000) });
+      const res = await fetch(url, { headers: { ...UA, ...(extraHeaders || {}) }, signal: AbortSignal.timeout(25000) });
       if (res.status === 200) return await res.text();
       if (res.status === 202 || res.status === 429 || res.status >= 500) {
         await sleep(2500 * (a + 1)); continue;
@@ -45,26 +52,68 @@ async function get(url) {
   return null;
 }
 
-// ---------- search (opportunistic — endpoint may not exist) ----------
-let searchOk = null; // null = untested, false = unavailable
-async function searchIds(q) {
-  if (searchOk === false) return null;
-  const txt = await get(`${API}/search/boardgame?q=${encodeURIComponent(q)}&showcount=20`);
-  if (txt === null) { if (searchOk === null) { searchOk = false; console.log('  (search endpoint unavailable — relying on ZH pages)'); } return null; }
-  try {
-    const d = JSON.parse(txt);
-    const items = Array.isArray(d) ? d : (d.items || []);
-    searchOk = true;
-    return items.map(it => ({
-      id: +(it.objectid || it.id || 0),
-      type: it.subtype || it.objecttype || 'boardgame',
-      name: typeof it.name === 'object' ? (it.name?.name || '') : String(it.name || ''),
-      year: +(it.yearpublished || 0)
-    })).filter(x => x.id);
-  } catch (e) {
-    if (searchOk === null) { searchOk = false; console.log('  (search endpoint returned non-JSON — relying on ZH pages)'); }
-    return null;
+// ---------- search via the official XML API (needs BGG_TOKEN secret) ----------
+async function searchIdsXml(q) {
+  if (!TOKEN) return null;
+  const xml = await get(`${XML}/search?query=${encodeURIComponent(q)}&type=boardgame,boardgameexpansion`,
+    { Authorization: `Bearer ${TOKEN}` });
+  if (xml === null) return null;
+  const out = [];
+  for (const chunk of xml.split(/<item\s/).slice(1)) {
+    const head = chunk.slice(0, chunk.indexOf('>'));
+    const type = (head.match(/type="([^"]+)"/) || [])[1];
+    const id = +((head.match(/id="(\d+)"/) || [])[1] || 0);
+    const name = (chunk.match(/<name[^>]*value="([^"]*)"/) || [])[1] || '';
+    const year = +((chunk.match(/<yearpublished[^>]*value="(\d+)"/) || [])[1] || 0);
+    if (id) out.push({ id, type, name: unesc(name), year });
   }
+  return out;
+}
+
+// ---------- Wikidata: title -> BGG id (P2339), verified against BGG itself ----------
+async function wikidataCandidates(q, lang) {
+  const s = await get(`${WD}/w/api.php?action=wbsearchentities&search=${encodeURIComponent(q)}&language=${lang}&uselang=en&type=item&limit=8&format=json`);
+  if (s === null) return null;
+  let qids;
+  try { qids = (JSON.parse(s).search || []).map(x => x.id); } catch (e) { return null; }
+  if (!qids.length) return [];
+  const e = await get(`${WD}/w/api.php?action=wbgetentities&ids=${qids.join('|')}&props=claims|labels&languages=en|cs&format=json`);
+  if (e === null) return null;
+  const cands = [];
+  try {
+    const ents = JSON.parse(e).entities || {};
+    for (const qid of qids) {
+      const ent = ents[qid]; if (!ent) continue;
+      const claim = ((ent.claims || {}).P2339 || [])[0];
+      const bggid = +(claim?.mainsnak?.datavalue?.value || 0);
+      if (!bggid) continue;
+      const label = ent.labels?.en?.value || ent.labels?.cs?.value || '';
+      cands.push({ id: bggid, type: 'boardgame', name: label, year: 1 });
+    }
+  } catch (e2) { return null; }
+  return cands;
+}
+function nameMatches(name, g) {
+  const cand = [{ id: 1, type: 'boardgame', name, year: 1 }];
+  return !!(pickCandidate(cand, g.t) || (g.c && pickCandidate(cand, g.c)));
+}
+async function resolveViaWikidata(g) {
+  const tries = [[g.t, 'en']];
+  const short = g.t.split(/[:(–]/)[0].trim();
+  if (short && norm(short) !== norm(g.t) && short.length > 3) tries.push([short, 'en']);
+  if (g.c && norm(g.c) !== norm(g.t)) tries.push([g.c, 'cs']);
+  let sawFailure = false;
+  for (const [q, lang] of tries) {
+    const cands = await wikidataCandidates(q, lang);
+    if (cands === null) { sawFailure = true; continue; }
+    const hit = pickCandidate(cands, q);
+    if (!hit) continue;
+    /* verify against BGG itself — details cached for phase 2 only when accepted */
+    const t = things[hit.id] || await fetchThing(hit.id);
+    if (t && nameMatches(t.name, g)) { things[hit.id] = t; return hit.id; }
+    await sleep(300);
+  }
+  return sawFailure ? null : 0;
 }
 
 function pickCandidate(cands, query) {
@@ -105,24 +154,23 @@ async function zhLookup(key, url) {
 
 async function resolveId(k, g) {
   if (g.b) return g.b;
-  let sawFailure = false;
-  if (g.u && g.u.includes('zatrolene-hry')) {
-    const via = await zhLookup(k, g.u);
-    if (via) return via;
-    if (zh[k] === undefined) sawFailure = true;  // ZH fetch failed entirely
+  if (TOKEN) {
+    const tries = [g.t];
+    const short = g.t.split(/[:(–]/)[0].trim();
+    if (short && norm(short) !== norm(g.t) && short.length > 3) tries.push(short);
+    if (g.c && norm(g.c) !== norm(g.t)) tries.push(g.c);
+    let sawFailure = false;
+    for (const q of tries) {
+      const cands = await searchIdsXml(q);
+      if (cands === null) { sawFailure = true; continue; }
+      const hit = pickCandidate(cands, q);
+      if (hit) return hit.id;
+      await sleep(400);
+    }
+    if (sawFailure) return null;
+    /* token search found nothing definitive — still try wikidata below */
   }
-  const tries = [g.t];
-  const short = g.t.split(/[:(–]/)[0].trim();
-  if (short && norm(short) !== norm(g.t) && short.length > 3) tries.push(short);
-  if (g.c && norm(g.c) !== norm(g.t)) tries.push(g.c);
-  for (const q of tries) {
-    const cands = await searchIds(q);
-    if (cands === null) { sawFailure = true; continue; }  /* incl. search-unavailable: retry next run */
-    const hit = pickCandidate(cands, q);
-    if (hit) return hit.id;
-    await sleep(400);
-  }
-  return sawFailure ? null : 0;
+  return await resolveViaWikidata(g);
 }
 
 // ---------- details from the JSON API ----------
@@ -198,4 +246,4 @@ save();
 
 const matched = [...targets.keys()].filter(k => ids[k] > 0).length;
 const detailed = [...targets.keys()].filter(k => ids[k] > 0 && things[ids[k]]).length;
-console.log(`Done: ${matched}/${targets.size} matched, ${detailed} with details, ${Object.keys(zh).length} ZH entries, searchOk=${searchOk}`);
+console.log(`Done: ${matched}/${targets.size} matched, ${detailed} with details, token=${TOKEN ? 'yes' : 'no'}`);
