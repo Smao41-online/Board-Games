@@ -52,12 +52,48 @@ async function get(url, extraHeaders) {
   return null;
 }
 
-// ---------- search via the official XML API (needs BGG_TOKEN secret) ----------
-async function searchIdsXml(q) {
-  if (!TOKEN) return null;
-  const xml = await get(`${XML}/search?query=${encodeURIComponent(q)}&type=boardgame,boardgameexpansion`,
-    { Authorization: `Bearer ${TOKEN}` });
-  if (xml === null) return null;
+// ---------- official XML API search with self-detected auth scheme ----------
+const XML_BASES = [XML, 'https://api.geekdo.com/xmlapi2'];
+let xmlAuth = null;   // { base, variant } once a working scheme is found
+function authVariants(token) {
+  const b64u = Buffer.from(token + ':').toString('base64');   // token as username
+  const b64t = Buffer.from(token).toString('base64');
+  return [
+    { name: 'Bearer',        headers: { Authorization: `Bearer ${token}` }, q: '' },
+    { name: 'Basic(token:)', headers: { Authorization: `Basic ${b64u}` },  q: '' },
+    { name: 'Basic(token)',  headers: { Authorization: `Basic ${b64t}` },  q: '' },
+    { name: 'x-api-key',     headers: { 'x-api-key': token },              q: '' },
+    { name: 'apikey-query',  headers: {},  q: `&apikey=${encodeURIComponent(token)}` },
+    { name: 'token-query',   headers: {},  q: `&token=${encodeURIComponent(token)}` },
+  ];
+}
+/* dedicated fetch that NEVER logs the URL (query-param schemes carry the token) */
+async function tokenFetch(url, headers) {
+  for (let a = 0; a < 3; a++) {
+    try {
+      const res = await fetch(url, { headers: { ...UA, ...headers }, signal: AbortSignal.timeout(25000) });
+      const text = res.status === 200 ? await res.text() : '';
+      if (res.status === 429 || res.status >= 500) { await sleep(2000 * (a + 1)); continue; }
+      return { status: res.status, text };
+    } catch (e) { await sleep(1500 * (a + 1)); }
+  }
+  return { status: 0, text: '' };
+}
+async function detectXmlAuth() {
+  if (!TOKEN) { console.log('BGG_TOKEN present: no — using Wikidata only.'); return; }
+  console.log(`BGG_TOKEN present: yes (${TOKEN.length} chars). Probing XML API auth schemes…`);
+  for (const base of XML_BASES) {
+    for (const v of authVariants(TOKEN)) {
+      const { status, text } = await tokenFetch(`${base}/search?query=catan&type=boardgame${v.q}`, v.headers);
+      const ok = status === 200 && /<item[\s>]/.test(text);
+      console.log(`  ${base.replace('https://', '')} [${v.name}] -> HTTP ${status}${ok ? '  ✓ returned items' : ''}`);
+      if (ok) { xmlAuth = { base, variant: v }; console.log(`  ✅ token works: ${base} with "${v.name}" auth`); return; }
+      await sleep(700);
+    }
+  }
+  console.log('  ⚠️ no auth scheme returned items with this token — continuing with Wikidata only.');
+}
+function parseSearchXml(xml) {
   const out = [];
   for (const chunk of xml.split(/<item\s/).slice(1)) {
     const head = chunk.slice(0, chunk.indexOf('>'));
@@ -68,6 +104,14 @@ async function searchIdsXml(q) {
     if (id) out.push({ id, type, name: unesc(name), year });
   }
   return out;
+}
+async function searchIdsXml(q) {
+  if (!xmlAuth) return null;
+  const { base, variant } = xmlAuth;
+  const { status, text } = await tokenFetch(
+    `${base}/search?query=${encodeURIComponent(q)}&type=boardgame,boardgameexpansion${variant.q}`, variant.headers);
+  if (status !== 200 || !text) return null;
+  return parseSearchXml(text);
 }
 
 // ---------- Wikidata bulk dump: every P2339 (BGG id) with labels & aliases ----------
@@ -206,7 +250,7 @@ async function zhLookup(key, url) {
 
 async function resolveId(k, g) {
   if (g.b) return g.b;
-  if (TOKEN) {
+  if (xmlAuth) {
     const tries = [g.t];
     const short = g.t.split(/[:(–]/)[0].trim();
     if (short && norm(short) !== norm(g.t) && short.length > 3) tries.push(short);
@@ -283,13 +327,14 @@ for (const [k, g] of targets) {
 }
 if (audited) console.log(`Audit: dropped ${audited} previously matched id(s) failing strict verification.`);
 
+await detectXmlAuth();
 await loadWikidataDump();
 
 const MAX_RESOLVE = +(process.env.MAX_RESOLVE || 400);   /* stay well under the job time limit */
 const DEADLINE = Date.now() + (+(process.env.MAX_MINUTES || 70)) * 60000; /* commit cleanly before the job limit */
 /* with a token or the bulk dump available, also retry earlier 'not found' verdicts */
 let todo = [...targets.entries()].filter(([k]) =>
-  ids[k] === undefined || ids[k] === null || ((TOKEN || wdIndex) && ids[k] === 0));
+  ids[k] === undefined || ids[k] === null || ((xmlAuth || wdIndex) && ids[k] === 0));
 if (todo.length > MAX_RESOLVE) {
   console.log(`Resolving ${MAX_RESOLVE} of ${todo.length} unresolved titles (the rest continues next run)…`);
   todo = todo.slice(0, MAX_RESOLVE);
@@ -321,4 +366,4 @@ save();
 
 const matched = [...targets.keys()].filter(k => ids[k] > 0).length;
 const detailed = [...targets.keys()].filter(k => ids[k] > 0 && things[ids[k]]).length;
-console.log(`Done: ${matched}/${targets.size} matched, ${detailed} with details, token=${TOKEN ? 'yes' : 'no'}`);
+console.log(`Done: ${matched}/${targets.size} matched, ${detailed} with details, xmlAuth=${xmlAuth ? xmlAuth.variant.name : 'none'}`);
