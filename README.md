@@ -19,6 +19,15 @@ Just open **`BG_database.html`** in any browser — no server, no build step, no
   (box art, players, age, play time, rating, genre) is filled in automatically. Works for
   both Collection and Wishlist; your additions are saved in the browser (`localStorage`),
   marked with a ✦ *added* badge, and can be removed again from their detail view
+- 🔄 **Sync a game** (`BG_database.html`, `BGG_Galaxy.html`): each detail view has a Sync button that
+  refreshes that game's data — from the weekly-updated `data/bgg.json` when hosted, from the baked-in
+  data in the offline file, or live from BGG when online. A footer **"Update all from data file"** button
+  refreshes the whole collection at once.
+- ✏️ **Edit a game** (`BG_database.html`, `BGG_Galaxy.html`): the detail view has an Edit button to fix
+  a wrong box art (paste the correct image URL), relink the BGG id (with a *Re-fetch from this id* button),
+  or override rating, genre, players, year, description, etc. Your edits are saved in the browser
+  (`localStorage`), marked with a ✦ *edited* badge, win over future syncs, and can be undone with
+  *Reset to original BGG data*. Works fully offline in `BGG_Galaxy.html`.
 - 🗑 **Remove any game** (`BG_database.html`): every game's detail view has a Remove button.
   Removals are remembered in the browser; a *Restore removed games* button in the footer undoes them
 - 📦 **Import an updated spreadsheet** (`BG_database.html`): type

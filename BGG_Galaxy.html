@@ -264,6 +264,16 @@
     box-shadow:0 6px 24px rgba(255,180,70,.25)}
   .ag-save:hover{filter:brightness(1.08)}
   .badge.new{left:8px;bottom:8px;top:auto;background:rgba(14,32,26,.88);border:1px solid rgba(87,215,199,.45);color:var(--teal)}
+  /* ---------- edit form ---------- */
+  .edf{display:flex;flex-direction:column;gap:5px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-top:12px}
+  .ag-inner textarea{width:100%;padding:9px 12px;border-radius:9px;border:1px solid var(--border);
+    background:rgba(10,14,30,.9);color:var(--ink);font:inherit;font-size:13px;outline:none;resize:vertical}
+  .ag-inner textarea:focus{border-color:var(--border-strong)}
+  .mini{background:rgba(122,140,255,.12);border:1px solid var(--border-strong);color:var(--ink);
+    border-radius:8px;padding:8px 12px;font-size:12px;cursor:pointer}
+  .mini:hover{background:rgba(122,140,255,.22)}
+  .mini.danger{border-color:rgba(255,143,143,.4);color:var(--danger)}
+  .mini.danger:hover{background:rgba(255,143,143,.1)}
   /* ---------- footer ---------- */
   footer{border-top:1px solid rgba(122,140,255,.12);padding:26px 24px 40px;text-align:center;color:var(--faint);font-size:12.5px;line-height:1.7}
   footer button{background:none;border:1px solid var(--border);color:var(--muted);border-radius:999px;
@@ -389,6 +399,7 @@
   Enriched data is cached in this browser (localStorage).<br>
   <button id="rescan">🔄 Rescan galaxy (clear cache &amp; refetch from BGG)</button>
   <button id="restoreRemoved">♻️ Restore removed games</button>
+  <button id="syncAll">⟳ Update all from data file</button>
 </footer>
 
 <script>
@@ -410,6 +421,10 @@ if(!Array.isArray(removedStore.C))removedStore.C=[];
 if(!Array.isArray(removedStore.W))removedStore.W=[];
 removedStore.C=removedStore.C.filter(x=>x&&typeof x.i==='number');
 removedStore.W=removedStore.W.filter(x=>x&&typeof x.i==='number');
+/* per-game manual edits & syncs: normTitle -> { id?, det?, patch? } (survives reloads, travels via localStorage) */
+const LS_OVERRIDES='user.overrides.v1';
+let overrides;
+try{overrides=JSON.parse(localStorage.getItem(LS_OVERRIDES))||{};}catch(e){overrides={};}
 GAMES.forEach((g,i)=>g._i=i);
 WISHLIST.forEach((g,i)=>g._i=i);
 for(let i=GAMES.length-1;i>=0;i--)if(removedStore.C.some(x=>x.i===GAMES[i]._i))GAMES.splice(i,1);
@@ -689,8 +704,6 @@ function mergeBaked(baked){
 async function loadBaked(){
   if(bakedLoaded)return;
   bakedLoaded=true;
-  /* inline baked data first (works when opened as a local file), then the
-     same-origin data file as a fallback for the hosted copy */
   if(typeof BGG_BAKED!=='undefined' && mergeBaked(BGG_BAKED)){refreshView(true);return;}
   try{
     const res=await fetch('data/bgg.json',{cache:'no-cache'});
@@ -770,8 +783,16 @@ async function enrichCore(){
 let tab='C';
 const selLang=$('fLang'),selGenre=$('fGenre'),selPlayers=$('fPlayers'),selSort=$('fSort'),qInput=$('q');
 
-function bggOf(g){const id=idMap[norm(g.t)];return id?things[id]:null;}
-function idOf(g){return idMap[norm(g.t)]||g.b||0;}
+function ovOf(g){return overrides[norm(g.t)];}
+function normDet(d){return d?{cats:[],mechs:[],designers:[],...d}:null;}
+function idOf(g){const o=ovOf(g);if(o&&o.id!=null)return o.id;return idMap[norm(g.t)]||g.b||0;}
+function bggOf(g){
+  const o=ovOf(g),id=idOf(g);
+  let base=(id&&things[id])?things[id]:null;
+  if(o&&o.det)base=o.det;
+  if(o&&o.patch)base={...(base||{}),...o.patch};
+  return normDet(base);
+}
 
 function buildLangOptions(){
   const langs=[...new Set(GAMES.map(g=>g.l).filter(Boolean))].sort();
@@ -894,6 +915,9 @@ function openModal(g){
   const links=[];
   if(g.u)links.push(`<a href="${esc(g.u)}" target="_blank" rel="noopener">🔗 ${g.u.includes('zatrolene')?'Zatrolené hry':'Original link'}</a>`);
   if(id)links.push(`<a class="bgg" href="https://boardgamegeek.com/boardgame/${id}" target="_blank" rel="noopener">🎲 BoardGameGeek</a>`);
+  links.push(`<a href="#" id="mSync" title="Fetch the latest data for this game">🔄 Sync</a>`);
+  links.push(`<a href="#" id="mEdit" title="Manually fix box art, rating, genre…">✏️ Edit</a>`);
+  if(ovOf(g))links.push(`<span style="font-size:11px;color:var(--teal);align-self:center">✦ edited</span>`);
   links.push(`<a href="#" id="mDelete" style="color:var(--danger);border-color:rgba(255,143,143,.4)">🗑 Remove</a>`);
   modal.innerHTML=`<button class="close" onclick="document.getElementById('overlay').classList.remove('show')">✕</button>
     <div class="m-head">
@@ -927,6 +951,94 @@ function openModal(g){
     }
     overlay.classList.remove('show');
     refreshView(true);
+  };
+  const bSync=modal.querySelector('#mSync');
+  if(bSync)bSync.onclick=e=>{e.preventDefault();syncGame(g,bSync);};
+  const bEdit=modal.querySelector('#mEdit');
+  if(bEdit)bEdit.onclick=e=>{e.preventDefault();openEdit(g);};
+}
+/* ---- Sync: refresh one game from data/bgg.json (authoritative), else live BGG ---- */
+async function syncGame(g,btn){
+  const key=norm(g.t), orig=btn?btn.textContent:'';
+  if(btn)btn.textContent='⏳ Syncing…';
+  let id=idOf(g), det=null, src='';
+  const inline=(typeof BGG_BAKED!=='undefined')?BGG_BAKED:null;
+  if(inline&&inline.ids&&inline.ids[key]&&inline.things&&inline.things[inline.ids[key]]){id=inline.ids[key];det=inline.things[id];src='inline';}
+  if(!det){try{
+    const r=await fetch('data/bgg.json',{cache:'no-cache'});
+    if(r.ok){const b=await r.json();const bid=b.ids&&b.ids[key];
+      if(bid&&b.things&&b.things[bid]){id=bid;det=b.things[bid];src='data file';}}
+  }catch(_){}}
+  if(!det){
+    if(!id){const cands=await searchBGG(g.t);const hit=cands&&pickCandidate(cands,g.t);if(hit)id=hit.id;}
+    if(id)det=await fetchThingJson(id);
+    if(det)src='BGG live';
+  }
+  if(det){
+    const o=overrides[key]||{};o.id=id;o.det=det;overrides[key]=o;   /* keep any manual patch on top */
+    lsSet(LS_OVERRIDES,overrides);
+    openModal(g);refreshView(true);
+  }else if(btn){btn.textContent='⚠️ offline / not found';setTimeout(()=>{btn.textContent=orig;},2600);}
+}
+/* ---- Edit: manual per-game overrides (fix wrong box art, relink BGG id, …) ---- */
+function openEdit(g){
+  const d=bggOf(g)||{}, id=idOf(g), v=x=>x==null?'':x;
+  modal.innerHTML=`<button class="close" id="edClose">✕</button>
+  <div class="ag-inner">
+    <h3>✏️ Edit “${esc(g.t)}”</h3>
+    <p class="ag-status" id="edStatus">Fix box art, rating or genre. Blank keeps the current value. Saved in this browser only.</p>
+    <div class="ag-row">
+      <label>BGG id <input id="edId" type="text" value="${v(id||'')}" style="width:120px"></label>
+      <button class="mini" id="edRefetch" type="button">⤓ Re-fetch from this id</button>
+    </div>
+    <label class="edf">Box art image URL (used on card &amp; detail) <input id="edArt" type="text" value="${esc(v(d.img||d.thumb))}" placeholder="https://cf.geekdo-images.com/…"></label>
+    <div class="ag-row">
+      <label>Rating <input id="edRating" type="text" value="${v(d.rating)}" style="width:78px"></label>
+      <label>Complexity <input id="edWeight" type="text" value="${v(d.weight)}" style="width:92px"></label>
+      <label>Year <input id="edYear" type="text" value="${v(d.year)}" style="width:78px"></label>
+      <label>Players min <input id="edMinP" type="text" value="${v(d.minP)}" style="width:64px"></label>
+      <label>Players max <input id="edMaxP" type="text" value="${v(d.maxP)}" style="width:64px"></label>
+      <label>Time (min) <input id="edTime" type="text" value="${v(d.time)}" style="width:78px"></label>
+      <label>Age <input id="edAge" type="text" value="${v(d.age)}" style="width:64px"></label>
+    </div>
+    <label class="edf">Genres (comma-separated) <input id="edCats" type="text" value="${esc((d.cats||[]).join(', '))}"></label>
+    <label class="edf">Designers (comma-separated) <input id="edDes" type="text" value="${esc((d.designers||[]).join(', '))}"></label>
+    <label class="edf">Description <textarea id="edDesc" rows="4">${esc(v(d.desc))}</textarea></label>
+    <button class="ag-save" id="edSave">💾 Save changes</button>
+    <button class="mini danger" id="edReset" type="button" style="margin-top:8px;width:100%">↺ Reset to original BGG data</button>
+  </div>`;
+  overlay.classList.add('show');
+  $('edClose').onclick=()=>openModal(g);
+  $('edRefetch').onclick=async()=>{
+    const nid=+String($('edId').value).trim();
+    if(!nid){$('edStatus').textContent='Enter a BGG id first.';return;}
+    $('edStatus').textContent='⏳ Fetching from BGG…';
+    const det=await fetchThingJson(nid);
+    if(!det){$('edStatus').textContent='⚠️ Could not fetch (offline or unknown id).';return;}
+    $('edArt').value=det.img||det.thumb||'';$('edRating').value=det.rating||'';
+    $('edWeight').value=det.weight||'';$('edYear').value=det.year||'';$('edMinP').value=det.minP||'';
+    $('edMaxP').value=det.maxP||'';$('edTime').value=det.time||'';$('edAge').value=det.age||'';
+    $('edCats').value=(det.cats||[]).join(', ');$('edDes').value=(det.designers||[]).join(', ');$('edDesc').value=det.desc||'';
+    $('edStatus').textContent='✅ Fetched — review the fields and Save.';
+  };
+  $('edReset').onclick=()=>{
+    if(!confirm('Discard your edits/sync for this game and restore the original built-in data?'))return;
+    delete overrides[norm(g.t)];lsSet(LS_OVERRIDES,overrides);openModal(g);refreshView(true);
+  };
+  $('edSave').onclick=()=>{
+    const num=x=>{x=String(x).trim();if(!x)return undefined;const n=+x;return isNaN(n)?undefined:n;};
+    const str=x=>{x=String(x).trim();return x||undefined;};
+    const lst=x=>{x=String(x).trim();return x?x.split(',').map(y=>y.trim()).filter(Boolean):undefined;};
+    const patch={}, set=(k,val)=>{if(val!==undefined)patch[k]=val;};
+    const art=str($('edArt').value);set('thumb',art);set('img',art);
+    set('rating',num($('edRating').value));set('weight',num($('edWeight').value));
+    set('year',num($('edYear').value));set('minP',num($('edMinP').value));set('maxP',num($('edMaxP').value));
+    set('time',num($('edTime').value));set('age',num($('edAge').value));
+    set('cats',lst($('edCats').value));set('designers',lst($('edDes').value));set('desc',str($('edDesc').value));
+    const o=overrides[norm(g.t)]||{};
+    const nid=+String($('edId').value).trim();if(nid)o.id=nid;
+    o.patch=patch;overrides[norm(g.t)]=o;lsSet(LS_OVERRIDES,overrides);
+    openModal(g);refreshView(true);
   };
 }
 $('grid').addEventListener('click',e=>{
@@ -1261,6 +1373,21 @@ $('mTest').onclick=async()=>{
   }
   $('mText').textContent='🩺 Connection test — '+out.join(' · ');
   btn.disabled=false;
+};
+$('syncAll').onclick=async()=>{
+  const btn=$('syncAll');btn.disabled=true;const o0=btn.textContent;
+  let baked=(typeof BGG_BAKED!=='undefined')?BGG_BAKED:null;
+  if(!baked){try{const r=await fetch('data/bgg.json',{cache:'no-cache'});if(r.ok)baked=await r.json();}catch(_){}}
+  if(!baked){btn.textContent='⚠️ data not reachable';setTimeout(()=>{btn.textContent=o0;btn.disabled=false;},3000);return;}
+  let n=0;
+  for(const g of [...GAMES,...WISHLIST]){
+    const k=norm(g.t),bid=baked.ids&&baked.ids[k];
+    if(bid&&baked.things&&baked.things[bid]){
+      const o=overrides[k]||{};o.id=bid;o.det=baked.things[bid];overrides[k]=o;n++;
+    }
+  }
+  lsSet(LS_OVERRIDES,overrides);refreshView(true);
+  btn.textContent=`✅ Updated ${n} games`;setTimeout(()=>{btn.textContent=o0;btn.disabled=false;},3500);
 };
 $('restoreRemoved').onclick=()=>{
   const n=removedStore.C.length+removedStore.W.length;
