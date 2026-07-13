@@ -28,6 +28,12 @@ Just open **`BG_database.html`** in any browser — no server, no build step, no
   or override rating, genre, players, year, description, etc. Your edits are saved in the browser
   (`localStorage`), marked with a ✦ *edited* badge, win over future syncs, and can be undone with
   *Reset to original BGG data*. Works fully offline in `BGG_Galaxy.html`.
+- ⬇️ **Download portable HTML**: footer button that bakes the *current* state — your edits, added
+  games, removals, and all BGG data — into a fresh self-contained `BGG_Galaxy.html` you can share.
+  A person who opens it sees your version instantly, offline, with no localStorage needed.
+- 📊 **Export to Excel**: footer button that saves the whole collection + wishlist with all BGG
+  attributes (id, rating, players, play time, complexity, categories, designers, box-art URL, BGG
+  link…) as a real `.xlsx` file — no libraries, generated entirely in the browser.
 - 🗑 **Remove any game** (`BG_database.html`): every game's detail view has a Remove button.
   Removals are remembered in the browser; a *Restore removed games* button in the footer undoes them
 - 📦 **Import an updated spreadsheet** (`BG_database.html`): type
