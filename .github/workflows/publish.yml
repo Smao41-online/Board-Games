@@ -1,0 +1,66 @@
+name: Publish additions
+
+# Fired when the owner opens/edits an issue titled "[publish] …" (created by the
+# Publish button in the galaxy). The issue body carries a ```json block of new
+# games / id-fixes. This merges them into data/games.json; that push then
+# triggers bgg-data.yml, which enriches the newcomers from BGG using the token.
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: publish-additions
+  cancel-in-progress: false
+
+jobs:
+  merge:
+    # Only the repo owner/collaborators can trigger a data change this way.
+    if: >-
+      contains(github.event.issue.title, '[publish]') &&
+      (github.event.issue.author_association == 'OWNER' ||
+       github.event.issue.author_association == 'COLLABORATOR' ||
+       github.event.issue.author_association == 'MEMBER')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/board-game-database-solar-9avghh
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - id: apply
+        name: Merge additions into data/games.json
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: node scripts/apply_publish.mjs
+      - name: Commit
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/games.json
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "Publish additions from issue #${{ github.event.issue.number }}"
+            git pull --rebase origin claude/board-game-database-solar-9avghh || true
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Comment & close the issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const added = '${{ steps.apply.outputs.added }}' || '0';
+            const fixed = '${{ steps.apply.outputs.fixed }}' || '0';
+            const changed = '${{ steps.commit.outputs.changed }}' === 'true';
+            const body = changed
+              ? `✅ Published **${added}** new game(s) and **${fixed}** id-fix(es) into \`data/games.json\`. BoardGameGeek enrichment is running now — the online database and site will update shortly.`
+              : `ℹ️ Nothing new to add — every game in this request was already in the collection.`;
+            await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, body });
+            await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, state: 'closed' });

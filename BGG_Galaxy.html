@@ -402,6 +402,7 @@
   <button id="syncAll">⟳ Update all from data file</button>
   <button id="dlHtml">⬇️ Download portable HTML</button>
   <button id="dlXlsx">📊 Export to Excel (.xlsx)</button>
+  <button id="pubBtn">🚀 Publish additions online</button>
 </footer>
 
 <script>
@@ -1499,6 +1500,47 @@ function exportXlsx(){
   _dlBlob('Board_Games_collection.xlsx',_xlsx(headers,rows));
 }
 
+/* ================= publish local additions to the online database ================= */
+const REPO_SLUG='Smao41-online/Board-Games';
+function _cleanPub(g){const o={};for(const k of['t','c','l','p','a','n','u','b'])if(g[k]!=null&&g[k]!=='')o[k]=g[k];return o.t?o:null;}
+function publishAdditions(){
+  const adds={
+    collection:(userStore.C||[]).map(_cleanPub).filter(Boolean),
+    wishlist:(userStore.W||[]).map(_cleanPub).filter(Boolean)
+  };
+  const fix=[];
+  for(const key in overrides){
+    const o=overrides[key];if(!o||o.id==null)continue;
+    const g=[...GAMES,...WISHLIST].find(x=>norm(x.t)===key);
+    if(g&&!g.us)fix.push({t:g.t,b:o.id});   /* relink an existing game to the right BGG id */
+  }
+  const nAdd=adds.collection.length+adds.wishlist.length;
+  if(nAdd+fix.length===0){
+    alert('Nothing to publish yet.\n\nAdd a game with the “+” in the sun, or correct one with Edit, then publish.');
+    return;
+  }
+  const payload={add:adds,fix};
+  const pretty=JSON.stringify(payload,null,1);
+  const title='[publish] '+nAdd+' game(s), '+fix.length+' fix(es)';
+  const body='This issue publishes local additions to the shared collection.\n\n'
+    +'```json\n'+pretty+'\n```\n\n'
+    +'_Sent from BGG Galaxy. A workflow merges these into `data/games.json` and enriches them from BoardGameGeek._';
+  const base='https://github.com/'+REPO_SLUG+'/issues/new';
+  const url=base+'?title='+encodeURIComponent(title)+'&labels=publish-additions&body='+encodeURIComponent(body);
+  const summary='Publish '+nAdd+' added game(s) and '+fix.length+' correction(s) to the online database?\n\n'
+    +'This opens a pre-filled GitHub issue — just press “Submit new issue” there (you need to be signed in to GitHub). '
+    +'A workflow then adds them to the shared collection and enriches them from BoardGameGeek.';
+  if(url.length<7000){
+    if(confirm(summary))window.open(url,'_blank','noopener');
+  }else{
+    /* too large for a URL — hand over a file to attach */
+    _dlBlob('bgg_additions.json',new Blob([pretty],{type:'application/json'}));
+    alert('You have many additions, so I saved them as bgg_additions.json.\n\n'
+      +'A new-issue page will open: keep “[publish]” in the title, paste the file’s contents inside a ```json code block (or drag the file in), and submit.');
+    window.open(base+'?title='+encodeURIComponent(title)+'&labels=publish-additions','_blank','noopener');
+  }
+}
+
 /* ================= wiring ================= */
 $('tabC').onclick=()=>{tab='C';$('tabC').classList.add('on');$('tabW').classList.remove('on');refreshView();};
 $('tabW').onclick=()=>{tab='W';$('tabW').classList.add('on');$('tabC').classList.remove('on');refreshView();};
@@ -1572,6 +1614,7 @@ buildLangOptions();
 if(typeof BGG_BAKED!=='undefined' && BGG_BAKED){mergeBaked(BGG_BAKED);bakedLoaded=true;}
 $('dlHtml').onclick=downloadHtml;
 $('dlXlsx').onclick=exportXlsx;
+$('pubBtn').onclick=publishAdditions;
 refreshView(true);
 enrich();
 </script>

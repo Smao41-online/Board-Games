@@ -34,6 +34,14 @@ Just open **`BG_database.html`** in any browser — no server, no build step, no
   or override rating, genre, players, year, description, etc. Your edits are saved in the browser
   (`localStorage`), marked with a ✦ *edited* badge, win over future syncs, and can be undone with
   *Reset to original BGG data*. Works fully offline in `BGG_Galaxy.html`.
+- 🚀 **Publish additions online**: footer button that pushes the games you've *added* (and any
+  BGG-id corrections you made with Edit) back into the shared online database — no credentials in
+  the file. It opens a pre-filled **GitHub issue** titled `[publish] …` containing your additions as
+  JSON; you press *Submit new issue* (signed in to GitHub). The **Publish additions** workflow
+  (`.github/workflows/publish.yml`, owner-only) merges them into `data/games.json`, which triggers
+  the BGG enrichment run — so your additions reach the online database and hosted site automatically,
+  then flow back to everyone's copies on their next Sync. (Adding to `data/games.json` is the one
+  server-side write; everything else stays local to your browser.)
 - ⬇️ **Download portable HTML**: footer button that bakes the *current* state — your edits, added
   games, removals, and all BGG data — into a fresh self-contained `BGG_Galaxy.html` you can share.
   A person who opens it sees your version instantly, offline, with no localStorage needed.
