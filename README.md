@@ -19,10 +19,16 @@ Just open **`BG_database.html`** in any browser — no server, no build step, no
   (box art, players, age, play time, rating, genre) is filled in automatically. Works for
   both Collection and Wishlist; your additions are saved in the browser (`localStorage`),
   marked with a ✦ *added* badge, and can be removed again from their detail view
-- 🔄 **Sync a game** (`BG_database.html`, `BGG_Galaxy.html`): each detail view has a Sync button that
-  refreshes that game's data — from the weekly-updated `data/bgg.json` when hosted, from the baked-in
-  data in the offline file, or live from BGG when online. A footer **"Update all from data file"** button
-  refreshes the whole collection at once.
+- 🔄 **Sync a game** (`BG_database.html`, `BGG_Galaxy.html`): each detail view has a Sync button. When
+  online it pulls the freshest **token-enriched** data from the hosted repo
+  (`raw.githubusercontent.com …/data/bgg.json`); offline it uses the baked-in data; and for a brand-new
+  game not in any data file it resolves live via **Wikidata → BoardGameGeek** right in the browser
+  (no token needed client-side). Clicking Sync also resets the connectivity breaker, so it works even
+  if an earlier offline moment disabled network calls. A footer **"Update all from data file"** button
+  refreshes the whole collection from the online data at once.
+- ➕ **Add a game** now searches **Wikidata** (browser-friendly, no token) to resolve the title to a
+  BoardGameGeek entry and pulls its box art, rating, genre, players, etc. — so adding a game while
+  online fills in real data even in the offline file.
 - ✏️ **Edit a game** (`BG_database.html`, `BGG_Galaxy.html`): the detail view has an Edit button to fix
   a wrong box art (paste the correct image URL), relink the BGG id (with a *Re-fetch from this id* button),
   or override rating, genre, players, year, description, etc. Your edits are saved in the browser

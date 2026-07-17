@@ -544,16 +544,76 @@ async function getJson(url){
   if(++consecFails>=8){offline=true;missionFail();}
   return null; /* transport failure — caller must NOT cache "not found" */
 }
+/* ---- online connectivity, token-enriched data, and client-side BGG resolution ---- */
+function resetOnline(){offline=false;consecFails=0;}
+const REPO_BRANCH='claude/board-game-database-solar-9avghh';
+const ONLINE_DATA=[
+  'https://raw.githubusercontent.com/Smao41-online/Board-Games/'+REPO_BRANCH+'/data/bgg.json',
+  'https://smao41-online.github.io/Board-Games/data/bgg.json',
+  'data/bgg.json'
+];
+async function fetchDataFile(url){
+  try{const ctrl=new AbortController();const k=setTimeout(()=>ctrl.abort(),15000);
+    const r=await fetch(url,{signal:ctrl.signal,cache:'no-cache'});clearTimeout(k);
+    if(r.status===200)return await r.json();}catch(e){}
+  return null;
+}
+async function onlineData(key){
+  for(const url of ONLINE_DATA){const b=await fetchDataFile(url);
+    if(b&&b.ids&&b.ids[key]&&b.things&&b.things[b.ids[key]])return {id:b.ids[key],det:b.things[b.ids[key]],all:b};}
+  return null;
+}
+/* Wikidata resolves title -> BGG id in the browser (sends CORS with &origin=*, no token needed) */
+async function wdFetch(url){
+  try{const ctrl=new AbortController();const k=setTimeout(()=>ctrl.abort(),15000);
+    const r=await fetch(url,{signal:ctrl.signal});clearTimeout(k);
+    if(r.status===200)return await r.text();}catch(e){}
+  return null;
+}
+async function wdSearchIds(q,lang){
+  const B='https://www.wikidata.org/w/api.php';
+  let t=await wdFetch(B+'?action=wbsearchentities&search='+encodeURIComponent(q)+'&language='+(lang||'en')+'&uselang=en&type=item&limit=8&format=json&origin=*');
+  if(!t)return null;
+  let qids;try{qids=(JSON.parse(t).search||[]).map(x=>x.id);}catch(e){return null;}
+  if(!qids.length)return [];
+  t=await wdFetch(B+'?action=wbgetentities&ids='+qids.join('|')+'&props=claims|labels&languages=en|cs&format=json&origin=*');
+  if(!t)return null;
+  const out=[];
+  try{const ents=JSON.parse(t).entities||{};
+    for(const qid of qids){const e=ents[qid];if(!e)continue;
+      const c=((e.claims||{}).P2339||[])[0];
+      const bid=+((c&&c.mainsnak&&c.mainsnak.datavalue&&c.mainsnak.datavalue.value)||0);
+      if(bid)out.push({id:bid,type:'boardgame',name:((e.labels&&((e.labels.en&&e.labels.en.value)||(e.labels.cs&&e.labels.cs.value)))||q),year:0});}
+  }catch(e){return null;}
+  return out;
+}
+function nameMatchLoose(name,title,czech){
+  const nn=norm(name);if(!nn)return false;
+  for(const s of [title,czech]){if(!s)continue;const ns=norm(s);
+    if(ns===nn)return true;
+    if(ns.startsWith(nn)&&nn.length>=4)return true;
+    if(nn.startsWith(ns)&&ns.length>=4)return true;}
+  return false;
+}
+async function resolveLive(title,czech){
+  const tries=[[title,'en']];const short=title.split(/[:(–]/)[0].trim();
+  if(short&&norm(short)!==norm(title)&&short.length>3)tries.push([short,'en']);
+  if(czech&&norm(czech)!==norm(title))tries.push([czech,'cs']);
+  for(const [q,lang] of tries){
+    const cands=await wdSearchIds(q,lang);if(!cands||!cands.length)continue;
+    const hit=pickCandidate(cands,q);if(!hit)continue;
+    const det=await fetchThingJson(hit.id);
+    if(det&&nameMatchLoose(det.name,title,czech))return {id:hit.id,det};
+  }
+  return null;
+}
+
+/* title search for the add dialog — resolves via Wikidata (client-side, no token) */
 async function searchBGG(q){
-  const d=await getJson(`${GAPI}/search/boardgame?q=${encodeURIComponent(q)}&showcount=20`);
-  if(!d||d.__http)return null;
-  const items=Array.isArray(d)?d:(d.items||[]);
-  return items.map(it=>({
-    id:+(it.objectid||it.id||0),
-    type:it.subtype||it.objecttype||'boardgame',
-    name:typeof it.name==='object'?(it.name?.name||''):String(it.name||''),
-    year:+(it.yearpublished||0)
-  })).filter(x=>x.id);
+  resetOnline();
+  let c=await wdSearchIds(q,'en');
+  if(!c||!c.length){const c2=await wdSearchIds(q,'cs');if(c2&&c2.length)c=c2;}
+  return c||[];
 }
 function pickCandidate(cands,query){
   const nq=norm(query);
@@ -963,26 +1023,36 @@ function openModal(g){
 }
 /* ---- Sync: refresh one game from data/bgg.json (authoritative), else live BGG ---- */
 async function syncGame(g,btn){
+  resetOnline();
   const key=norm(g.t), orig=btn?btn.textContent:'';
+  const online=navigator.onLine!==false;
   if(btn)btn.textContent='⏳ Syncing…';
   let id=idOf(g), det=null, src='';
-  const _inl=(typeof BGG_BAKED!=='undefined')?BGG_BAKED:null;
-  if(_inl&&_inl.ids&&_inl.ids[key]&&_inl.things&&_inl.things[_inl.ids[key]]){id=_inl.ids[key];det=_inl.things[id];src='inline';}
-  if(!det){try{
-    const r=await fetch('data/bgg.json',{cache:'no-cache'});
-    if(r.ok){const b=await r.json();const bid=b.ids&&b.ids[key];
-      if(bid&&b.things&&b.things[bid]){id=bid;det=b.things[bid];src='data file';}}
-  }catch(_){}}
+  /* 1) freshest: token-enriched data from the online repo (raw/pages) or same-origin file */
+  if(online){
+    if(btn)btn.textContent='🌐 Checking online…';
+    const od=await onlineData(key);
+    if(od){id=od.id;det=od.det;src='online';}
+  }
+  /* 2) offline fallback: inline baked data */
   if(!det){
-    if(!id){const cands=await searchBGG(g.t);const hit=cands&&pickCandidate(cands,g.t);if(hit)id=hit.id;}
-    if(id)det=await fetchThingJson(id);
-    if(det)src='BGG live';
+    const _inl=(typeof BGG_BAKED!=='undefined')?BGG_BAKED:null;
+    if(_inl&&_inl.ids&&_inl.ids[key]&&_inl.things&&_inl.things[_inl.ids[key]]){id=_inl.ids[key];det=_inl.things[id];src='inline';}
+  }
+  /* 3) a brand-new game not in any data file: resolve live via Wikidata -> BGG */
+  if(!det&&online){
+    if(btn)btn.textContent='🌐 Fetching from BGG…';
+    if(!id){const r=await resolveLive(g.t,g.c);if(r){id=r.id;det=r.det;src='BGG live';}}
+    else{const d2=await fetchThingJson(id);if(d2){det=d2;src='BGG live';}}
   }
   if(det){
     const o=overrides[key]||{};o.id=id;o.det=det;overrides[key]=o;   /* keep any manual patch on top */
     lsSet(LS_OVERRIDES,overrides);
     openModal(g);refreshView(true);
-  }else if(btn){btn.textContent='⚠️ offline / not found';setTimeout(()=>{btn.textContent=orig;},2600);}
+  }else if(btn){
+    btn.textContent=online?'⚠️ not found on BGG':'⚠️ offline — connect and retry';
+    setTimeout(()=>{btn.textContent=orig;},3000);
+  }
 }
 /* ---- Edit: manual per-game overrides (fix wrong box art, relink BGG id, …) ---- */
 function openEdit(g){
@@ -1076,6 +1146,7 @@ $('agTitle').addEventListener('input',()=>{
   if(q.length<3){$('agSugs').innerHTML='';$('agStatus').textContent='Start typing a title (3+ letters)…';return;}
   $('agStatus').textContent='🛰️ Scanning BoardGameGeek…';
   addTimer=setTimeout(async()=>{
+    resetOnline();
     const cands=await searchBGG(q)||[];
     if($('agTitle').value.trim()!==q)return;
     cands.sort((a,b)=>(b.type==='boardgame')-(a.type==='boardgame')||b.year-a.year);
@@ -1467,7 +1538,10 @@ $('mTest').onclick=async()=>{
 };
 $('syncAll').onclick=async()=>{
   const btn=$('syncAll');btn.disabled=true;const o0=btn.textContent;
-  let baked=(typeof BGG_BAKED!=='undefined')?BGG_BAKED:null;
+  resetOnline();
+  let baked=null;
+  if(navigator.onLine!==false){btn.textContent='🌐 Fetching latest…';for(const url of ONLINE_DATA){baked=await fetchDataFile(url);if(baked)break;}}
+  if(!baked&&typeof BGG_BAKED!=='undefined')baked=BGG_BAKED;
   if(!baked){try{const r=await fetch('data/bgg.json',{cache:'no-cache'});if(r.ok)baked=await r.json();}catch(_){}}
   if(!baked){btn.textContent='⚠️ data not reachable';setTimeout(()=>{btn.textContent=o0;btn.disabled=false;},3000);return;}
   let n=0;
