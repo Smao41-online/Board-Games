@@ -28,7 +28,14 @@ Just open **`BG_database.html`** in any browser — no server, no build step, no
   refreshes the whole collection from the online data at once.
 - ➕ **Add a game** now searches **Wikidata** (browser-friendly, no token) to resolve the title to a
   BoardGameGeek entry and pulls its box art, rating, genre, players, etc. — so adding a game while
-  online fills in real data even in the offline file.
+  online fills in real data even in the offline file. You can also **paste a BGG link or id**
+  (e.g. `boardgamegeek.com/boardgame/297562/namiji`) straight into the title box — the dialog fetches
+  that exact entry, which also covers games that aren't on Wikidata yet.
+- 📴 **Add a game offline**: if the search can't reach the internet, the dialog says so and the save
+  button switches to *Add offline (sync later)* — the game is stored with the basic info you typed.
+  When you're back online, open the game and press **🔄 Sync** (or use **🚀 Publish** first so the
+  server enriches it with the BGG token, then Sync) and the full data flows into both the offline
+  file (re-generate it with *Download portable HTML*) and the online database.
 - ✏️ **Edit a game** (`BG_database.html`, `BGG_Galaxy.html`): the detail view has an Edit button to fix
   a wrong box art (paste the correct image URL), relink the BGG id (with a *Re-fetch from this id* button),
   or override rating, genre, players, year, description, etc. Your edits are saved in the browser

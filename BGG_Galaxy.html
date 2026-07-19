@@ -612,9 +612,12 @@ async function resolveLive(title,czech){
 /* title search for the add dialog — resolves via Wikidata (client-side, no token) */
 async function searchBGG(q){
   resetOnline();
-  let c=await wdSearchIds(q,'en');
-  if(!c||!c.length){const c2=await wdSearchIds(q,'cs');if(c2&&c2.length)c=c2;}
-  return c||[];
+  const c1=await wdSearchIds(q,'en');
+  if(c1&&c1.length)return c1;
+  const c2=await wdSearchIds(q,'cs');
+  if(c2&&c2.length)return c2;
+  if(c1===null&&c2===null)return null;  /* transport failed — likely offline */
+  return [];
 }
 function pickCandidate(cands,query){
   const nq=norm(query);
@@ -1051,7 +1054,7 @@ async function syncGame(g,btn){
     lsSet(LS_OVERRIDES,overrides);
     openModal(g);refreshView(true);
   }else if(btn){
-    btn.textContent=online?'⚠️ not found on BGG':'⚠️ offline — connect and retry';
+    btn.textContent=online?'⚠️ not found — 🚀 Publish it, wait a bit, Sync again':'⚠️ offline — connect and retry';
     setTimeout(()=>{btn.textContent=orig;},3000);
   }
 }
@@ -1134,7 +1137,8 @@ function openAdd(){
   $('agLang').value=tab==='C'?'CZ':'';
   $('agDest').value=tab;
   $('agSugs').innerHTML='';$('agPreview').innerHTML='';
-  $('agStatus').textContent='Start typing a title — I will search BoardGameGeek for you…';
+  $('agSave').textContent='🚀 Add game';
+  $('agStatus').textContent='Start typing a title — I will search BoardGameGeek for you… (or paste a BGG link)';
   addOverlay.classList.add('show');
   setTimeout(()=>$('agTitle').focus(),60);
 }
@@ -1148,27 +1152,44 @@ $('agTitle').addEventListener('input',()=>{
   $('agStatus').textContent='🛰️ Scanning BoardGameGeek…';
   addTimer=setTimeout(async()=>{
     resetOnline();
-    const cands=await searchBGG(q)||[];
+    $('agSave').textContent='🚀 Add game';
+    /* pasted a BGG link or numeric id? fetch that exact entry */
+    const idm=q.match(/boardgame(?:expansion)?\/(\d+)/)||q.match(/^#?(\d{4,7})$/);
+    if(idm){
+      $('agStatus').textContent='📡 Fetching BGG entry #'+idm[1]+'…';
+      const det=await fetchThingJson(+idm[1]);
+      if($('agTitle').value.trim()!==q)return;
+      if(det){
+        addSel=+idm[1];addDetails=det;
+        $('agTitle').value=det.name||q;
+        $('agSugs').innerHTML='';
+        renderAgPreview(det);
+        $('agStatus').textContent='✅ Attributes locked in — ready to launch.';
+      }else{
+        $('agStatus').textContent='⚠️ Could not fetch that BGG entry — check the id / your connection.';
+      }
+      return;
+    }
+    const cands=await searchBGG(q);
     if($('agTitle').value.trim()!==q)return;
+    if(cands===null){
+      /* offline: guide the basic-add-now, sync-later flow */
+      $('agSugs').innerHTML='';
+      $('agStatus').textContent='📴 Offline — BGG search unavailable. Add the game with basic info now, then use 🔄 Sync on it when online.';
+      $('agSave').textContent='💾 Add offline (sync later)';
+      return;
+    }
     cands.sort((a,b)=>(b.type==='boardgame')-(a.type==='boardgame')||b.year-a.year);
     const top=cands.slice(0,8);
     $('agSugs').innerHTML=top.map(c=>
       `<div class="sug" data-id="${c.id}">${esc(c.name)}<span>${c.year||''}${c.type==='boardgameexpansion'?' · expansion':''}</span></div>`).join('');
     $('agStatus').textContent=top.length
       ?`Found ${top.length} match${top.length>1?'es':''} — pick the right one:`
-      :'Nothing found on BGG — you can still add it manually below.';
+      :'Not in the index — paste the game\'s BGG link/id, or add it manually (Publish + Sync will fill the data later).';
   },450);
 });
-$('agSugs').addEventListener('click',async e=>{
-  const el=e.target.closest('.sug');if(!el)return;
-  for(const s of document.querySelectorAll('.sug'))s.classList.remove('on');
-  el.classList.add('on');
-  const id=+el.dataset.id;
-  $('agStatus').textContent='📡 Downloading attributes from BGG…';
-  const det=await fetchThingJson(id);
-  if(!det){$('agStatus').textContent='⚠️ Could not fetch details — try again, or add manually.';return;}
-  addSel=id;addDetails=det;
-  const d=addDetails,hue=hueOf(d.name||'x');
+function renderAgPreview(d){
+  const hue=hueOf(d.name||'x');
   $('agPreview').innerHTML=`
     <div class="m-img" style="width:120px;height:120px;flex:0 0 auto">${d.thumb
       ?`<img src="${esc(d.thumb)}" alt="">`
@@ -1180,6 +1201,17 @@ $('agSugs').addEventListener('click',async e=>{
       <div>BGG rating<br><b>${d.rating?'★ '+d.rating.toFixed(1):'–'}</b></div>
       <div style="grid-column:1/-1">Genre<br><b>${esc(d.cats.slice(0,4).join(', ')||'–')}</b></div>
     </div>`;
+}
+$('agSugs').addEventListener('click',async e=>{
+  const el=e.target.closest('.sug');if(!el)return;
+  for(const s of document.querySelectorAll('.sug'))s.classList.remove('on');
+  el.classList.add('on');
+  const id=+el.dataset.id;
+  $('agStatus').textContent='📡 Downloading attributes from BGG…';
+  const det=await fetchThingJson(id);
+  if(!det){$('agStatus').textContent='⚠️ Could not fetch details — try again, or add manually.';return;}
+  addSel=id;addDetails=det;
+  renderAgPreview(det);
   $('agStatus').textContent='✅ Attributes locked in — ready to launch.';
 });
 $('agSave').onclick=()=>{
