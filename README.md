@@ -49,6 +49,11 @@ Just open **`BG_database.html`** in any browser — no server, no build step, no
   the BGG enrichment run — so your additions reach the online database and hosted site automatically,
   then flow back to everyone's copies on their next Sync. (Adding to `data/games.json` is the one
   server-side write; everything else stays local to your browser.)
+  **Timing**: after you press *Submit new issue*, the merge lands in under a minute and the BGG
+  enrichment run takes ~5–10 minutes — then press 🔄 Sync (or *Update all from data file*).
+  The bot comments on your issue with the result. Note the JSON must be **pasted in the issue
+  description** — attaching it as a file does not work (the bot only reads the description text);
+  the Publish button handles this for you, including a clipboard copy when the list is large.
 - ⬇️ **Download portable HTML**: footer button that bakes the *current* state — your edits, added
   games, removals, and all BGG data — into a fresh self-contained `BGG_Galaxy.html` you can share.
   A person who opens it sees your version instantly, offline, with no localStorage needed.

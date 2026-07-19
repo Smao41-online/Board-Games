@@ -59,8 +59,13 @@ jobs:
             const added = '${{ steps.apply.outputs.added }}' || '0';
             const fixed = '${{ steps.apply.outputs.fixed }}' || '0';
             const changed = '${{ steps.commit.outputs.changed }}' === 'true';
-            const body = changed
-              ? `✅ Published **${added}** new game(s) and **${fixed}** id-fix(es) into \`data/games.json\`. BoardGameGeek enrichment is running now — the online database and site will update shortly.`
+            const nojson = '${{ steps.apply.outputs.nojson }}' === 'true';
+            const body = nojson
+              ? '⚠️ I could not find a ```json code block in this issue\'s **description**, so nothing was published.\n\n' +
+                'The Publish button\'s JSON must be *pasted as text* into the description — **file attachments are not read**. ' +
+                'Please press 🚀 *Publish additions online* in the galaxy again and follow the steps it shows (it puts the JSON on your clipboard when the list is large).'
+              : changed
+              ? `✅ Published **${added}** new game(s) and **${fixed}** id-fix(es) into \`data/games.json\`. BoardGameGeek enrichment is running now (~5–10 min) — then press 🔄 Sync in the galaxy.`
               : `ℹ️ Nothing new to add — every game in this request was already in the collection.`;
             await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, body });
             await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, state: 'closed' });

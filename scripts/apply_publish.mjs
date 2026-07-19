@@ -7,7 +7,11 @@ import fs from 'node:fs';
 
 const body = process.env.ISSUE_BODY || '';
 const m = body.match(/```json\s*([\s\S]*?)```/);
-if (!m) { console.log('No ```json block in the issue — nothing to do.'); process.exit(0); }
+if (!m) {
+  console.log('No ```json block in the issue — nothing to do.');
+  fs.writeFileSync(process.env.GITHUB_OUTPUT || '/dev/null', 'nojson=true\n', { flag: 'a' });
+  process.exit(0);
+}
 
 let payload;
 try { payload = JSON.parse(m[1]); }
