@@ -2,8 +2,13 @@ name: Publish additions
 
 # Fired when the owner opens/edits an issue titled "[publish] …" (created by the
 # Publish button in the galaxy). The issue body carries a ```json block of new
-# games / id-fixes. This merges them into data/games.json; that push then
-# triggers bgg-data.yml, which enriches the newcomers from BGG using the token.
+# games / id-fixes.
+#
+# IMPORTANT: this job enriches the new games from BoardGameGeek ITSELF, in the
+# same run, and commits data/games.json + data/bgg.json together. It must not
+# rely on "commit games.json, let bgg-data.yml pick it up": a push made with the
+# default GITHUB_TOKEN does not trigger other workflows, so that chain silently
+# never ran and published games never received any data.
 
 on:
   issues:
@@ -26,6 +31,7 @@ jobs:
        github.event.issue.author_association == 'COLLABORATOR' ||
        github.event.issue.author_association == 'MEMBER')
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with:
@@ -38,34 +44,51 @@ jobs:
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
         run: node scripts/apply_publish.mjs
-      - name: Commit
+
+      - name: Enrich the new games from BoardGameGeek
+        if: steps.apply.outputs.nojson != 'true'
+        env:
+          BGG_TOKEN: ${{ secrets.BGG_TOKEN }}
+          MAX_MINUTES: 25          # keep the issue reply timely; leftovers go to the weekly run
+        run: node scripts/fetch_bgg.mjs
+
+      - id: report
+        name: Work out what actually got data
+        if: steps.apply.outputs.nojson != 'true'
+        run: node scripts/publish_report.mjs
+
+      - name: Commit data files
         id: commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/games.json
+          git add data/games.json data/bgg.json
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
-            git commit -m "Publish additions from issue #${{ github.event.issue.number }}"
+            git commit -m "Publish additions from issue #${{ github.event.issue.number }} (with BGG data)"
             git pull --rebase origin claude/board-game-database-solar-9avghh || true
             git push
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
+
       - name: Comment & close the issue
         uses: actions/github-script@v7
         with:
           script: |
-            const added = '${{ steps.apply.outputs.added }}' || '0';
-            const fixed = '${{ steps.apply.outputs.fixed }}' || '0';
-            const changed = '${{ steps.commit.outputs.changed }}' === 'true';
+            const fs = require('fs');
             const nojson = '${{ steps.apply.outputs.nojson }}' === 'true';
-            const body = nojson
-              ? '⚠️ I could not find a ```json code block in this issue\'s **description**, so nothing was published.\n\n' +
+            let body;
+            if (nojson) {
+              body = '⚠️ I could not find a ```json code block in this issue\'s **description**, so nothing was published.\n\n' +
                 'The Publish button\'s JSON must be *pasted as text* into the description — **file attachments are not read**. ' +
-                'Please press 🚀 *Publish additions online* in the galaxy again and follow the steps it shows (it puts the JSON on your clipboard when the list is large).'
-              : changed
-              ? `✅ Published **${added}** new game(s) and **${fixed}** id-fix(es) into \`data/games.json\`. BoardGameGeek enrichment is running now (~5–10 min) — then press 🔄 Sync in the galaxy.`
-              : `ℹ️ Nothing new to add — every game in this request was already in the collection.`;
+                'Please press 🚀 *Publish additions online* in the galaxy again and follow the steps it shows.';
+            } else {
+              const added = '${{ steps.apply.outputs.added }}' || '0';
+              const fixed = '${{ steps.apply.outputs.fixed }}' || '0';
+              let report = '';
+              try { report = fs.readFileSync('publish_report.md', 'utf8'); } catch (e) {}
+              body = `Merged **${added}** new game(s) and **${fixed}** id-fix(es), then harvested BoardGameGeek in the same run.\n\n${report}`;
+            }
             await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, body });
             await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, state: 'closed' });
