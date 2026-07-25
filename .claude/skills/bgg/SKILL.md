@@ -94,8 +94,16 @@ a localStorage game also exists in the shipped list.
 
 - A publish issue works only if its **description** contains a ```json block —
   attachments are ignored. The bot comments an explanation when it's missing.
-- After the publish workflow merges, `bgg-data.yml` runs automatically.
-  Watch for completion with plain git (webhooks don't fire for it):
+- `publish.yml` merges **and enriches in the same job**, then comments a per-game
+  verdict. It must stay that way: a commit pushed with the default `GITHUB_TOKEN`
+  does not trigger other workflows, so the old "commit games.json and let
+  bgg-data.yml pick it up" chain never ran (see invariant 0 in CLAUDE.md).
+  **When touching any workflow, confirm a run really exists for the new sha** —
+  `actions_list list_workflow_runs` and match `head_sha`; an absent run is the
+  signature of this trap.
+- Manually enriching pending games: dispatch `bgg-data.yml`
+  (`actions_run_trigger run_workflow`, ref = the project branch).
+- Watch for completion with plain git (webhooks don't fire for it):
   ```bash
   # background poll until the CI commit lands
   for i in $(seq 1 60); do git fetch -q origin claude/board-game-database-solar-9avghh; \

@@ -26,9 +26,12 @@ the step-by-step maintenance procedures; use it for any change to this project.
   Bearer scheme). Commits `data/bgg.json` even on timeout (`if: always()`).
   A run takes ~5–10 min when only a few games are new.
 - `publish.yml` — fires on issues titled `[publish] …` from OWNER/COLLABORATOR/MEMBER.
-  Runs apply_publish, commits games.json (which triggers bgg-data), comments and
-  closes the issue. Reads **only the issue description text** — attachments are ignored.
+  Runs apply_publish, **then runs `fetch_bgg.mjs` itself** and commits
+  games.json + bgg.json together, then comments a per-game report
+  (`scripts/publish_report.mjs`) and closes the issue. Reads **only the issue
+  description text** — attachments are ignored.
 - `pages.yml` — deploys the branch to `gh-pages` → https://smao41-online.github.io/Board-Games/
+  Triggers on push **and on `workflow_run`** of the two workflows above.
 
 ## Data flow (the publish loop)
 
@@ -41,6 +44,21 @@ enrichment ~5–10 min.
 
 ## Hard-won invariants — breaking these caused real field failures
 
+0. **A workflow must never rely on its own commit triggering another workflow.**
+   GitHub suppresses events from pushes made with the default `GITHUB_TOKEN`, so
+   `publish.yml` committing games.json did NOT start `bgg-data.yml`: published
+   games silently never got data while the issue comment claimed enrichment was
+   running. Any step that must follow a bot commit either runs **in the same
+   job** (what publish.yml now does with `fetch_bgg.mjs`) or triggers on
+   `workflow_run` (what pages.yml now does). Verify with
+   `actions_list list_workflow_runs` that a run actually exists for the sha.
+0b. **Never promise a background step you have not verified fires** — report what
+   actually happened per game instead (`scripts/publish_report.mjs`).
+0c. **Placeholder titles are poison.** 29 collection rows shipped with
+   `t:"zzz: czech only"` (spreadsheet rows lacking an English name). They all
+   normalised to one key, so none could hold its own BGG record, and the cards
+   showed that literal text. Titles must be real and unique; `t` falls back to
+   the Czech name.
 1. **`norm()` must stay byte-identical** in BG_database.html, fetch_bgg.mjs and
    apply_publish.mjs: lowercase → NFD strip combining marks → remove `’´'\`` →
    non-alnum→space → trim. All id lookups key on it.
