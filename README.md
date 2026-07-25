@@ -3,11 +3,19 @@
 A solar-system-themed, single-file database of the board game collection
 (**692 games** + **15 wishlist items**), built from `Board_Games_usakova_akce_4.xlsx`.
 
-## How to use
+## Which file to open
 
-Just open **`BG_database.html`** in any browser — no server, no build step, no dependencies.
-(`index.html` is the original read-only version; `BoardGames.html` adds the add-game feature;
-`BG_database.html` is the latest and adds remove-any-game plus spreadsheet import.)
+| If you… | Open | Why |
+|---|---|---|
+| want it to **always work, even with no internet** | **`BGG_Galaxy.html`** | Every game's BGG data (box art, ratings, genres) is stored *inside* the file. |
+| are online, or use the hosted site | `BG_database.html` | Small file; it downloads the game data on start-up. **Without internet it has no data** and shows planets instead of box art. |
+
+Both files have the same features. `index.html` is the original read-only version and
+`BoardGames.html` an earlier step — kept for reference.
+
+If a page ever says *"no built-in BoardGameGeek data"*, you opened `BG_database.html`
+offline — switch to `BGG_Galaxy.html`. The 🩺 *Test relays* button in the 🛰️ Mission
+control panel gives a plain-language verdict on what is and isn't working.
 
 - 🔭 **Search** by English or Czech title
 - 🌍 **Filter** by language, player count, and genre

@@ -179,7 +179,8 @@
     backdrop-filter:blur(8px);display:none}
   #mission.show{display:block}
   #mission h4{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
-  #mission p{font-size:12.5px;color:var(--muted);line-height:1.45}
+  #mission p{font-size:12.5px;color:var(--muted);line-height:1.45;white-space:pre-line;
+    max-height:46vh;overflow-y:auto}
   .bar{height:6px;border-radius:99px;background:rgba(122,140,255,.15);margin-top:10px;overflow:hidden}
   .bar i{display:block;height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,var(--teal),var(--accent));transition:width .4s}
   .m-actions{gap:8px;margin-top:11px;flex-wrap:wrap}
@@ -730,8 +731,9 @@ function zhOf(g){const z=zhMap[norm(g.t)];return z&&z.thumb?z:null;}
 /* ================= mission control ================= */
 const mission=$('mission');
 let missionTimer=null;
+let missionHold=false;   /* a diagnostic report is on screen — keep it readable */
 function missionShow(t,frac){
-  if(offline)return;   /* a failure report is on screen — do not overwrite it */
+  if(offline||missionHold)return;   /* a failure/test report is up — do not overwrite it */
   clearTimeout(missionTimer);
   mission.classList.add('show');
   $('mActions').style.display='none';
@@ -739,6 +741,7 @@ function missionShow(t,frac){
   if(frac!=null)$('mBar').style.width=(frac*100).toFixed(1)+'%';
 }
 function missionDone(msg){
+  if(missionHold)return;
   clearTimeout(missionTimer);
   $('mActions').style.display='none';
   $('mText').textContent=msg||'All systems nominal — galaxy fully mapped. ✨';
@@ -746,9 +749,23 @@ function missionDone(msg){
   missionTimer=setTimeout(()=>mission.classList.remove('show'),15000);
 }
 function missionFail(){
+  if(missionHold)return;
   clearTimeout(missionTimer);
   const pool=[...GAMES,...WISHLIST];
   const detailed=pool.filter(g=>{const id=idMap[norm(g.t)];return id>0&&things[id];}).length;
+  const hasInline=(typeof BGG_BAKED!=='undefined')&&BGG_BAKED;
+  if(!detailed&&!hasInline){
+    /* This copy carries no BGG data and none could be downloaded: almost always
+       BG_database.html opened from the desktop while offline. Say exactly that
+       instead of blaming BoardGameGeek. */
+    mission.classList.add('show');
+    $('mText').textContent='📴 This copy has no built-in BoardGameGeek data and the online database could not be reached.'
+      +' Open BGG_Galaxy.html instead — it has every game’s data inside it and needs no internet.'
+      +' (This file, BG_database.html, downloads its data when you are online.)';
+    $('mBar').style.width='0%';
+    $('mActions').style.display='flex';
+    return;
+  }
   if(detailed>pool.length*0.2){
     /* the built-in data carries the site — inform quietly instead of alarming */
     mission.classList.add('show');
@@ -783,12 +800,20 @@ async function loadBaked(){
   if(bakedLoaded)return;
   bakedLoaded=true;
   if(typeof BGG_BAKED!=='undefined' && BGG_BAKED && mergeBaked(BGG_BAKED)){refreshView(true);return;}
-  try{
-    const res=await fetch('data/bgg.json',{cache:'no-cache'});
-    if(!res.ok)return;
-    mergeBaked(await res.json());
-    refreshView(true);
-  }catch(e){/* live enrichment takes over */}
+  /* No inline data (this is BG_database.html, whose slot stays empty). Try the
+     data file: same-origin when hosted, and — crucially — the raw/pages copies,
+     which send CORS headers and so work even from a file:// page. Without this
+     an offline-opened copy would try to resolve ~640 games one by one and fail. */
+  for(const url of ONLINE_DATA){
+    const b=await fetchDataFile(url);
+    if(b&&mergeBaked(b)){
+      refreshView(true);
+      const n=Object.keys(b.things||{}).length;
+      missionDone(`✅ Loaded BGG data for ${n} games from the online database.`);
+      return;
+    }
+  }
+  /* nothing reachable — missionFail() explains what to open instead */
 }
 
 /* ================= enrichment orchestrator ================= */
@@ -1611,14 +1636,38 @@ $('rescan').onclick=()=>{
   localStorage.removeItem(LS_IDS);localStorage.removeItem(LS_THINGS);localStorage.removeItem(LS_ZH);location.reload();
 };
 $('mRetry').onclick=()=>location.reload();
-$('mHide').onclick=()=>mission.classList.remove('show');
+$('mHide').onclick=()=>{missionHold=false;mission.classList.remove('show');};
 $('mTest').onclick=async()=>{
   const btn=$('mTest');btn.disabled=true;
+  missionHold=true;resetOnline();     /* keep the report on screen, un-trip the breaker */
+  /* Each check exercises the path the app really uses. Notably, api.geekdo.com is
+     never called bare — it has no CORS headers, so a direct probe always "fails"
+     and used to make a healthy setup look broken. getJson() walks the relays. */
   const checks=[
-    ['baked data', async()=>{if(typeof BGG_BAKED!=='undefined'&&BGG_BAKED)return '✅ inline ('+Object.keys(BGG_BAKED.things||{}).length+')';try{const r=await fetch('data/bgg.json',{cache:'no-cache'});return r.ok?'✅ data file':'⚠️ HTTP '+r.status;}catch(e){return '❌ none';}}],
-    ['BGG JSON API (details)', async()=>{const r=await fetch(`${GAPI}/api/geekitems?objectid=13&objecttype=thing&nosession=1`);return r.ok?'✅ OK':'⚠️ HTTP '+r.status;}],
-    ['BGG JSON API (search)', async()=>{const r=await fetch(`${GAPI}/search/boardgame?q=catan&showcount=3`);return r.ok?'✅ OK':'⚠️ HTTP '+r.status;}],
-    ['BGG image CDN (box art)', async()=>new Promise(res=>{
+    ['Game data in this file', async()=>{
+      if(typeof BGG_BAKED!=='undefined'&&BGG_BAKED)return '✅ built in ('+Object.keys(BGG_BAKED.things||{}).length+' games)';
+      const n=Object.keys(things||{}).length;
+      return n?`✅ ${n} games downloaded/cached`:'❌ none — open BGG_Galaxy.html for the offline copy';
+    }],
+    ['Online database (sync source)', async()=>{
+      for(const url of ONLINE_DATA){
+        const b=await fetchDataFile(url);
+        if(b&&b.things)return `✅ reachable (${Object.keys(b.things).length} games) via ${url.includes('raw.')?'raw.githubusercontent':url.includes('github.io')?'github.io':'local file'}`;
+      }
+      return '❌ unreachable — you appear to be offline';
+    }],
+    ['Title lookup (Wikidata)', async()=>{
+      const c=await wdSearchIds('Catan','en');
+      if(c===null)return '❌ blocked — no internet, or Wikidata unreachable';
+      return c.length?`✅ OK (${c.length} candidates)`:'⚠️ reachable but no match for the test title';
+    }],
+    ['Game details (BGG via relays)', async()=>{
+      const d=await getJson(`${GAPI}/api/geekitems?objectid=13&objecttype=thing&nosession=1`);
+      if(d&&d.item)return '✅ OK'+(jIdx?` (relay ${jIdx})`:' (direct)');
+      if(d&&d.__http)return '⚠️ HTTP '+d.__http;
+      return '❌ blocked — adding brand-new games will need 🚀 Publish + 🔄 Sync';
+    }],
+    ['Box art images', async()=>new Promise(res=>{
       const t=Object.values(things).find(x=>x&&x.thumb&&String(x.thumb).includes('geekdo-images'));
       if(!t)return res('⚠️ nothing to test yet');
       const im=new Image();
@@ -1628,6 +1677,7 @@ $('mTest').onclick=async()=>{
       im.src=t.thumb;})]
   ];
   const out=[];
+  mission.classList.add('show');
   for(const [name,fn] of checks){
     $('mText').textContent=`🩺 Testing connections… ${out.length+1}/${checks.length} (${name})`;
     const t0=Date.now();
@@ -1635,7 +1685,15 @@ $('mTest').onclick=async()=>{
     try{verdict=await fn();}catch(e){verdict='❌ '+((e&&e.name==='AbortError')?'timeout':'blocked');}
     out.push(`${name}: ${verdict} ${((Date.now()-t0)/1000).toFixed(1)}s`);
   }
-  $('mText').textContent='🩺 Connection test — '+out.join(' · ');
+  /* one-line verdict so the user knows whether anything is actually wrong */
+  const dataOK=out[0].includes('✅')||out[1].includes('✅');
+  const liveOK=out[2].includes('✅')&&out[3].includes('✅');
+  const verdict=dataOK
+    ?(liveOK?'✅ All good — everything works.'
+            :'✅ The galaxy works. Live BGG lookups are unavailable on this network, so brand-new games need 🚀 Publish, then 🔄 Sync.')
+    :'⚠️ No game data available here — open BGG_Galaxy.html (works fully offline) or connect to the internet.';
+  $('mText').textContent='🩺 Connection test — '+verdict+'\n\n'+out.join(' · ');
+  $('mActions').style.display='flex';   /* keep Dismiss reachable; it releases the hold */
   btn.disabled=false;
 };
 $('syncAll').onclick=async()=>{
