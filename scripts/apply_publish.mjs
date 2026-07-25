@@ -21,9 +21,21 @@ catch (e) { console.error('Invalid JSON payload:', e.message); process.exit(1); 
 const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
   .replace(/[’´'`]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 
+// A BGG link pasted into the title box must never become the game's name:
+// rescue the id (so enrichment works by id) and derive a readable title.
+const BGG_LINK = /boardgame(?:expansion)?\/(\d+)(?:\/([^/?#\s]+))?/;
 const clean = g => {
   const o = {};
   for (const k of ['t', 'c', 'l', 'p', 'a', 'n', 'u', 'b']) if (g[k] != null && g[k] !== '') o[k] = g[k];
+  if (o.t) {
+    const m = String(o.t).match(BGG_LINK);
+    if (m) {
+      if (!o.b) o.b = +m[1];
+      if (!o.u) o.u = `https://boardgamegeek.com/boardgame/${m[1]}`;
+      const slug = m[2] ? decodeURIComponent(m[2]).replace(/[-_]+/g, ' ').trim() : '';
+      o.t = slug ? slug.replace(/\b[a-z]/g, c => c.toUpperCase()) : `BGG game ${m[1]}`;
+    }
+  }
   return o.t ? o : null;
 };
 

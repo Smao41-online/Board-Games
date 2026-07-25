@@ -5725,8 +5725,10 @@
    "l": "CZ"
   },
   {
-   "t": "https://boardgamegeek.com/boardgame/404923/operation-barclay",
-   "l": "CZ"
+   "t": "Operation Barclay",
+   "l": "CZ",
+   "b": 404923,
+   "u": "https://boardgamegeek.com/boardgame/404923"
   }
  ],
  "wishlist": [
