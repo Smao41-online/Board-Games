@@ -55,12 +55,23 @@ for (const [sect, arr] of [['collection', ((payload.add || {}).collection) || []
     touched.push({ t: c.t, key: k, sect, b: c.b || 0 });
   }
 }
+// A fix targets an existing game by its current title and can set the BGG id (b),
+// a corrected title (nt) and/or the second-language name (c).
 for (const f of (payload.fix || [])) {
-  if (!f || !f.t || !f.b) continue;
-  const k = norm(f.t), bid = +f.b; if (!bid) continue;
+  if (!f || !f.t) continue;
+  const k = norm(f.t), bid = +f.b || 0;
+  const nt = typeof f.nt === 'string' ? f.nt.trim() : '';
+  const hasC = typeof f.c === 'string';
+  if (!bid && !nt && !hasC) continue;
+  let hit = null;
   for (const sect of ['collection', 'wishlist'])
-    for (const g of db[sect]) if (norm(g.t) === k) { g.b = bid; fixed++; }
-  touched.push({ t: f.t, key: k, sect: 'fix', b: bid });
+    for (const g of db[sect]) if (norm(g.t) === k) {
+      if (bid) g.b = bid;
+      if (hasC) { if (f.c.trim()) g.c = f.c.trim(); else delete g.c; }
+      if (nt) g.t = nt;                 // last: it changes the lookup key
+      hit = g; fixed++;
+    }
+  if (hit) touched.push({ t: hit.t, key: norm(hit.t), sect: 'fix', b: hit.b || 0 });
 }
 // not committed — just handed to the next workflow step
 fs.writeFileSync('publish_touched.json', JSON.stringify(touched, null, 1));

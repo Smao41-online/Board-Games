@@ -377,6 +377,8 @@
         <option>SK</option><option>DE</option><option>PL</option><option>NL</option></select></label>
       <label style="flex:1;min-width:140px">Notes <input id="agNotes" type="text" placeholder="optional"></label>
     </div>
+    <label class="edf" style="margin-top:2px">Czech / second-language title
+      <input id="agCz" type="text" placeholder="optional — also searchable"></label>
     <button class="ag-save" id="agSave">🚀 Add game</button>
   </div>
 </div></div>
@@ -905,6 +907,12 @@ let tab='C';
 const selLang=$('fLang'),selGenre=$('fGenre'),selPlayers=$('fPlayers'),selSort=$('fSort'),qInput=$('q');
 
 function ovOf(g){return overrides[norm(g.t)];}
+/* Effective titles. Edits live in overrides[key].g so a renamed game keeps its
+   BGG data (every lookup still keys on the ORIGINAL g.t). Everything the user
+   sees or searches — cards, detail view, search, sorting, export — must go
+   through these, or an edited title would be invisible to the search box. */
+function gTitle(g){const o=ovOf(g);return (o&&o.g&&o.g.t)||g.t;}
+function gCzech(g){const o=ovOf(g);return (o&&o.g&&o.g.c!=null)?o.g.c:(g.c||'');}
 function normDet(d){return d?{cats:[],mechs:[],designers:[],...d}:null;}
 function idOf(g){const o=ovOf(g);if(o&&o.id!=null)return o.id;return idMap[norm(g.t)]||g.b||0;}
 function bggOf(g){
@@ -939,7 +947,13 @@ function updateStats(){
 }
 function matches(g){
   const q=norm(qInput.value);
-  if(q && !(norm(g.t).includes(q)||norm(g.c||'').includes(q)))return false;
+  if(q){
+    /* search both languages (including edited ones) and the BoardGameGeek name,
+       so "Kořist" finds Abluxxen and vice versa */
+    const d=bggOf(g);
+    const hay=[gTitle(g),gCzech(g),g.t,g.c,d&&d.name].filter(Boolean).map(norm);
+    if(!hay.some(h=>h.includes(q)))return false;
+  }
   if(tab==='C'){
     if(selLang.value && g.l!==selLang.value)return false;
     const d=bggOf(g);
@@ -988,8 +1002,8 @@ function cardHTML(g,i){
       ${g.us?`<span class="badge new">✦ added</span>`:''}
     </div>
     <div class="body">
-      <div class="t">${esc(g.t)}</div>
-      ${g.c&&norm(g.c)!==norm(g.t)?`<div class="cz">${esc(g.c)}</div>`:''}
+      <div class="t">${esc(gTitle(g))}</div>
+      ${gCzech(g)&&norm(gCzech(g))!==norm(gTitle(g))?`<div class="cz">${esc(gCzech(g))}</div>`:''}
       ${cats}
       <div class="chips">${chips.join('')}</div>
     </div></div>`;
@@ -1044,8 +1058,8 @@ function openModal(g){
     <div class="m-head">
       <div class="m-img">${img}</div>
       <div class="m-info">
-        <h2>${esc(g.t)}</h2>
-        ${g.c&&norm(g.c)!==norm(g.t)?`<div class="cz">${esc(g.c)}</div>`:''}
+        <h2>${esc(gTitle(g))}</h2>
+        ${gCzech(g)&&norm(gCzech(g))!==norm(gTitle(g))?`<div class="cz">${esc(gCzech(g))}</div>`:''}
         ${d&&d.cats.length?`<div class="cats" style="margin-top:10px">${d.cats.map(c=>`<span class="cat">${esc(c)}</span>`).join('')}</div>`:''}
         <div class="m-attrs">${attrs.map(([k,v])=>`<div>${k}<br><b>${esc(v)}</b></div>`).join('')}</div>
       </div>
@@ -1123,8 +1137,10 @@ function openEdit(g){
   const d=bggOf(g)||{}, id=idOf(g), v=x=>x==null?'':x;
   modal.innerHTML=`<button class="close" id="edClose">✕</button>
   <div class="ag-inner">
-    <h3>✏️ Edit “${esc(g.t)}”</h3>
-    <p class="ag-status" id="edStatus">Fix box art, rating or genre. Blank keeps the current value. Saved in this browser only.</p>
+    <h3>✏️ Edit “${esc(gTitle(g))}”</h3>
+    <p class="ag-status" id="edStatus">Fix the titles, box art, rating or genre. Blank keeps the current value. Saved in this browser only.</p>
+    <label class="edf">Title <input id="edTitle" type="text" value="${esc(gTitle(g))}"></label>
+    <label class="edf">Czech / second-language title <input id="edCz" type="text" value="${esc(gCzech(g))}" placeholder="e.g. Kořist"></label>
     <div class="ag-row">
       <label>BGG id <input id="edId" type="text" value="${v(id||'')}" style="width:120px"></label>
       <button class="mini" id="edRefetch" type="button">⤓ Re-fetch from this id</button>
@@ -1176,6 +1192,14 @@ function openEdit(g){
     const o=overrides[norm(g.t)]||{};
     const nid=+String($('edId').value).trim();
     if(nid){if(nid!==id)o.uf=1;o.id=nid;}   /* uf = user relinked the id — publishable fix */
+    /* titles: keyed on the ORIGINAL g.t so the game keeps its BGG data and the
+       override never orphans itself when the displayed title changes */
+    const nt=str($('edTitle').value), nc=String($('edCz').value).trim();
+    const gp={};
+    if(nt&&nt!==g.t)gp.t=nt;
+    if(nc!==(g.c||''))gp.c=nc;
+    if(Object.keys(gp).length){o.g={...(o.g||{}),...gp};o.tf=1;}   /* tf = publishable title fix */
+    else if(o.g){delete o.g;delete o.tf;}
     o.patch=patch;overrides[norm(g.t)]=o;lsSet(LS_OVERRIDES,overrides);
     openModal(g);refreshView(true);
   };
@@ -1194,7 +1218,7 @@ const addOverlay=$('addOverlay');
 let addSel=null,addDetails=null,addTimer=null;
 function openAdd(){
   addSel=null;addDetails=null;
-  $('agTitle').value='';$('agNotes').value='';
+  $('agTitle').value='';$('agNotes').value='';$('agCz').value='';
   $('agLang').value=tab==='C'?'CZ':'';
   $('agDest').value=tab;
   $('agSugs').innerHTML='';$('agPreview').innerHTML='';
@@ -1306,6 +1330,7 @@ $('agSave').onclick=()=>{
   if(list.some(x=>norm(x.t)===key)&&!confirm('This game already seems to be in the list. Add it anyway?'))return;
   const g={t:title,us:1};
   if($('agLang').value)g.l=$('agLang').value;
+  if($('agCz').value.trim())g.c=$('agCz').value.trim();
   if($('agNotes').value.trim())g.n=$('agNotes').value.trim();
   if(addSel){                       /* the id travels with the game even without details */
     g.b=addSel;
@@ -1400,10 +1425,12 @@ function extractGames(rows){
     const map={};
     for(const [col,v] of Object.entries(rows[i])){
       const h=norm(String(v));
-      if(h==='title')map.t=col;else if(h==='nazev')map.c=col;
+      if(h==='title')map.t=col;
+      else if(h==='nazev'||h==='czech name'||h==='czech title')map.c=col;
       else if(h==='language')map.l=col;else if(h==='players')map.p=col;
       else if(h==='age')map.a=col;else if(h==='notes')map.n=col;
-      else if(h.includes('link'))map.u=col;
+      else if(h==='bgg id')map.b=col;                      /* our own export round-trips ids */
+      else if(h.includes('link')&&map.u==null)map.u=col;   /* first link column wins */
     }
     if(map.t){hdr=map;hi=i;break;}
   }
@@ -1423,6 +1450,7 @@ function extractGames(rows){
       const m=g.u.match(/boardgamegeek\.com\/boardgame(?:expansion)?\/(\d+)/);
       if(m)g.b=+m[1];
     }
+    if(hdr.b&&r[hdr.b]){const bid=+String(r[hdr.b]).trim();if(bid)g.b=bid;}
     games.push(g);
   }
   return games;
@@ -1585,35 +1613,55 @@ function _zipStore(files){
   const out=new Uint8Array(total);let pos=0;for(const p of parts){out.set(p,pos);pos+=p.length;}
   return new Blob([out],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
 }
-function _xlsx(headers,rows){
+/* sheets: [{name, headers, rows}] — one worksheet each. The importer routes by
+   sheet name (a sheet whose name contains "wishlist" becomes the wishlist), so
+   the export must be able to write more than one. */
+function _xlsx(sheets){
   const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const col=n=>{let s='';n++;while(n){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=(n-m-1)/26|0;}return s;};
   const cell=(r,c,v)=>{const ref=col(c)+r;
     if(typeof v==='number'&&isFinite(v))return `<c r="${ref}"><v>${v}</v></c>`;
     const t=esc(v);return t===''?'':`<c r="${ref}" t="inlineStr"><is><t xml:space="preserve">${t}</t></is></c>`;};
-  let sd='';
-  [headers,...rows].forEach((row,ri)=>{sd+=`<row r="${ri+1}">`;row.forEach((v,ci)=>{sd+=cell(ri+1,ci,v);});sd+='</row>';});
-  const sheet='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>'+sd+'</sheetData></worksheet>';
-  return _zipStore({
-    '[Content_Types].xml':'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/></Types>',
-    '_rels/.rels':'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>',
-    'xl/workbook.xml':'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Board Games" sheetId="1" r:id="rId1"/></sheets></workbook>',
-    'xl/_rels/workbook.xml.rels':'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/></Relationships>',
-    'xl/worksheets/sheet1.xml':sheet
+  const files={
+    '_rels/.rels':'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'
+  };
+  let types='',tabs='',rels='';
+  sheets.forEach((sh,i)=>{
+    const n=i+1;
+    let sd='';
+    [sh.headers,...sh.rows].forEach((row,ri)=>{sd+=`<row r="${ri+1}">`;row.forEach((v,ci)=>{sd+=cell(ri+1,ci,v);});sd+='</row>';});
+    files[`xl/worksheets/sheet${n}.xml`]='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>'+sd+'</sheetData></worksheet>';
+    types+=`<Override PartName="/xl/worksheets/sheet${n}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`;
+    tabs+=`<sheet name="${esc(sh.name)}" sheetId="${n}" r:id="rId${n}"/>`;
+    rels+=`<Relationship Id="rId${n}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${n}.xml"/>`;
   });
+  files['[Content_Types].xml']='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>'+types+'</Types>';
+  files['xl/workbook.xml']='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>'+tabs+'</sheets></workbook>';
+  files['xl/_rels/workbook.xml.rels']='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+rels+'</Relationships>';
+  return _zipStore(files);
 }
 function exportXlsx(){
-  const headers=['Section','Title','Czech name','Language','Players','Age','Notes','BGG id','BGG name','Year','Min players','Max players','Play time (min)','BGG rating','Complexity','BGG rank','Categories','Designers','Mechanics','Box art URL','BGG link'];
-  const rows=[];
-  const push=(list,section)=>{for(const g of list){
+  /* Column names and sheet names match what the import wizard reads
+     (Title / Název / Language / Players / Age / Notes / Link, and a sheet whose
+     name contains "wishlist"), so an exported file can be re-imported or used
+     as the comparison template. The BGG columns after them are extra detail the
+     importer simply ignores. Exactly ONE header may contain the word "link". */
+  const headers=['Title','Název','Language','Players','Age','Notes','Link',
+    'BGG id','BGG name','Year','Min players','Max players','Play time (min)',
+    'BGG rating','Complexity','BGG rank','Categories','Designers','Mechanics','Box art URL'];
+  const rowsOf=list=>list.map(g=>{
     const d=bggOf(g)||{},id=idOf(g);
     const players=g.p||(d.minP?(d.minP===d.maxP?String(d.minP):d.minP+'–'+d.maxP):'');
-    rows.push([section,g.t,g.c||'',g.l||'',players,g.a||'',g.n||'',
+    return [gTitle(g),gCzech(g),g.l||'',players,g.a||'',g.n||'',
+      g.u||(id?'https://boardgamegeek.com/boardgame/'+id:''),
       id||'',d.name||'',d.year||'',d.minP||'',d.maxP||'',d.time||'',
       d.rating||'',d.weight||'',d.rank||'',(d.cats||[]).join(', '),(d.designers||[]).join(', '),(d.mechs||[]).join(', '),
-      d.img||d.thumb||'',id?('https://boardgamegeek.com/boardgame/'+id):'']);}};
-  push(GAMES,'Collection');push(WISHLIST,'Wishlist');
-  _dlBlob('Board_Games_collection.xlsx',_xlsx(headers,rows));
+      d.img||d.thumb||''];
+  });
+  _dlBlob('Board_Games_collection.xlsx',_xlsx([
+    {name:'Collection',headers,rows:rowsOf(GAMES)},
+    {name:'Wishlist',  headers,rows:rowsOf(WISHLIST)}
+  ]));
 }
 
 /* ================= publish local additions to the online database ================= */
@@ -1626,11 +1674,16 @@ async function publishAdditions(){
   };
   const fix=[];
   for(const key in overrides){
-    /* only ids the user changed via Edit (uf flag) — a plain Sync also stores an id,
-       and publishing those would flood the payload with hundreds of no-op "fixes" */
-    const o=overrides[key];if(!o||!o.uf||o.id==null)continue;
+    /* only what the user actually changed in Edit: uf = relinked BGG id,
+       tf = corrected title / second-language name. A plain Sync also stores an
+       id, and publishing those would flood the payload with no-op "fixes". */
+    const o=overrides[key];if(!o||(!o.uf&&!o.tf))continue;
     const g=[...GAMES,...WISHLIST].find(x=>norm(x.t)===key);
-    if(g&&!g.us)fix.push({t:g.t,b:o.id});   /* relink an existing game to the right BGG id */
+    if(!g||g.us)continue;
+    const f={t:g.t};
+    if(o.uf&&o.id!=null)f.b=o.id;
+    if(o.tf&&o.g){if(o.g.t)f.nt=o.g.t;if(o.g.c!=null)f.c=o.g.c;}
+    if(f.b!=null||f.nt||f.c!=null)fix.push(f);
   }
   const nAdd=adds.collection.length+adds.wishlist.length;
   if(nAdd+fix.length===0){
@@ -1674,12 +1727,25 @@ async function publishAdditions(){
   }
 }
 
+/* ---- maintenance gate for the destructive footer buttons ----
+   The passphrase is the same one that unlocks the spreadsheet import. This
+   guards against an accidental click (both actions throw away work), not
+   against someone determined — anyone can read a local HTML file. */
+function maintenanceOK(what){
+  const a=prompt(`🔐 “${what}” is protected.\n\nEnter the maintenance password:`);
+  if(a===null)return false;                      /* cancelled — say nothing */
+  if(norm(a)===norm(CMD_PHRASE))return true;
+  alert('⛔ Wrong password — nothing was changed.');
+  return false;
+}
+
 /* ================= wiring ================= */
 $('tabC').onclick=()=>{tab='C';$('tabC').classList.add('on');$('tabW').classList.remove('on');refreshView();};
 $('tabW').onclick=()=>{tab='W';$('tabW').classList.add('on');$('tabC').classList.remove('on');refreshView();};
 for(const el of [selLang,selGenre,selPlayers,selSort])el.onchange=()=>refreshView();
 qInput.oninput=()=>refreshView();
 $('rescan').onclick=()=>{
+  if(!maintenanceOK('Rescan galaxy'))return;
   if(!confirm('Clear cached BoardGameGeek data and refetch everything?'))return;
   localStorage.removeItem(LS_IDS);localStorage.removeItem(LS_THINGS);localStorage.removeItem(LS_ZH);location.reload();
 };
@@ -1766,6 +1832,7 @@ $('syncAll').onclick=async()=>{
 $('restoreRemoved').onclick=()=>{
   const n=removedStore.C.length+removedStore.W.length;
   if(!n){alert('No removed spreadsheet games to restore.');return;}
+  if(!maintenanceOK('Restore removed games'))return;
   if(!confirm(`Restore ${n} removed game${n===1?'':'s'}?`))return;
   /* a removed base game may have been re-added via import/add — drop the duplicate user copy */
   for(const [rem,store] of [[removedStore.C,userStore.C],[removedStore.W,userStore.W]])

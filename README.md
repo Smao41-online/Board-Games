@@ -17,7 +17,8 @@ If a page ever says *"no built-in BoardGameGeek data"*, you opened `BG_database.
 offline — switch to `BGG_Galaxy.html`. The 🩺 *Test relays* button in the 🛰️ Mission
 control panel gives a plain-language verdict on what is and isn't working.
 
-- 🔭 **Search** by English or Czech title
+- 🔭 **Search** by English title, Czech/second-language title, or the BoardGameGeek name —
+  including titles you edited yourself (accent- and case-insensitive, so `korist` finds *Kořist*)
 - 🌍 **Filter** by language, player count, and genre
 - 🌌 **Sort** by title, BGG rating, complexity, play time, or year
 - 🪐 Click any card for full details (description, designer, mechanics, links)
@@ -45,8 +46,10 @@ control panel gives a plain-language verdict on what is and isn't working.
   server enriches it with the BGG token, then Sync) and the full data flows into both the offline
   file (re-generate it with *Download portable HTML*) and the online database.
 - ✏️ **Edit a game** (`BG_database.html`, `BGG_Galaxy.html`): the detail view has an Edit button to fix
-  a wrong box art (paste the correct image URL), relink the BGG id (with a *Re-fetch from this id* button),
-  or override rating, genre, players, year, description, etc. Your edits are saved in the browser
+  **both titles** (English and Czech/second language — the search picks the new ones up immediately, and
+  a rename keeps the game's BGG data), a wrong box art (paste the correct image URL), relink the BGG id
+  (with a *Re-fetch from this id* button), or override rating, genre, players, year, description, etc.
+  Title and id corrections travel with 🚀 Publish, so the shared database gets them too. Your edits are saved in the browser
   (`localStorage`), marked with a ✦ *edited* badge, win over future syncs, and can be undone with
   *Reset to original BGG data*. Works fully offline in `BGG_Galaxy.html`.
 - 🚀 **Publish additions online**: footer button that pushes the games you've *added* (and any
@@ -65,11 +68,18 @@ control panel gives a plain-language verdict on what is and isn't working.
 - ⬇️ **Download portable HTML**: footer button that bakes the *current* state — your edits, added
   games, removals, and all BGG data — into a fresh self-contained `BGG_Galaxy.html` you can share.
   A person who opens it sees your version instantly, offline, with no localStorage needed.
-- 📊 **Export to Excel**: footer button that saves the whole collection + wishlist with all BGG
-  attributes (id, rating, players, play time, complexity, categories, designers, box-art URL, BGG
-  link…) as a real `.xlsx` file — no libraries, generated entirely in the browser.
+- 📊 **Export to Excel**: footer button that saves the whole collection + wishlist as a real `.xlsx`
+  file — no libraries, generated entirely in the browser. The file uses **the same layout the import
+  wizard reads** (two sheets, *Collection* and *Wishlist*, with `Title / Název / Language / Players /
+  Age / Notes / Link` columns), so you can edit it in Excel and feed it straight back through the
+  import/comparison flow. The BGG detail columns that follow (id, rating, play time, complexity,
+  categories, designers, box art…) are extra; the importer keeps the BGG id and ignores the rest.
 - 🗑 **Remove any game** (`BG_database.html`): every game's detail view has a Remove button.
   Removals are remembered in the browser; a *Restore removed games* button in the footer undoes them
+- 🔐 **Maintenance password**: the two destructive footer buttons — *Rescan galaxy* (throws away the
+  cached BGG data) and *Restore removed games* (undoes your curation) — ask for the same passphrase
+  that unlocks the spreadsheet import before they do anything. It stops an accidental click; it is
+  not real security, since anyone holding the file can read it.
 - 📦 **Import an updated spreadsheet** (`BG_database.html`): type
   **`usakova sbirka board game database`** into the command line at the very top row of the page.
   Pick the new `.xlsx` — it is parsed and compared with the database behind the scenes, and only
