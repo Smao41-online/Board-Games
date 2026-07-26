@@ -379,6 +379,8 @@
     </div>
     <label class="edf" style="margin-top:2px">Czech / second-language title
       <input id="agCz" type="text" placeholder="optional — also searchable"></label>
+    <label class="edf">Alternative URL
+      <input id="agAlt" type="text" placeholder="optional — Kickstarter / publisher link, if the game is not on BGG"></label>
     <button class="ag-save" id="agSave">🚀 Add game</button>
   </div>
 </div></div>
@@ -913,6 +915,10 @@ function ovOf(g){return overrides[norm(g.t)];}
    through these, or an edited title would be invisible to the search box. */
 function gTitle(g){const o=ovOf(g);return (o&&o.g&&o.g.t)||g.t;}
 function gCzech(g){const o=ovOf(g);return (o&&o.g&&o.g.c!=null)?o.g.c:(g.c||'');}
+function gNotes(g){const o=ovOf(g);return (o&&o.g&&o.g.n!=null)?o.g.n:(g.n||'');}
+/* `au` = alternative URL: for games neither BGG nor Zatrolené hry covers
+   (Kickstarter, a publisher's page, a shop listing…) */
+function gAltUrl(g){const o=ovOf(g);return (o&&o.g&&o.g.au!=null)?o.g.au:(g.au||'');}
 function normDet(d){return d?{cats:[],mechs:[],designers:[],...d}:null;}
 function idOf(g){const o=ovOf(g);if(o&&o.id!=null)return o.id;return idMap[norm(g.t)]||g.b||0;}
 function bggOf(g){
@@ -1046,10 +1052,12 @@ function openModal(g){
   if(d&&d.rank)attrs.push(['BGG rank','#'+d.rank]);
   if(d&&d.designers.length)attrs.push(['Designer',d.designers.join(', ')]);
   if(d&&d.mechs.length)attrs.push(['Mechanics',d.mechs.join(', ')]);
-  if(g.n)attrs.push(['Notes',g.n]);
+  if(gNotes(g))attrs.push(['Notes',gNotes(g)]);
   const links=[];
   if(g.u)links.push(`<a href="${esc(g.u)}" target="_blank" rel="noopener">🔗 ${g.u.includes('zatrolene')?'Zatrolené hry':'Original link'}</a>`);
   if(id)links.push(`<a class="bgg" href="https://boardgamegeek.com/boardgame/${id}" target="_blank" rel="noopener">🎲 BoardGameGeek</a>`);
+  const alt=gAltUrl(g);
+  if(alt)links.push(`<a href="${esc(alt)}" target="_blank" rel="noopener">${/kickstarter/i.test(alt)?'🚀 Kickstarter':'🌐 Alternative link'}</a>`);
   links.push(`<a href="#" id="mSync" title="Fetch the latest data for this game">🔄 Sync</a>`);
   links.push(`<a href="#" id="mEdit" title="Manually fix box art, rating, genre…">✏️ Edit</a>`);
   if(ovOf(g))links.push(`<span style="font-size:11px;color:var(--teal);align-self:center">✦ edited</span>`);
@@ -1157,6 +1165,8 @@ function openEdit(g){
     </div>
     <label class="edf">Genres (comma-separated) <input id="edCats" type="text" value="${esc((d.cats||[]).join(', '))}"></label>
     <label class="edf">Designers (comma-separated) <input id="edDes" type="text" value="${esc((d.designers||[]).join(', '))}"></label>
+    <label class="edf">Notes <input id="edNotes" type="text" value="${esc(gNotes(g))}" placeholder="e.g. Macka 10/24, borrowed to Petr, missing 2 cards"></label>
+    <label class="edf">Alternative URL <input id="edAlt" type="text" value="${esc(gAltUrl(g))}" placeholder="Kickstarter / publisher / shop link — when BGG and Zatrolené hry have nothing"></label>
     <label class="edf">Description <textarea id="edDesc" rows="4">${esc(v(d.desc))}</textarea></label>
     <button class="ag-save" id="edSave">💾 Save changes</button>
     <button class="mini danger" id="edReset" type="button" style="margin-top:8px;width:100%">↺ Reset to original BGG data</button>
@@ -1195,9 +1205,12 @@ function openEdit(g){
     /* titles: keyed on the ORIGINAL g.t so the game keeps its BGG data and the
        override never orphans itself when the displayed title changes */
     const nt=str($('edTitle').value), nc=String($('edCz').value).trim();
+    const nn=String($('edNotes').value).trim(), na=String($('edAlt').value).trim();
     const gp={};
     if(nt&&nt!==g.t)gp.t=nt;
     if(nc!==(g.c||''))gp.c=nc;
+    if(nn!==(g.n||''))gp.n=nn;
+    if(na!==(g.au||''))gp.au=na;
     if(Object.keys(gp).length){o.g={...(o.g||{}),...gp};o.tf=1;}   /* tf = publishable title fix */
     else if(o.g){delete o.g;delete o.tf;}
     o.patch=patch;overrides[norm(g.t)]=o;lsSet(LS_OVERRIDES,overrides);
@@ -1218,7 +1231,7 @@ const addOverlay=$('addOverlay');
 let addSel=null,addDetails=null,addTimer=null;
 function openAdd(){
   addSel=null;addDetails=null;
-  $('agTitle').value='';$('agNotes').value='';$('agCz').value='';
+  $('agTitle').value='';$('agNotes').value='';$('agCz').value='';$('agAlt').value='';
   $('agLang').value=tab==='C'?'CZ':'';
   $('agDest').value=tab;
   $('agSugs').innerHTML='';$('agPreview').innerHTML='';
@@ -1331,6 +1344,7 @@ $('agSave').onclick=()=>{
   const g={t:title,us:1};
   if($('agLang').value)g.l=$('agLang').value;
   if($('agCz').value.trim())g.c=$('agCz').value.trim();
+  if($('agAlt').value.trim())g.au=$('agAlt').value.trim();
   if($('agNotes').value.trim())g.n=$('agNotes').value.trim();
   if(addSel){                       /* the id travels with the game even without details */
     g.b=addSel;
@@ -1430,6 +1444,7 @@ function extractGames(rows){
       else if(h==='language')map.l=col;else if(h==='players')map.p=col;
       else if(h==='age')map.a=col;else if(h==='notes')map.n=col;
       else if(h==='bgg id')map.b=col;                      /* our own export round-trips ids */
+      else if(h==='alternative url'||h==='alternative link')map.au=col;
       else if(h.includes('link')&&map.u==null)map.u=col;   /* first link column wins */
     }
     if(map.t){hdr=map;hi=i;break;}
@@ -1451,6 +1466,7 @@ function extractGames(rows){
       if(m)g.b=+m[1];
     }
     if(hdr.b&&r[hdr.b]){const bid=+String(r[hdr.b]).trim();if(bid)g.b=bid;}
+    if(hdr.au&&r[hdr.au])g.au=String(r[hdr.au]).trim();
     games.push(g);
   }
   return games;
@@ -1560,7 +1576,7 @@ $('impApply').onclick=()=>{
 /* ================= export: portable HTML + Excel ================= */
 function _dlBlob(name,blob){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;
   document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1500);}
-function _cleanGames(list){return list.map(g=>{const o={};for(const k of['t','c','l','p','a','n','u','b'])if(g[k]!=null&&g[k]!=='')o[k]=g[k];return o;});}
+function _cleanGames(list){return list.map(g=>{const o={};for(const k of['t','c','l','p','a','n','u','b','au'])if(g[k]!=null&&g[k]!=='')o[k]=g[k];return o;});}
 function _buildBaked(){
   const baked={ids:{},things:{},zh:{}};
   for(const k in idMap)if(idMap[k])baked.ids[k]=idMap[k];
@@ -1646,14 +1662,14 @@ function exportXlsx(){
      name contains "wishlist"), so an exported file can be re-imported or used
      as the comparison template. The BGG columns after them are extra detail the
      importer simply ignores. Exactly ONE header may contain the word "link". */
-  const headers=['Title','Název','Language','Players','Age','Notes','Link',
+  const headers=['Title','Název','Language','Players','Age','Notes','Link','Alternative URL',
     'BGG id','BGG name','Year','Min players','Max players','Play time (min)',
     'BGG rating','Complexity','BGG rank','Categories','Designers','Mechanics','Box art URL'];
   const rowsOf=list=>list.map(g=>{
     const d=bggOf(g)||{},id=idOf(g);
     const players=g.p||(d.minP?(d.minP===d.maxP?String(d.minP):d.minP+'–'+d.maxP):'');
-    return [gTitle(g),gCzech(g),g.l||'',players,g.a||'',g.n||'',
-      g.u||(id?'https://boardgamegeek.com/boardgame/'+id:''),
+    return [gTitle(g),gCzech(g),g.l||'',players,g.a||'',gNotes(g),
+      g.u||(id?'https://boardgamegeek.com/boardgame/'+id:''),gAltUrl(g),
       id||'',d.name||'',d.year||'',d.minP||'',d.maxP||'',d.time||'',
       d.rating||'',d.weight||'',d.rank||'',(d.cats||[]).join(', '),(d.designers||[]).join(', '),(d.mechs||[]).join(', '),
       d.img||d.thumb||''];
@@ -1666,7 +1682,7 @@ function exportXlsx(){
 
 /* ================= publish local additions to the online database ================= */
 const REPO_SLUG='Smao41-online/Board-Games';
-function _cleanPub(g){const o={};for(const k of['t','c','l','p','a','n','u','b'])if(g[k]!=null&&g[k]!=='')o[k]=g[k];return o.t?o:null;}
+function _cleanPub(g){const o={};for(const k of['t','c','l','p','a','n','u','b','au'])if(g[k]!=null&&g[k]!=='')o[k]=g[k];return o.t?o:null;}
 async function publishAdditions(){
   const adds={
     collection:(userStore.C||[]).map(_cleanPub).filter(Boolean),
@@ -1682,8 +1698,9 @@ async function publishAdditions(){
     if(!g||g.us)continue;
     const f={t:g.t};
     if(o.uf&&o.id!=null)f.b=o.id;
-    if(o.tf&&o.g){if(o.g.t)f.nt=o.g.t;if(o.g.c!=null)f.c=o.g.c;}
-    if(f.b!=null||f.nt||f.c!=null)fix.push(f);
+    if(o.tf&&o.g){if(o.g.t)f.nt=o.g.t;if(o.g.c!=null)f.c=o.g.c;
+      if(o.g.n!=null)f.n=o.g.n;if(o.g.au!=null)f.au=o.g.au;}
+    if(f.b!=null||f.nt||f.c!=null||f.n!=null||f.au!=null)fix.push(f);
   }
   const nAdd=adds.collection.length+adds.wishlist.length;
   if(nAdd+fix.length===0){

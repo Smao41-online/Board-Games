@@ -26,7 +26,7 @@ const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ
 const BGG_LINK = /boardgame(?:expansion)?\/(\d+)(?:\/([^/?#\s]+))?/;
 const clean = g => {
   const o = {};
-  for (const k of ['t', 'c', 'l', 'p', 'a', 'n', 'u', 'b']) if (g[k] != null && g[k] !== '') o[k] = g[k];
+  for (const k of ['t', 'c', 'l', 'p', 'a', 'n', 'u', 'b', 'au']) if (g[k] != null && g[k] !== '') o[k] = g[k];
   if (o.t) {
     const m = String(o.t).match(BGG_LINK);
     if (m) {
@@ -56,18 +56,19 @@ for (const [sect, arr] of [['collection', ((payload.add || {}).collection) || []
   }
 }
 // A fix targets an existing game by its current title and can set the BGG id (b),
-// a corrected title (nt) and/or the second-language name (c).
+// a corrected title (nt), the second-language name (c), notes (n) and/or the
+// alternative URL (au). An empty string clears the field.
 for (const f of (payload.fix || [])) {
   if (!f || !f.t) continue;
   const k = norm(f.t), bid = +f.b || 0;
   const nt = typeof f.nt === 'string' ? f.nt.trim() : '';
-  const hasC = typeof f.c === 'string';
-  if (!bid && !nt && !hasC) continue;
+  const text = ['c', 'n', 'au'].filter(x => typeof f[x] === 'string');
+  if (!bid && !nt && !text.length) continue;
   let hit = null;
   for (const sect of ['collection', 'wishlist'])
     for (const g of db[sect]) if (norm(g.t) === k) {
       if (bid) g.b = bid;
-      if (hasC) { if (f.c.trim()) g.c = f.c.trim(); else delete g.c; }
+      for (const x of text) { const val = f[x].trim(); if (val) g[x] = val; else delete g[x]; }
       if (nt) g.t = nt;                 // last: it changes the lookup key
       hit = g; fixed++;
     }

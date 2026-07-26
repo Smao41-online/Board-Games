@@ -14,7 +14,7 @@ def js(o):
     return b.replace("</", "<\\/").replace(" ", "\\u2028").replace(" ", "\\u2029")
 
 def clean(g):
-    return {k: g[k] for k in ("t", "c", "l", "p", "a", "n", "u", "b") if g.get(k) not in (None, "")}
+    return {k: g[k] for k in ("t", "c", "l", "p", "a", "n", "u", "b", "au") if g.get(k) not in (None, "")}
 
 db = json.load(open("data/games.json", encoding="utf-8"))
 html = open("BG_database.html", encoding="utf-8").read()

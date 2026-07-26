@@ -47,9 +47,13 @@ control panel gives a plain-language verdict on what is and isn't working.
   file (re-generate it with *Download portable HTML*) and the online database.
 - ✏️ **Edit a game** (`BG_database.html`, `BGG_Galaxy.html`): the detail view has an Edit button to fix
   **both titles** (English and Czech/second language — the search picks the new ones up immediately, and
-  a rename keeps the game's BGG data), a wrong box art (paste the correct image URL), relink the BGG id
-  (with a *Re-fetch from this id* button), or override rating, genre, players, year, description, etc.
-  Title and id corrections travel with 🚀 Publish, so the shared database gets them too. Your edits are saved in the browser
+  a rename keeps the game's BGG data), your own **Notes** (who borrowed it, missing pieces, where it came
+  from), an **Alternative URL** for games neither BoardGameGeek nor Zatrolené hry covers (a Kickstarter,
+  publisher or shop link — it appears as a link in the detail view, labelled 🚀 Kickstarter when it is one),
+  a wrong box art (paste the correct image URL), relink the BGG id (with a *Re-fetch from this id* button),
+  or override rating, genre, players, year, description, etc.
+  Title, notes, alternative-URL and id corrections travel with 🚀 Publish, so the shared database gets
+  them too — and both appear in the Excel export. Your edits are saved in the browser
   (`localStorage`), marked with a ✦ *edited* badge, win over future syncs, and can be undone with
   *Reset to original BGG data*. Works fully offline in `BGG_Galaxy.html`.
 - 🚀 **Publish additions online**: footer button that pushes the games you've *added* (and any
