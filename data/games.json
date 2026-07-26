@@ -5758,7 +5758,8 @@
    "t": "Cosca Take Over The Mafia",
    "l": "CZ",
    "u": "https://boardgamegeek.com/boardgame/400947",
-   "b": 400947
+   "b": 400947,
+   "c": "Cosca: ovládni mafii"
   },
   {
    "t": "Akropolis Athena",
@@ -5776,13 +5777,15 @@
    "t": "Radlands Cult Of Chrome",
    "l": "CZ",
    "u": "https://boardgamegeek.com/boardgame/422233",
-   "b": 422233
+   "b": 422233,
+   "c": "Radlands: Kult oktanu"
   },
   {
    "t": "Friday",
    "l": "CZ",
    "u": "https://boardgamegeek.com/boardgame/43570",
-   "b": 43570
+   "b": 43570,
+   "c": "Pátek"
   },
   {
    "t": "Shrinkopolis",
@@ -5794,7 +5797,8 @@
    "t": "Fit The Fishes",
    "l": "CZ",
    "u": "https://boardgamegeek.com/boardgame/414156",
-   "b": 414156
+   "b": 414156,
+   "c": "Moje první akvárko"
   },
   {
    "t": "Ready Set Bet",
@@ -5806,13 +5810,15 @@
    "t": "How Dare You",
    "l": "CZ",
    "u": "https://boardgamegeek.com/boardgame/387763",
-   "b": 387763
+   "b": 387763,
+   "c": "Tos přehnal!"
   },
   {
    "t": "Tos Prehnal Cesko",
    "l": "CZ",
    "u": "https://boardgamegeek.com/boardgame/436208",
-   "b": 436208
+   "b": 436208,
+   "c": "Tos přehnal! Česko"
   }
  ],
  "wishlist": [
