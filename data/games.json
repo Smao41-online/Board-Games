@@ -5804,7 +5804,8 @@
    "t": "Ready Set Bet",
    "l": "CZ",
    "u": "https://boardgamegeek.com/boardgame/351040",
-   "b": 351040
+   "b": 351040,
+   "c": "Sázky prosím!"
   },
   {
    "t": "How Dare You",
@@ -5819,6 +5820,21 @@
    "u": "https://boardgamegeek.com/boardgame/436208",
    "b": 436208,
    "c": "Tos přehnal! Česko"
+  },
+  {
+   "t": "Arcs",
+   "l": "CZ",
+   "p": "2–4",
+   "a": "14+",
+   "u": "https://boardgamegeek.com/boardgame/359871",
+   "b": 359871
+  },
+  {
+   "t": "Arcs Leaders And Lore Pack",
+   "c": "Arcs: balicek vudcu a pribehu",
+   "l": "CZ",
+   "u": "https://boardgamegeek.com/boardgame/419279",
+   "b": 419279
   }
  ],
  "wishlist": [
