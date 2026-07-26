@@ -5746,7 +5746,8 @@
    "t": "Corps Of Discovery A Game Set In The World Of Mani",
    "l": "CZ",
    "u": "https://boardgamegeek.com/boardgame/396895",
-   "b": 396895
+   "b": 396895,
+   "c": "Stíny Západu"
   },
   {
    "t": "Spy Connection",
@@ -5835,6 +5836,33 @@
    "l": "CZ",
    "u": "https://boardgamegeek.com/boardgame/419279",
    "b": 419279
+  },
+  {
+   "t": "Witchcraft",
+   "c": "Čarodějnice!",
+   "l": "CZ",
+   "u": "https://boardgamegeek.com/boardgame/383499",
+   "b": 383499
+  },
+  {
+   "t": "Neanderthal",
+   "l": "CZ",
+   "u": "https://boardgamegeek.com/boardgame/171662",
+   "b": 171662
+  },
+  {
+   "t": "Fort Cats And Dogs Expansion",
+   "c": "FORT: kočky a psi",
+   "l": "CZ",
+   "u": "https://boardgamegeek.com/boardgame/341066",
+   "b": 341066
+  },
+  {
+   "t": "Detective City Of Angels",
+   "c": "Detektiv: Město andělů",
+   "l": "CZ",
+   "u": "https://boardgamegeek.com/boardgame/218074",
+   "b": 218074
   }
  ],
  "wishlist": [
