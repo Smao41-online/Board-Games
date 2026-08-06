@@ -3,6 +3,12 @@
 A solar-system-themed, single-file database of the board game collection
 (**692 games** + **15 wishlist items**), built from `Board_Games_usakova_akce_4.xlsx`.
 
+## New here? Watch the briefing
+
+Open **`Galaxy_guide.html`** — an eleven-slide, self-playing walkthrough (about two minutes) that
+covers finding a game, adding one, editing it, and the publish → sync loop. It plays like a video;
+`←` `→` steer, `space` pauses, and the planets along the bottom jump to any slide.
+
 ## Which file to open
 
 | If you… | Open | Why |

@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Board Game Galaxy — flight briefing</title>
+<style>
+:root{
+  --bg:#04060f; --ink:#e9edff; --muted:#98a0c6; --faint:#6a7199;
+  --card:rgba(13,18,38,.82); --border:rgba(122,140,255,.22); --border-strong:rgba(140,160,255,.45);
+  --gold:#ffcf6e; --gold-deep:#f0a63c; --accent:#8a7bff; --teal:#57d7c7; --danger:#ff8f8f;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  overflow:hidden;-webkit-font-smoothing:antialiased;
+}
+#sky{position:fixed;inset:0;z-index:0;display:block}
+#glow{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(58vmax 44vmax at 78% 12%,rgba(138,123,255,.16),transparent 62%),
+    radial-gradient(46vmax 36vmax at 12% 88%,rgba(255,207,110,.11),transparent 60%);
+}
+.stage{position:relative;z-index:2;height:100%;display:flex;flex-direction:column}
+
+/* ---------- slides ---------- */
+.slides{flex:1;position:relative;overflow:hidden}
+.slide{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  padding:clamp(20px,5vw,64px) clamp(18px,6vw,80px) 20px;
+  opacity:0;visibility:hidden;transform:translateY(18px) scale(.995);
+  transition:opacity .55s ease,transform .55s ease,visibility .55s;
+  overflow-y:auto;
+}
+.slide.on{opacity:1;visibility:visible;transform:none}
+.wrap{width:100%;max-width:56rem;margin:auto}
+
+.eyebrow{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);display:flex;align-items:center;gap:10px;margin-bottom:18px;
+}
+.eyebrow::before{content:"";width:26px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+h1{
+  font-size:clamp(34px,6.4vw,68px);line-height:1.02;letter-spacing:-.035em;margin:0 0 18px;
+  font-weight:800;text-wrap:balance;
+}
+h2{
+  font-size:clamp(26px,4.4vw,44px);line-height:1.08;letter-spacing:-.028em;margin:0 0 16px;
+  font-weight:750;text-wrap:balance;
+}
+.lede{font-size:clamp(16px,1.9vw,20px);line-height:1.6;color:var(--muted);max-width:62ch;margin:0 0 26px}
+p{line-height:1.62;color:var(--muted);max-width:62ch}
+strong{color:var(--ink);font-weight:650}
+em{color:var(--gold);font-style:normal}
+
+/* ---------- content blocks ---------- */
+.grid{display:grid;gap:14px;margin-top:8px;max-width:48rem}
+.grid.two{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));max-width:none}
+.grid.three{grid-template-columns:repeat(auto-fit,minmax(210px,1fr));max-width:none}
+.panel{
+  background:var(--card);border:1px solid var(--border);border-radius:14px;
+  padding:16px 18px;backdrop-filter:blur(6px);
+}
+.panel h3{margin:0 0 6px;font-size:15.5px;letter-spacing:-.01em;color:var(--ink);font-weight:650}
+.panel p{margin:0;font-size:14.2px;line-height:1.55;max-width:none}
+.panel.good{border-color:rgba(87,215,199,.4)}
+.panel.warn{border-color:rgba(255,207,110,.42)}
+.panel.bad{border-color:rgba(255,143,143,.4)}
+
+ul.steps{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:12px;max-width:62ch}
+ul.steps li{display:flex;gap:14px;align-items:flex-start;color:var(--muted);line-height:1.55}
+ul.steps .n{
+  flex:0 0 auto;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  font-family:var(--mono);font-size:12px;color:var(--bg);background:var(--gold);font-weight:700;margin-top:1px;
+}
+ul.plain{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:10px;max-width:62ch}
+ul.plain li{display:flex;gap:12px;align-items:flex-start;color:var(--muted);line-height:1.55}
+ul.plain .ic{flex:0 0 auto;font-size:17px;line-height:1.35}
+
+.btn-demo{
+  display:inline-flex;align-items:center;gap:7px;background:rgba(20,26,52,.9);
+  border:1px solid var(--border-strong);color:var(--ink);border-radius:999px;
+  padding:6px 13px;font-size:13.5px;white-space:nowrap;
+}
+.btn-row{display:flex;flex-wrap:wrap;gap:9px;margin:14px 0 4px}
+.kbd{
+  font-family:var(--mono);font-size:11.5px;background:rgba(255,255,255,.07);
+  border:1px solid var(--border);border-radius:6px;padding:2px 7px;color:var(--ink);
+}
+.note{
+  margin-top:22px;border-left:2px solid var(--gold);padding:2px 0 2px 15px;
+  color:var(--faint);font-size:14px;line-height:1.55;max-width:60ch;
+}
+.mono-line{font-family:var(--mono);font-size:13px;color:var(--teal);word-break:break-all}
+
+/* the sun on the cover */
+.sun-demo{
+  position:relative;width:132px;height:132px;border-radius:50%;margin:0 auto 30px;
+  background:radial-gradient(circle at 38% 34%,#fff3cf,var(--gold) 34%,var(--gold-deep) 66%,#b4670f);
+  box-shadow:0 0 44px rgba(255,190,90,.5),0 0 110px rgba(255,170,60,.28);
+}
+.sun-demo span{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-size:44px;color:rgba(60,30,0,.62);font-weight:300;
+}
+@media (prefers-reduced-motion:no-preference){
+  .sun-demo{animation:pulse 4.5s ease-in-out infinite}
+  @keyframes pulse{50%{box-shadow:0 0 60px rgba(255,190,90,.62),0 0 140px rgba(255,170,60,.34)}}
+}
+
+/* ---------- orbit navigation ---------- */
+.hud{
+  position:relative;z-index:3;display:flex;align-items:center;gap:16px;
+  padding:12px clamp(14px,4vw,34px) 16px;border-top:1px solid rgba(122,140,255,.14);
+  background:linear-gradient(180deg,transparent,rgba(4,6,15,.75));
+}
+.orbit{
+  flex:1;position:relative;height:34px;display:flex;align-items:center;
+}
+.orbit::before{
+  content:"";position:absolute;left:0;right:0;top:50%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(140,160,255,.32),transparent);
+}
+.orbit-dots{position:relative;display:flex;justify-content:space-between;width:100%}
+.dot{
+  width:12px;height:12px;border-radius:50%;border:1px solid var(--border-strong);
+  background:#0b1024;cursor:pointer;padding:0;position:relative;transition:all .25s;
+}
+.dot:hover{transform:scale(1.35);border-color:var(--gold)}
+.dot.done{background:rgba(138,123,255,.55);border-color:transparent}
+.dot.now{
+  background:radial-gradient(circle at 36% 32%,#fff3cf,var(--gold) 55%,var(--gold-deep));
+  border-color:transparent;transform:scale(1.5);box-shadow:0 0 14px rgba(255,200,110,.65);
+}
+.dot:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.dot .tip{
+  position:absolute;bottom:22px;left:50%;transform:translateX(-50%);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;white-space:nowrap;
+  background:#0b1024;border:1px solid var(--border);border-radius:6px;padding:3px 7px;
+  color:var(--muted);opacity:0;pointer-events:none;transition:opacity .18s;
+}
+.dot:hover .tip,.dot:focus-visible .tip{opacity:1}
+
+.ctrl{
+  display:flex;align-items:center;gap:8px;background:rgba(13,18,38,.7);
+  border:1px solid var(--border);border-radius:999px;padding:5px 6px;
+}
+.ctrl button{
+  width:32px;height:32px;border-radius:50%;border:0;background:transparent;color:var(--ink);
+  cursor:pointer;font-size:14px;display:grid;place-items:center;transition:background .2s;font-family:inherit;
+}
+.ctrl button:hover{background:rgba(255,255,255,.09)}
+.ctrl button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.counter{
+  font-family:var(--mono);font-size:11.5px;color:var(--faint);letter-spacing:.1em;
+  padding:0 8px;font-variant-numeric:tabular-nums;
+}
+#bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--accent));z-index:9;width:0;transition:width .18s linear}
+.hint{
+  position:fixed;right:clamp(14px,4vw,34px);top:16px;z-index:4;font-family:var(--mono);
+  font-size:11px;color:var(--faint);letter-spacing:.08em;display:flex;gap:8px;align-items:center;
+}
+@media (max-width:640px){.hint{display:none}.slide{padding-left:20px;padding-right:20px}}
+@media (prefers-reduced-motion:reduce){
+  .slide{transition:none}
+  .dot{transition:none}
+}
+</style>
+</head>
+<body>
+<canvas id="sky"></canvas>
+<div id="glow"></div>
+<div id="bar"></div>
+<div class="hint"><span class="kbd">←</span><span class="kbd">→</span> navigate <span class="kbd">space</span> pause</div>
+
+<div class="stage">
+  <div class="slides" id="slides">
+
+    <!-- 1 -->
+    <section class="slide on" data-tip="Welcome" data-dur="9000">
+      <div class="wrap" style="text-align:center">
+        <div class="sun-demo"><span>+</span></div>
+        <h1>Your collection,<br>as a solar system</h1>
+        <p class="lede" style="margin-inline:auto">693 games orbiting a small gold sun. This briefing takes about two minutes and covers everything: finding a game, adding one, and keeping every copy up to date.</p>
+        <div class="btn-row" style="justify-content:center">
+          <span class="btn-demo">▶ It plays by itself</span>
+          <span class="btn-demo">← → to steer</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="slide" data-tip="Which file" data-dur="13000">
+      <div class="wrap">
+        <div class="eyebrow">Before you launch</div>
+        <h2>Open the right file</h2>
+        <p class="lede">Two files, same features. The difference is where the game data lives.</p>
+        <div class="grid two">
+          <div class="panel good">
+            <h3>🪐 BGG_Galaxy.html — use this one</h3>
+            <p>Every game's box art, rating and genre is stored <strong>inside the file</strong>. Works with no internet, anywhere, forever. This is the file to keep and to share.</p>
+          </div>
+          <div class="panel">
+            <h3>🛰️ BG_database.html</h3>
+            <p>A small file that <strong>downloads the data when you are online</strong>. Fine on the hosted site — but with no connection it has no data and shows plain planets.</p>
+          </div>
+        </div>
+        <div class="note">If a page ever says “no built-in BoardGameGeek data”, you opened the second file offline. Switch to <strong>BGG_Galaxy.html</strong>.</div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="slide" data-tip="Finding" data-dur="13000">
+      <div class="wrap">
+        <div class="eyebrow">Navigation</div>
+        <h2>Finding a game</h2>
+        <p class="lede">The search box reads three names at once, so you never have to remember which language a game is filed under.</p>
+        <div class="grid three">
+          <div class="panel"><h3>English title</h3><p><em>Abluxxen</em></p></div>
+          <div class="panel"><h3>Czech title</h3><p><em>Kořist</em> — accents optional, <span class="mono-line">korist</span> works</p></div>
+          <div class="panel"><h3>BoardGameGeek name</h3><p>Whatever BGG calls it</p></div>
+        </div>
+        <ul class="plain" style="margin-top:18px">
+          <li><span class="ic">🌍</span><div>Narrow by <strong>language, player count or genre</strong> with the three dropdowns.</div></li>
+          <li><span class="ic">🌌</span><div><strong>Sort</strong> by title, BGG rating, complexity, play time or year.</div></li>
+          <li><span class="ic">✨</span><div>The <strong>Wishlist</strong> tab holds games you do not own yet.</div></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="slide" data-tip="Add a game" data-dur="15000">
+      <div class="wrap">
+        <div class="eyebrow">The most useful trick</div>
+        <h2>Adding a game</h2>
+        <p class="lede">Click the hidden <strong>+ in the middle of the sun</strong> to open the add window.</p>
+        <div class="panel good" style="margin-bottom:14px">
+          <h3>Best way: paste the BoardGameGeek link</h3>
+          <p>Copy the game's address from boardgamegeek.com and paste it straight into the title box:</p>
+          <p class="mono-line" style="margin-top:8px">https://boardgamegeek.com/boardgame/404923/operation-barclay</p>
+          <p style="margin-top:8px">The galaxy reads the game's ID out of the link, names the game properly, and fills in players, age, artwork and rating. <strong>This works even if the connection fails</strong> — the ID is in the link itself, so nothing is lost.</p>
+        </div>
+        <div class="grid two">
+          <div class="panel"><h3>Just typing a name</h3><p>Also fine — it searches for a match. Nicknames and Czech-only names may not be found, so a link is safer.</p></div>
+          <div class="panel"><h3>No internet?</h3><p>The window says so and the button becomes <em>Add offline (sync later)</em>. The game is saved; the details arrive later.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="slide" data-tip="Edit" data-dur="14000">
+      <div class="wrap">
+        <div class="eyebrow">Fixing anything</div>
+        <h2>Edit a game</h2>
+        <p class="lede">Open any game and press <span class="btn-demo">✏️ Edit</span> — everything about it can be corrected by hand.</p>
+        <div class="grid two">
+          <div class="panel"><h3>Both titles</h3><p>English and Czech. The search finds the new names <strong>immediately</strong>, and renaming never loses the game's BGG data.</p></div>
+          <div class="panel"><h3>Notes</h3><p>Anything you want to remember: <em>“borrowed to Petr”</em>, <em>“missing 2 cards”</em>.</p></div>
+          <div class="panel"><h3>Alternative URL</h3><p>For games on neither BGG nor Zatrolené hry — a Kickstarter or publisher link. It appears as a link on the game.</p></div>
+          <div class="panel"><h3>Box art &amp; BGG id</h3><p>Paste a better image URL, or relink the game to the correct BGG entry and re-fetch everything.</p></div>
+        </div>
+        <div class="note">Edits are saved in your browser and win over future syncs. <strong>Reset to original BGG data</strong> undoes them.</div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="slide" data-tip="Sync" data-dur="13000">
+      <div class="wrap">
+        <div class="eyebrow">Keeping data fresh</div>
+        <h2>The Sync button</h2>
+        <p class="lede"><span class="btn-demo">🔄 Sync</span> on a game fetches the newest BoardGameGeek data for it. If it cannot, it tells you exactly why:</p>
+        <div class="grid" style="gap:11px">
+          <div class="panel bad"><h3>⚠️ BoardGameGeek has no match for this title</h3><p>The name could not be matched. Waiting will not help — open <strong>✏️ Edit</strong> and paste the game's BGG link or id.</p></div>
+          <div class="panel warn"><h3>⚠️ Not in the shared database yet</h3><p>Only on your computer so far. Press <strong>🚀 Publish</strong> first — see the next slide.</p></div>
+          <div class="panel"><h3>⚠️ Could not reach the online database</h3><p>Just a connection problem. Try again when you are back online.</p></div>
+        </div>
+        <div class="note">The footer's <strong>Update all from data file</strong> refreshes the whole collection in one go.</div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="slide" data-tip="Publish" data-dur="16000">
+      <div class="wrap">
+        <div class="eyebrow">Sharing your additions</div>
+        <h2>Publish, then sync</h2>
+        <p class="lede">Games you add live only in your browser until you publish them.</p>
+        <div class="btn-row" style="margin:-12px 0 22px"><span class="btn-demo">🚀 Publish additions online</span><span style="color:var(--faint);font-size:14px;align-self:center">sends them to the shared collection</span></div>
+        <ul class="steps">
+          <li><span class="n">1</span><div>Press <strong>🚀 Publish</strong>. A GitHub page opens, already filled in.</div></li>
+          <li><span class="n">2</span><div>Press <strong>Submit new issue</strong> on that page. That is the only button you need — it is the message being sent.</div></li>
+          <li><span class="n">3</span><div>Wait <strong>about 5 minutes</strong>. A robot adds your games and fetches their BoardGameGeek data.</div></li>
+          <li><span class="n">4</span><div><strong>Read the robot's reply</strong> on that page — it names every game and what happened to it.</div></li>
+          <li><span class="n">5</span><div>Back in the galaxy, press <strong>🔄 Sync</strong> on those games.</div></li>
+        </ul>
+        <div class="note">Nothing else on the GitHub page needs your attention. Once the reply appears, the work is done.</div>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="slide" data-tip="The reply" data-dur="13000">
+      <div class="wrap">
+        <div class="eyebrow">Reading the robot's reply</div>
+        <h2>Three possible verdicts</h2>
+        <div class="grid" style="gap:11px">
+          <div class="panel good">
+            <h3>✅ Ready to sync</h3>
+            <p>Found on BoardGameGeek, with a link to prove which game it matched. Press <strong>🔄 Sync</strong> and you are done.</p>
+          </div>
+          <div class="panel warn">
+            <h3>⏳ Matched, details still coming</h3>
+            <p>The next run will finish it. Sync again a little later.</p>
+          </div>
+          <div class="panel bad">
+            <h3>⚠️ No match for these titles</h3>
+            <p>Usually a nickname, a Czech-only name or a typo. Find the game on BoardGameGeek, then <strong>✏️ Edit → paste the id → Re-fetch → Save</strong>, and publish once more.</p>
+          </div>
+        </div>
+        <div class="note">This is why pasting a BGG link when adding a game is worth the extra second — a game with an id can always be found.</div>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section class="slide" data-tip="Spreadsheet" data-dur="14000">
+      <div class="wrap">
+        <div class="eyebrow">Bulk work</div>
+        <h2>Excel in, Excel out</h2>
+        <div class="grid two">
+          <div class="panel">
+            <h3>📊 Export to Excel</h3>
+            <p>Saves the whole collection and wishlist as a spreadsheet — two sheets, every attribute, ready to share or edit.</p>
+          </div>
+          <div class="panel">
+            <h3>📦 Import an updated spreadsheet</h3>
+            <p>Type the secret phrase into the command line at the very top of the page:</p>
+            <p class="mono-line" style="margin-top:8px">usakova sbirka board game database</p>
+            <p style="margin-top:8px">Pick your <strong>.xlsx</strong>; only the games that are genuinely new are offered, with tick boxes.</p>
+          </div>
+        </div>
+        <div class="note">The exported file uses exactly the layout the import expects — so you can export, edit in Excel, and feed it straight back.</div>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section class="slide" data-tip="Housekeeping" data-dur="13000">
+      <div class="wrap">
+        <div class="eyebrow">The rest of the footer</div>
+        <h2>Housekeeping</h2>
+        <ul class="plain">
+          <li><span class="ic">⬇️</span><div><strong>Download portable HTML</strong> — bakes your current galaxy, edits and all, into a fresh file you can share. Whoever opens it sees your version instantly, offline.</div></li>
+          <li><span class="ic">🗑</span><div><strong>Remove</strong> — on any game's page. It disappears from view; nothing is destroyed.</div></li>
+          <li><span class="ic">🔐</span><div><strong>Restore removed games</strong> and <strong>Rescan galaxy</strong> ask for the maintenance password first — they undo work, so they are behind the same secret phrase as the import.</div></li>
+        </ul>
+        <div class="note">Everything you do stays in your browser until you press Publish. There is no way to break the shared collection by clicking around.</div>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section class="slide" data-tip="Cheat sheet" data-dur="18000">
+      <div class="wrap">
+        <div class="eyebrow">Take-away</div>
+        <h2>The whole thing in five lines</h2>
+        <ul class="steps" style="max-width:64ch">
+          <li><span class="n">1</span><div>Open <strong>BGG_Galaxy.html</strong> — it works offline.</div></li>
+          <li><span class="n">2</span><div>Search by <strong>either language</strong>; click a planet for the full detail.</div></li>
+          <li><span class="n">3</span><div>Add games with the <strong>+ in the sun</strong>, pasting the BGG link when you can.</div></li>
+          <li><span class="n">4</span><div><strong>🚀 Publish → wait ~5 min → read the reply → 🔄 Sync.</strong></div></li>
+          <li><span class="n">5</span><div>Anything wrong? <strong>✏️ Edit</strong> fixes titles, notes, links and artwork.</div></li>
+        </ul>
+        <p style="margin-top:26px;color:var(--faint)">Fly safe. 🪐</p>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="hud">
+    <div class="ctrl">
+      <button id="prev" aria-label="Previous slide" title="Previous">⏮</button>
+      <button id="play" aria-label="Pause" title="Play / pause">❚❚</button>
+      <button id="next" aria-label="Next slide" title="Next">⏭</button>
+    </div>
+    <div class="orbit"><div class="orbit-dots" id="dots"></div></div>
+    <div class="counter" id="counter">01 / 11</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var dotsBox=document.getElementById('dots'), bar=document.getElementById('bar');
+  var counter=document.getElementById('counter'), playBtn=document.getElementById('play');
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var i=0, playing=!reduce, t0=0, raf=null;
+
+  slides.forEach(function(s,n){
+    var b=document.createElement('button');
+    b.className='dot'; b.type='button';
+    b.setAttribute('aria-label','Slide '+(n+1)+': '+(s.dataset.tip||''));
+    b.innerHTML='<span class="tip">'+(s.dataset.tip||'')+'</span>';
+    b.addEventListener('click',function(){go(n,true);});
+    dotsBox.appendChild(b);
+  });
+  var dots=[].slice.call(dotsBox.children);
+  var pad=function(n){return (n<10?'0':'')+n;};
+
+  function go(n,stop){
+    i=(n+slides.length)%slides.length;
+    slides.forEach(function(s,k){s.classList.toggle('on',k===i);});
+    dots.forEach(function(d,k){
+      d.classList.toggle('now',k===i);
+      d.classList.toggle('done',k<i);
+    });
+    counter.textContent=pad(i+1)+' / '+pad(slides.length);
+    if(stop)setPlaying(false);
+    t0=performance.now();
+    bar.style.width='0%';
+  }
+  function setPlaying(v){
+    playing=v; playBtn.textContent=v?'❚❚':'▶';
+    playBtn.setAttribute('aria-label',v?'Pause':'Play');
+    if(v)t0=performance.now();
+  }
+  function tick(now){
+    raf=requestAnimationFrame(tick);
+    if(!playing){bar.style.width='0%';return;}
+    var dur=+(slides[i].dataset.dur||12000);
+    var p=(now-t0)/dur;
+    if(p>=1){go(i+1);return;}
+    bar.style.width=(p*100).toFixed(2)+'%';
+  }
+  raf=requestAnimationFrame(tick);
+
+  document.getElementById('next').addEventListener('click',function(){go(i+1,true);});
+  document.getElementById('prev').addEventListener('click',function(){go(i-1,true);});
+  playBtn.addEventListener('click',function(){setPlaying(!playing);});
+  addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='PageDown'){go(i+1,true);e.preventDefault();}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){go(i-1,true);e.preventDefault();}
+    else if(e.key===' '){setPlaying(!playing);e.preventDefault();}
+    else if(e.key==='Home'){go(0,true);}
+    else if(e.key==='End'){go(slides.length-1,true);}
+  });
+  var sx=null;
+  addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});
+  addEventListener('touchend',function(e){
+    if(sx===null)return;
+    var dx=e.changedTouches[0].clientX-sx;
+    if(Math.abs(dx)>55)go(i+(dx<0?1:-1),true);
+    sx=null;
+  },{passive:true});
+  setPlaying(playing);
+
+  /* ---- starfield ---- */
+  var c=document.getElementById('sky'), x=c.getContext('2d'), stars=[], w=0,h=0;
+  function seed(){
+    w=c.width=innerWidth*devicePixelRatio; h=c.height=innerHeight*devicePixelRatio;
+    c.style.width=innerWidth+'px'; c.style.height=innerHeight+'px';
+    var n=Math.min(340,Math.round(innerWidth*innerHeight/5200));
+    stars=[];
+    for(var k=0;k<n;k++){
+      var depth=Math.random();
+      stars.push({
+        x:Math.random()*w, y:Math.random()*h,
+        r:(depth*1.5+.25)*devicePixelRatio,
+        a:.18+depth*.62, v:(depth*.16+.02)*devicePixelRatio,
+        tw:Math.random()*Math.PI*2, hue:Math.random()<.14?1:0
+      });
+    }
+  }
+  function draw(now){
+    x.clearRect(0,0,w,h);
+    for(var k=0;k<stars.length;k++){
+      var s=stars[k];
+      if(!reduce){ s.x-=s.v; if(s.x<-2)s.x=w+2; }
+      var tw=reduce?1:(.72+.28*Math.sin(now/900+s.tw));
+      x.globalAlpha=s.a*tw;
+      x.fillStyle=s.hue?'#ffcf6e':'#dfe6ff';
+      x.beginPath(); x.arc(s.x,s.y,s.r,0,6.283); x.fill();
+    }
+    x.globalAlpha=1;
+    requestAnimationFrame(draw);
+  }
+  seed(); requestAnimationFrame(draw);
+  addEventListener('resize',seed);
+})();
+</script>
+</body>
+</html>
