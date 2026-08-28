@@ -78,6 +78,15 @@ control panel gives a plain-language verdict on what is and isn't working.
 - ⬇️ **Download portable HTML**: footer button that bakes the *current* state — your edits, added
   games, removals, and all BGG data — into a fresh self-contained `BGG_Galaxy.html` you can share.
   A person who opens it sees your version instantly, offline, with no localStorage needed.
+- 🧾 **Add from invoice**: footer button that reads the game names out of a purchase invoice
+  (`.pdf`, `.xlsx`, `.csv`, `.txt`, or pasted text) and checks each one against the collection, so a
+  whole order can be added without hunting for duplicates by hand. Results come in three groups —
+  **new** (ticked), **check these** (similar to something you own, e.g. *Ticket to Ride* next to
+  *Ticket to Ride: Europe*), and **already in the galaxy** (locked). Prices, shipping, VAT, totals
+  and item codes are filtered out, and the skipped lines can be expanded so nothing vanishes
+  silently. The PDF reader is built into the file — no library, works offline — but it needs a PDF
+  that contains **text**; a scan or photo has none, so use your phone's text recognition (iPhone Live
+  Text, Google Lens) to copy the text off the image and paste it in.
 - 📊 **Export to Excel**: footer button that saves the whole collection + wishlist as a real `.xlsx`
   file — no libraries, generated entirely in the browser. The file uses **the same layout the import
   wizard reads** (two sheets, *Collection* and *Wishlist*, with `Title / Název / Language / Players /

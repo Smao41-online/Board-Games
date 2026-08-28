@@ -10,6 +10,7 @@ the step-by-step maintenance procedures; use it for any change to this project.
 
 | File | Role |
 |---|---|
+| `Galaxy_guide.html` | Self-playing 12-slide user walkthrough. Keep it in step with features. |
 | `BG_database.html` | **The only file you edit.** Full app: solar UI, tabs, filters, add/remove/edit/sync, import wizard, publish, export. Contains inline `const GAMES/WISHLIST` arrays and an empty `/* BGG_BAKED_SLOT */`. |
 | `BGG_Galaxy.html` | **Derived artifact — never edit directly.** Offline portable copy with all BGG data baked into the slot. Regenerate with `python3 scripts/bake_galaxy.py` after every change. |
 | `index.html`, `BoardGames.html` | Frozen earlier versions. User asked to keep them untouched. |
@@ -86,6 +87,20 @@ enrichment ~5–10 min.
 8. localStorage keys: `user.games.v1` (added), `user.removed.v1` (removed, by
    stable index), `user.overrides.v1` (edits/syncs), `bgg.ids.v2`/`bgg.things.v2`
    (cache), `zh.extra.v1`.
+
+## Invoice → batch add
+
+`🧾 Add from invoice` reads .pdf/.xlsx/.csv/.txt or pasted text, keeps game-like lines
+and buckets them new / check / duplicate. The PDF reader is hand-written in the HTML
+(`pdfToText`): object scan → FlateDecode via `DecompressionStream` → ToUnicode CMap →
+Tj/TJ with Tm/Td line breaks. It handles Type0/CIDFontType2 (what Chrome and most
+invoicing systems emit) and WinAnsi. Scans/photos have no text layer — say so and point
+at phone text recognition instead of pretending.
+Classifier gotchas already paid for: measure the letter ratio against **non-space**
+characters (invoice columns are space-padded, which sank `Brass: Birmingham`), exclude
+currency/unit words before counting letters (`3x Azul … 1 497,00 Kč` looked like a price
+line), and treat a match on the **BGG record's name** as `maybe`, never `dupe` — many
+expansions are deliberately linked to their base game's record.
 
 ## Practical gotchas
 
