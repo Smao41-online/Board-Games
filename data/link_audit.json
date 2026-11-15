@@ -1,0 +1,1900 @@
+[
+ {
+  "sect": "collection",
+  "t": "Agricola revised edition",
+  "c": "Agricola",
+  "currentId": 31260,
+  "currentName": "Agricola",
+  "currentYear": 2007,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 200680,
+    "type": "boardgame",
+    "name": "Agricola (Revised Edition)",
+    "year": 2016,
+    "score": 100
+   },
+   {
+    "id": 31260,
+    "type": "boardgame",
+    "name": "Agricola",
+    "year": 2007,
+    "score": 100
+   },
+   {
+    "id": 359999,
+    "type": "boardgame",
+    "name": "Agricola 15",
+    "year": 2022,
+    "score": 85
+   },
+   {
+    "id": 9364,
+    "type": "boardgame",
+    "name": "Agricola Doppelkopf",
+    "year": 1895,
+    "score": 85
+   },
+   {
+    "id": 113413,
+    "type": "boardgame",
+    "name": "Agricola Ereigniskarten",
+    "year": 2011,
+    "score": 85
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Architects of the West Kingdom: Age of Artisans",
+  "c": "Architekti Západního království: Rozkvět řemesel",
+  "currentId": 236457,
+  "currentName": "Architects of the West Kingdom",
+  "currentYear": 2018,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 285235,
+    "type": "boardgame",
+    "name": "Architects of the West Kingdom: Age of Artisans",
+    "year": 2020,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Architects of the West Kingdom: Works of Wonder",
+  "c": "Architekti Západního království: Majestátní Monumenty",
+  "currentId": 236457,
+  "currentName": "Architects of the West Kingdom",
+  "currentYear": 2018,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 327245,
+    "type": "boardgame",
+    "name": "Architects of the West Kingdom: Works of Wonder",
+    "year": 2022,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Azul: Crystal mosaic expansion",
+  "c": "Azul: Křišťálová mozaika",
+  "currentId": 230802,
+  "currentName": "Azul",
+  "currentYear": 2017,
+  "verdict": "strong-candidate",
+  "candidates": [
+   {
+    "id": 294345,
+    "type": "boardgame",
+    "name": "Azul: Křišťálová mozaika – rozšíření",
+    "year": 2020,
+    "score": 85
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Bang!: expansions",
+  "c": "Bang!: všechna rozšíření",
+  "currentId": 3955,
+  "currentName": "BANG!",
+  "currentYear": 2002,
+  "verdict": "no-candidates",
+  "candidates": []
+ },
+ {
+  "sect": "collection",
+  "t": "Barrage: Leeghwater Project",
+  "c": "Přehrada: Projekt Leeghwater",
+  "currentId": 251247,
+  "currentName": "Barrage",
+  "currentYear": 2019,
+  "verdict": "strong-candidate",
+  "candidates": [
+   {
+    "id": 263711,
+    "type": "boardgame",
+    "name": "Barrage: The Leeghwater Project",
+    "year": 2019,
+    "score": 85
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Betrayal at House on the Hill: Widow's Walk",
+  "c": "Betrayal at House on the Hill: Widow's Walk",
+  "currentId": 10547,
+  "currentName": "Betrayal at House on the Hill",
+  "currentYear": 2004,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 198452,
+    "type": "boardgame",
+    "name": "Betrayal at House on the Hill: Widow's Walk",
+    "year": 2016,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Carcassonne: 1 exp",
+  "c": "Carcassonne: 1 hostince a katedrály",
+  "currentId": 822,
+  "currentName": "Carcassonne",
+  "currentYear": 2000,
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 2993,
+    "type": "boardgame",
+    "name": "Carcassonne: Expansion 1 – Inns & Cathedrals",
+    "year": 2002,
+    "score": 40
+   },
+   {
+    "id": 217006,
+    "type": "boardgame",
+    "name": "Carcassonne: Expansion 10 – Circus & Artists",
+    "year": 2017,
+    "score": 20
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Carcassonne: 10 exp",
+  "c": "Carcassonne: 10 cirkus",
+  "currentId": 822,
+  "currentName": "Carcassonne",
+  "currentYear": 2000,
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 217006,
+    "type": "boardgame",
+    "name": "Carcassonne: Expansion 10 – Circus & Artists",
+    "year": 2017,
+    "score": 40
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Carcassonne: 2 exp",
+  "c": "Carcassonne: 2 kupci a stavitelé",
+  "currentId": 822,
+  "currentName": "Carcassonne",
+  "currentYear": 2000,
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 5405,
+    "type": "boardgame",
+    "name": "Carcassonne: Expansion 2 – Traders & Builders",
+    "year": 2003,
+    "score": 40
+   },
+   {
+    "id": 400937,
+    "type": "boardgame",
+    "name": "Cosmic Portal 2: Exploring the Multiverse (fan expansion for Carcassonne)",
+    "year": 2021,
+    "score": 40
+   },
+   {
+    "id": 323386,
+    "type": "boardgame",
+    "name": "The Land Surveyors 2 (fan expansion for Carcassonne)",
+    "year": 2020,
+    "score": 40
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Carcassonne: 3 exp",
+  "c": "Carcassonne: 3 princezna a drak",
+  "currentId": 822,
+  "currentName": "Carcassonne",
+  "currentYear": 2000,
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 15158,
+    "type": "boardgame",
+    "name": "Carcassonne: Expansion 3 – Dragon & Fairy",
+    "year": 2005,
+    "score": 40
+   },
+   {
+    "id": 248791,
+    "type": "boardgame",
+    "name": "Corn Circles 3 (fan expansion for Carcassonne)",
+    "year": 2013,
+    "score": 40
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Carcassonne: 4 exp",
+  "c": "Carcassonne: 4 věž",
+  "currentId": 822,
+  "currentName": "Carcassonne",
+  "currentYear": 2000,
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 21385,
+    "type": "boardgame",
+    "name": "Carcassonne: 4. Expansion – The Tower",
+    "year": 2006,
+    "score": 40
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Carcassonne: 5 exp",
+  "c": "Carcassonne: 5 opatství a starosta",
+  "currentId": 822,
+  "currentName": "Carcassonne",
+  "currentYear": 2000,
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 31784,
+    "type": "boardgame",
+    "name": "Carcassonne: Expansion 5 – Abbey & Mayor",
+    "year": 2007,
+    "score": 40
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Carcassonne: 6 exp",
+  "c": "Carcassonne: 6 král, hrabě a řeka",
+  "currentId": 822,
+  "currentName": "Carcassonne",
+  "currentYear": 2000,
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 33458,
+    "type": "boardgame",
+    "name": "Carcassonne: Expansion 6 – Count, King & Robber",
+    "year": 2007,
+    "score": 40
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Carcassonne: 7 exp",
+  "c": "Carcassonne: 7 katapult",
+  "currentId": 822,
+  "currentName": "Carcassonne",
+  "currentYear": 2000,
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 38855,
+    "type": "boardgame",
+    "name": "Carcassonne: Expansion 7 – The Catapult",
+    "year": 2008,
+    "score": 40
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Carcassonne: 8 exp",
+  "c": "Carcassonne: 8 mosty a hrady",
+  "currentId": 822,
+  "currentName": "Carcassonne",
+  "currentYear": 2000,
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 66646,
+    "type": "boardgame",
+    "name": "Carcassonne: Expansion 8 – Bridges, Castles and Bazaars",
+    "year": 2010,
+    "score": 40
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Carcassonne: 9 exp",
+  "c": "Carcassonne: 9 ovce a kopce",
+  "currentId": 822,
+  "currentName": "Carcassonne",
+  "currentYear": 2000,
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 153773,
+    "type": "boardgame",
+    "name": "Carcassonne: Expansion 9 – Hills & Sheep",
+    "year": 2014,
+    "score": 40
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Carcassonne: Big Box",
+  "c": "Carcassonne: Big Box",
+  "currentId": 822,
+  "currentName": "Carcassonne",
+  "currentYear": 2000,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 142057,
+    "type": "boardgame",
+    "name": "Carcassonne Big Box",
+    "year": 2006,
+    "score": 100
+   },
+   {
+    "id": 141008,
+    "type": "boardgame",
+    "name": "Carcassonne Big Box 2",
+    "year": 2008,
+    "score": 85
+   },
+   {
+    "id": 141007,
+    "type": "boardgame",
+    "name": "Carcassonne Big Box 3",
+    "year": 2010,
+    "score": 85
+   },
+   {
+    "id": 140711,
+    "type": "boardgame",
+    "name": "Carcassonne Big Box 4",
+    "year": 2012,
+    "score": 85
+   },
+   {
+    "id": 164127,
+    "type": "boardgame",
+    "name": "Carcassonne Big Box 5",
+    "year": 2014,
+    "score": 85
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Carcassonne: Game",
+  "c": "Carcassonne: Základní hra",
+  "currentId": 822,
+  "currentName": "Carcassonne",
+  "currentYear": 2000,
+  "verdict": "strong-candidate",
+  "candidates": [
+   {
+    "id": 183453,
+    "type": "boardgame",
+    "name": "Carcassonne: Demo Game",
+    "year": 2015,
+    "score": 85
+   },
+   {
+    "id": 89953,
+    "type": "boardgame",
+    "name": "Carcassonne: The Dice Game",
+    "year": 2011,
+    "score": 80
+   },
+   {
+    "id": 34615,
+    "type": "boardgame",
+    "name": "New World: A Carcassonne Game",
+    "year": 2008,
+    "score": 75
+   },
+   {
+    "id": 26615,
+    "type": "boardgame",
+    "name": "Carcassonne: Games Quarterly Promo Tiles",
+    "year": 2006,
+    "score": 30
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Carcassonne: Kids of Carcassonne",
+  "c": "Carcassonne: Děti z Carcassonne",
+  "currentId": 822,
+  "currentName": "Carcassonne",
+  "currentYear": 2000,
+  "verdict": "strong-candidate",
+  "candidates": [
+   {
+    "id": 41010,
+    "type": "boardgame",
+    "name": "The Kids of Carcassonne",
+    "year": 2009,
+    "score": 90
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Cartographers: A Roll Player Tale",
+  "c": "Kartografové",
+  "currentId": 263918,
+  "currentName": "Cartographers",
+  "currentYear": 2019,
+  "verdict": "already-correct",
+  "candidates": [
+   {
+    "id": 263918,
+    "type": "boardgame",
+    "name": "Cartographers: A Roll Player Tale",
+    "year": 2019,
+    "score": 100
+   },
+   {
+    "id": 315767,
+    "type": "boardgame",
+    "name": "Kartografové: Hrdinové",
+    "year": 2021,
+    "score": 85
+   },
+   {
+    "id": 394559,
+    "type": "boardgame",
+    "name": "Kartografové: Architekti minirozšíření",
+    "year": 2024,
+    "score": 80
+   },
+   {
+    "id": 356086,
+    "type": "boardgame",
+    "name": "Kartografové: Balíček hrdinů",
+    "year": 2022,
+    "score": 80
+   },
+   {
+    "id": 302884,
+    "type": "boardgame",
+    "name": "Cartographers: A Roll Player Tale – Ambush Promo Pack",
+    "year": 2020,
+    "score": 75
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Catan: card game",
+  "c": "Catan: karetní hra",
+  "currentId": 13,
+  "currentName": "Catan",
+  "currentYear": 1995,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 278,
+    "type": "boardgame",
+    "name": "Catan Card Game",
+    "year": 1996,
+    "score": 100
+   },
+   {
+    "id": 91534,
+    "type": "boardgame",
+    "name": "Catan: Rychlá karetní hra",
+    "year": 2011,
+    "score": 85
+   },
+   {
+    "id": 21817,
+    "type": "boardgame",
+    "name": "Catan Card Game: Artisans & Benefactors",
+    "year": 2006,
+    "score": 80
+   },
+   {
+    "id": 2915,
+    "type": "boardgame",
+    "name": "Catan Card Game: Expansion Set",
+    "year": 2002,
+    "score": 80
+   },
+   {
+    "id": 12543,
+    "type": "boardgame",
+    "name": "Catan Card Game: Barbarians & Traders Upgrade Kit",
+    "year": 2003,
+    "score": 70
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Chronicles of Crime: The Millennium Series – 2400",
+  "c": "Kronika zločinu: Série Milénium – 2400",
+  "currentId": 239188,
+  "currentName": "Chronicles of Crime",
+  "currentYear": 2018,
+  "verdict": "no-candidates",
+  "candidates": []
+ },
+ {
+  "sect": "collection",
+  "t": "Civilization: A New Dawn",
+  "c": "Civilizace: Nový úsvit",
+  "currentId": 71,
+  "currentName": "Civilization",
+  "currentYear": 1980,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 233247,
+    "type": "boardgame",
+    "name": "Civilization: A New Dawn",
+    "year": 2017,
+    "score": 100
+   },
+   {
+    "id": 319462,
+    "type": "boardgame",
+    "name": "Civilization: A New Dawn – Automatic Civilization",
+    "year": 2020,
+    "score": 80
+   },
+   {
+    "id": 314014,
+    "type": "boardgame",
+    "name": "Civilization: A New Dawn – Terra Incognita",
+    "year": 2020,
+    "score": 80
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Codenames: Pictures",
+  "c": "Krycí jména: Obrázky",
+  "currentId": 178900,
+  "currentName": "Codenames",
+  "currentYear": 2015,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 198773,
+    "type": "boardgame",
+    "name": "Codenames: Pictures",
+    "year": 2016,
+    "score": 100
+   },
+   {
+    "id": 205916,
+    "type": "boardgame",
+    "name": "Codenames: Pictures – 5x5 Promo Tiles",
+    "year": 2016,
+    "score": 75
+   },
+   {
+    "id": 206078,
+    "type": "boardgame",
+    "name": "Codenames: Pictures – Broken Token Promo Card",
+    "year": 2016,
+    "score": 70
+   },
+   {
+    "id": 464600,
+    "type": "boardgame",
+    "name": "Codenames: Pictures – Cute Critters Expansion Pack",
+    "year": 2026,
+    "score": 70
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Conflict of Heroes: Storms of Steel – Kursk 1943 (Third Edition)",
+  "c": "Conflict of Heroes: Bouře oceli – Kursk 1943 (3. edice)",
+  "currentId": 38823,
+  "currentName": "Conflict of Heroes: Storms of Steel! – Kursk 1943",
+  "currentYear": 2009,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 286344,
+    "type": "boardgame",
+    "name": "Conflict of Heroes: Storms of Steel – Kursk 1943 (Third Edition)",
+    "year": 2019,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Crown of Ash: Deluxe package",
+  "c": "Koruna z popela: Deluxe",
+  "currentId": 354307,
+  "currentName": "Crown of Ash",
+  "currentYear": 2024,
+  "verdict": "no-candidates",
+  "candidates": []
+ },
+ {
+  "sect": "collection",
+  "t": "Dominant Species: Marine",
+  "c": "Dominant Species: Mořská říše",
+  "currentId": 62219,
+  "currentName": "Dominant Species",
+  "currentYear": 2010,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 262941,
+    "type": "boardgame",
+    "name": "Dominant Species: Marine",
+    "year": 2021,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Dune: Betrayal",
+  "c": "Duna: Zrada",
+  "currentId": 121,
+  "currentName": "Dune",
+  "currentYear": 1979,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 343696,
+    "type": "boardgame",
+    "name": "Dune: Betrayal",
+    "year": 2021,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Dune: House Secrets",
+  "c": "Duna: Tajemství rodu",
+  "currentId": 121,
+  "currentName": "Dune",
+  "currentYear": 1979,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 329713,
+    "type": "boardgame",
+    "name": "Dune: House Secrets",
+    "year": 2021,
+    "score": 100
+   },
+   {
+    "id": 393759,
+    "type": "boardgame",
+    "name": "Dune: House Secrets – Bonus Pack",
+    "year": 2021,
+    "score": 80
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Dungeons of Infinity: Deluxe edition",
+  "c": "Dungeons of Infinity",
+  "currentId": 193715,
+  "currentName": "Dungeons of Infinity",
+  "currentYear": 2021,
+  "verdict": "already-correct",
+  "candidates": [
+   {
+    "id": 193715,
+    "type": "boardgame",
+    "name": "Dungeons of Infinity",
+    "year": 2021,
+    "score": 100
+   },
+   {
+    "id": 305126,
+    "type": "boardgame",
+    "name": "Dungeons of Infinity: Kingdom Cost",
+    "year": 2023,
+    "score": 80
+   },
+   {
+    "id": 336620,
+    "type": "boardgame",
+    "name": "Dungeons of Infinity: Stonebound Saga",
+    "year": 2021,
+    "score": 80
+   },
+   {
+    "id": 474508,
+    "type": "boardgame",
+    "name": "Dungeons of Infinity: Legacy of Lux",
+    "year": 2027,
+    "score": 75
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Great Western Trail: Argentina",
+  "c": "Great Western Trail: Argentina",
+  "currentId": 193738,
+  "currentName": "Great Western Trail",
+  "currentYear": 2016,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 364011,
+    "type": "boardgame",
+    "name": "Great Western Trail: Argentina",
+    "year": 2022,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Imperial Settlers: Rise of the Empire",
+  "c": "Settlers: Zrod impéria - Rozkvět impéria",
+  "currentId": 154203,
+  "currentName": "Imperial Settlers",
+  "currentYear": 2014,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 299277,
+    "type": "boardgame",
+    "name": "Imperial Settlers: Rise of the Empire",
+    "year": 2020,
+    "score": 100
+   },
+   {
+    "id": 313864,
+    "type": "boardgame",
+    "name": "Imperial Settlers: Rise of the Empire – Interimperial Organizations Tiles",
+    "year": 2020,
+    "score": 75
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "It's a Wonderful World: Leisure & Decadence",
+  "c": "Svět divů: Pohodlí & úpadek",
+  "currentId": 271324,
+  "currentName": "It's a Wonderful World",
+  "currentYear": 2019,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 334767,
+    "type": "boardgame",
+    "name": "It's a Wonderful World: Leisure & Decadence",
+    "year": 2020,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "It's a Wonderful World: War or Peace",
+  "c": "Svět divů: Válka nebo mír",
+  "currentId": 271324,
+  "currentName": "It's a Wonderful World",
+  "currentYear": 2019,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 298752,
+    "type": "boardgame",
+    "name": "It's a Wonderful World: War or Peace",
+    "year": 2020,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Kemet: Blut und Sand",
+  "c": "Kemet: Krev a písek",
+  "currentId": 127023,
+  "currentName": "Kemet",
+  "currentYear": 2012,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 297562,
+    "type": "boardgame",
+    "name": "Kemet: Blut und Sand",
+    "year": 2021,
+    "score": 100
+   },
+   {
+    "id": 313475,
+    "type": "boardgame",
+    "name": "Kemet: Krev a písek – Kniha mrtvých",
+    "year": 2021,
+    "score": 80
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Keystone: North America (Deluxe edition)",
+  "c": "Divočina Severní Ameriky (Deluxe verze)",
+  "currentId": 172010,
+  "currentName": "KeYstoNe",
+  "currentYear": 2015,
+  "verdict": "no-candidates",
+  "candidates": []
+ },
+ {
+  "sect": "collection",
+  "t": "La Granja: Deluxe Master Set",
+  "c": "La Granja: Deluxe Master Set",
+  "currentId": 146886,
+  "currentName": "La Granja",
+  "currentYear": 2014,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 341945,
+    "type": "boardgame",
+    "name": "La Granja: Deluxe Master Set",
+    "year": 2023,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Lancaster: The New Laws",
+  "c": "Lancaster: The New Laws",
+  "currentId": 96913,
+  "currentName": "Lancaster",
+  "currentYear": 2011,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 107863,
+    "type": "boardgame",
+    "name": "Lancaster: The New Laws",
+    "year": 2011,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Lost Ruins of Arnak: Expedition Leaders",
+  "c": "Arnak: Velitelé expedic",
+  "currentId": 312484,
+  "currentName": "Lost Ruins of Arnak",
+  "currentYear": 2020,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 341254,
+    "type": "boardgame",
+    "name": "Lost Ruins of Arnak: Expedition Leaders",
+    "year": 2021,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Lost Ruins of Arnak: The Missing Expedition",
+  "c": "Arnak: Po stopách expedice",
+  "currentId": 312484,
+  "currentName": "Lost Ruins of Arnak",
+  "currentYear": 2020,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 382350,
+    "type": "boardgame",
+    "name": "Lost Ruins of Arnak: The Missing Expedition",
+    "year": 2023,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Luxor: Forgotten Treasures",
+  "c": "Luxor: Zapomenuté poklady",
+  "currentId": 245643,
+  "currentName": "Luxor",
+  "currentYear": 2018,
+  "verdict": "no-candidates",
+  "candidates": []
+ },
+ {
+  "sect": "collection",
+  "t": "Mage Knight: Ultimate Edition",
+  "c": "Mage Knight: Ultimátní edice",
+  "currentId": 864,
+  "currentName": "Mage Knight",
+  "currentYear": 2000,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 248562,
+    "type": "boardgame",
+    "name": "Mage Knight: Ultimate Edition",
+    "year": 2018,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Monopoly: Cheaters edition",
+  "c": "Monopoly: Cheaters edition",
+  "currentId": 1406,
+  "currentName": "Monopoly",
+  "currentYear": 1935,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 254617,
+    "type": "boardgame",
+    "name": "Monopoly: Cheaters Edition",
+    "year": 2018,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Monopoly: Empire",
+  "c": "Monopoly: Empire",
+  "currentId": 1406,
+  "currentName": "Monopoly",
+  "currentYear": 1935,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 145842,
+    "type": "boardgame",
+    "name": "Monopoly Empire",
+    "year": 2013,
+    "score": 100
+   },
+   {
+    "id": 333056,
+    "type": "boardgame",
+    "name": "Monopoly Empire Card Game",
+    "year": 2013,
+    "score": 80
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Monopoly: Game of Thrones",
+  "c": "Monopoly: Game of Thrones",
+  "currentId": 1406,
+  "currentName": "Monopoly",
+  "currentYear": 1935,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 265571,
+    "type": "boardgame",
+    "name": "Monopoly: Game of Thrones",
+    "year": 2018,
+    "score": 100
+   },
+   {
+    "id": 185104,
+    "type": "boardgame",
+    "name": "Monopoly: Game of Thrones Collector's Edition",
+    "year": 2015,
+    "score": 80
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Munchkin: Big box",
+  "c": "Munchkin: Big box",
+  "currentId": 1927,
+  "currentName": "Munchkin",
+  "currentYear": 2001,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 419687,
+    "type": "boardgame",
+    "name": "Munchkin Big Box",
+    "year": 2025,
+    "score": 100
+   },
+   {
+    "id": 448005,
+    "type": "boardgame",
+    "name": "Munchkin Big Box: Loot",
+    "year": 2025,
+    "score": 85
+   },
+   {
+    "id": 261221,
+    "type": "boardgame",
+    "name": "Munchkin Quest: Big Box",
+    "year": 2019,
+    "score": 85
+   },
+   {
+    "id": 33493,
+    "type": "boardgame",
+    "name": "Munchkin 6: Ujeté jeskyně + Big-Box",
+    "year": 2008,
+    "score": 75
+   },
+   {
+    "id": 24733,
+    "type": "boardgame",
+    "name": "The Official Steve Jackson Munchkin Bookmark of The Big Box of Beatdown!",
+    "year": 2001,
+    "score": 70
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Northgard: Uncharted Lands – Warchiefs",
+  "c": "Northgard: Náčelníci",
+  "currentId": 274124,
+  "currentName": "Northgard: Uncharted Lands",
+  "currentYear": 2022,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 366744,
+    "type": "boardgame",
+    "name": "Northgard: Uncharted Lands – Warchiefs",
+    "year": 2022,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Northgard: Uncharted Lands – Wilderness",
+  "c": "Northgard: Divočina",
+  "currentId": 274124,
+  "currentName": "Northgard: Uncharted Lands",
+  "currentYear": 2022,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 366746,
+    "type": "boardgame",
+    "name": "Northgard: Uncharted Lands – Wilderness",
+    "year": 2022,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Paladins of the West Kingdom: City of Crowns",
+  "c": "Paladinové Západního království: Sídla šlechticů",
+  "currentId": 266810,
+  "currentName": "Paladins of the West Kingdom",
+  "currentYear": 2019,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 317980,
+    "type": "boardgame",
+    "name": "Paladins of the West Kingdom: City of Crowns",
+    "year": 2021,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Paladins of the West Kingdom: The Vassals Mini-Expansion",
+  "c": "Paladinové Západního království: Vazalové minirozšíření",
+  "currentId": 266810,
+  "currentName": "Paladins of the West Kingdom",
+  "currentYear": 2019,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 327244,
+    "type": "boardgame",
+    "name": "Paladins of the West Kingdom: The Vassals Mini-Expansion",
+    "year": 2021,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Pax Pamir 2nd edition",
+  "c": "Pax Pamir",
+  "currentId": 155255,
+  "currentName": "Pax Pamir",
+  "currentYear": 2015,
+  "verdict": "already-correct",
+  "candidates": [
+   {
+    "id": 155255,
+    "type": "boardgame",
+    "name": "Pax Pamir",
+    "year": 2015,
+    "score": 100
+   },
+   {
+    "id": 198843,
+    "type": "boardgame",
+    "name": "Pax Pamir: Khyber Knives",
+    "year": 2016,
+    "score": 80
+   },
+   {
+    "id": 256960,
+    "type": "boardgame",
+    "name": "Pax Pamir: Second Edition",
+    "year": 2019,
+    "score": 80
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Port Royal: Big Box",
+  "c": "Port Royal: Big Box",
+  "currentId": 156009,
+  "currentName": "Port Royal",
+  "currentYear": 2014,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 331265,
+    "type": "boardgame",
+    "name": "Port Royal: Big Box",
+    "year": 2022,
+    "score": 100
+   },
+   {
+    "id": 356484,
+    "type": "boardgame",
+    "name": "Port Royal: Big Box – The Instructor Promo Pack",
+    "year": 2022,
+    "score": 70
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Reign: The Final Battle Royale",
+  "c": "Reign: The Final Battle Royale",
+  "currentId": 315584,
+  "currentName": "Reign",
+  "currentYear": 2020,
+  "verdict": "no-candidates",
+  "candidates": []
+ },
+ {
+  "sect": "collection",
+  "t": "Relics of Rajavihara: Montalo's Revenge Expansion",
+  "c": "Relics of Rajavihara: Montalo's Revenge Expansion",
+  "currentId": 339895,
+  "currentName": "Relics of Rajavihara: Montalo's Revenge",
+  "currentYear": 2021,
+  "verdict": "no-candidates",
+  "candidates": []
+ },
+ {
+  "sect": "collection",
+  "t": "Roll Player: Fiends & Familiars",
+  "c": "Hrdina v kostce: Ďáblíci a společníci",
+  "currentId": 169426,
+  "currentName": "Roll Player",
+  "currentYear": 2016,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 255601,
+    "type": "boardgame",
+    "name": "Roll Player: Fiends & Familiars",
+    "year": 2020,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Roll Player: Monsters & Minions",
+  "c": "Hrdina v kostce: Bestiář",
+  "currentId": 169426,
+  "currentName": "Roll Player",
+  "currentYear": 2016,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 213360,
+    "type": "boardgame",
+    "name": "Roll Player: Monsters & Minions",
+    "year": 2018,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Saboteur: The Dark Cave",
+  "c": "Sabotér: Temná jeskyně",
+  "currentId": 9220,
+  "currentName": "Saboteur",
+  "currentYear": 2004,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 365702,
+    "type": "boardgame",
+    "name": "Saboteur: The Dark Cave",
+    "year": 2022,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Scrabble: Twists & Turns",
+  "c": "Scrabble: Twists & Turns",
+  "currentId": 320,
+  "currentName": "Scrabble",
+  "currentYear": 1948,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 151603,
+    "type": "boardgame",
+    "name": "Scrabble Twists & Turns",
+    "year": 2012,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Scythe: Invaders from Afar",
+  "c": "Scythe: Invaze z dálek",
+  "currentId": 169786,
+  "currentName": "Scythe",
+  "currentYear": 2016,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 199727,
+    "type": "boardgame",
+    "name": "Scythe: Invaders from Afar",
+    "year": 2016,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Scythe: The Wind Gambit",
+  "c": "Scythe: Titáni Nebes",
+  "currentId": 169786,
+  "currentName": "Scythe",
+  "currentYear": 2016,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 223555,
+    "type": "boardgame",
+    "name": "Scythe: The Wind Gambit",
+    "year": 2017,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Settlers of Catan",
+  "c": "Catan: Osadníci z Katanu",
+  "currentId": 13,
+  "currentName": "Catan",
+  "currentYear": 1995,
+  "verdict": "strong-candidate",
+  "candidates": [
+   {
+    "id": 152959,
+    "type": "boardgame",
+    "name": "The Settlers of Catan",
+    "year": 2008,
+    "score": 85
+   },
+   {
+    "id": 32270,
+    "type": "boardgame",
+    "name": "Catan Geographies: Settlers of Hesse",
+    "year": 2007,
+    "score": 80
+   },
+   {
+    "id": 147240,
+    "type": "boardgame",
+    "name": "Settlers of Catan: Family Edition",
+    "year": 2012,
+    "score": 80
+   },
+   {
+    "id": 38821,
+    "type": "boardgame",
+    "name": "Settlers of Catan: Gallery Edition",
+    "year": 2008,
+    "score": 80
+   },
+   {
+    "id": 20899,
+    "type": "boardgame",
+    "name": "Settlers of Catan: Rockman Edition",
+    "year": 2005,
+    "score": 80
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Sherlock Holmes: The Challenge Trilogy",
+  "c": "Sherlock Holmes: Trojitá výzva",
+  "currentId": 29148,
+  "currentName": "Sherlock Holmes",
+  "currentYear": 1967,
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 368653,
+    "type": "boardgame",
+    "name": "Sherlock Holmes: Trojitá výzva – Edice 3",
+    "year": 2019,
+    "score": 80
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Shipyard (2nd edition)",
+  "c": "Loděnice",
+  "currentId": 55600,
+  "currentName": "Shipyard",
+  "currentYear": 2009,
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 393179,
+    "type": "boardgame",
+    "name": "Loděnice (druhé vydání)",
+    "year": 2023,
+    "score": 80
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Smash Up: Sheep",
+  "c": "Hustá mela: Ovce",
+  "currentId": 122522,
+  "currentName": "Smash Up",
+  "currentYear": 2012,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 220188,
+    "type": "boardgame",
+    "name": "Smash Up: Sheep",
+    "year": 2017,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Sobek: 2 Players",
+  "c": "Sobek",
+  "currentId": 67185,
+  "currentName": "Sobek",
+  "currentYear": 2010,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 332944,
+    "type": "boardgame",
+    "name": "Sobek: 2 Players",
+    "year": 2021,
+    "score": 100
+   },
+   {
+    "id": 67185,
+    "type": "boardgame",
+    "name": "Sobek",
+    "year": 2010,
+    "score": 100
+   },
+   {
+    "id": 355887,
+    "type": "boardgame",
+    "name": "Sobek: 2 Players – Treasures of the Pharaoh",
+    "year": 2022,
+    "score": 70
+   },
+   {
+    "id": 324416,
+    "type": "boardgame",
+    "name": "Cleopatra and the Society of Architects: Deluxe Edition – The Cult of Sobek",
+    "year": 2020,
+    "score": 70
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Talisman: Harry Potter",
+  "c": "Talisman: Harry Potter",
+  "currentId": 714,
+  "currentName": "Talisman",
+  "currentYear": 1983,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 340898,
+    "type": "boardgame",
+    "name": "Talisman: Harry Potter",
+    "year": 2021,
+    "score": 100
+   },
+   {
+    "id": 360694,
+    "type": "boardgame",
+    "name": "Talisman: Harry Potter – 2022 Promo Card Set",
+    "year": 2022,
+    "score": 70
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Tapestry: Plans & Ploys",
+  "c": "Tapestry: Plans & Ploys",
+  "currentId": 286096,
+  "currentName": "Tapestry",
+  "currentYear": 2019,
+  "verdict": "strong-candidate",
+  "candidates": [
+   {
+    "id": 315708,
+    "type": "boardgame",
+    "name": "Tapestry: Plans and Ploys",
+    "year": 2020,
+    "score": 85
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "The Palace of Alhambra",
+  "c": "Alhambra",
+  "currentId": 6249,
+  "currentName": "Alhambra",
+  "currentYear": 2003,
+  "verdict": "already-correct",
+  "candidates": [
+   {
+    "id": 6249,
+    "type": "boardgame",
+    "name": "The Palace of Alhambra",
+    "year": 2003,
+    "score": 100
+   },
+   {
+    "id": 45358,
+    "type": "boardgame",
+    "name": "Alhambra: Big Box",
+    "year": 2009,
+    "score": 80
+   },
+   {
+    "id": 430259,
+    "type": "boardgame",
+    "name": "Alhambra: Building Sites",
+    "year": 2024,
+    "score": 80
+   },
+   {
+    "id": 140709,
+    "type": "boardgame",
+    "name": "Alhambra: Family Box",
+    "year": 2011,
+    "score": 80
+   },
+   {
+    "id": 251830,
+    "type": "boardgame",
+    "name": "Alhambra: Mega Box",
+    "year": 2019,
+    "score": 80
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "The Quacks of Quedlinburg",
+  "c": "Kvedlalové z Kvedlinburku",
+  "currentId": 244521,
+  "currentName": "Quacks",
+  "currentYear": 2018,
+  "verdict": "already-correct",
+  "candidates": [
+   {
+    "id": 244521,
+    "type": "boardgame",
+    "name": "The Quacks of Quedlinburg",
+    "year": 2018,
+    "score": 100
+   },
+   {
+    "id": 349955,
+    "type": "boardgame",
+    "name": "The Quacks of Quedlinburg: MegaBox",
+    "year": 2021,
+    "score": 85
+   },
+   {
+    "id": 326869,
+    "type": "boardgame",
+    "name": "The Quacks of Quedlinburg: Big Box",
+    "year": 2020,
+    "score": 80
+   },
+   {
+    "id": 316597,
+    "type": "boardgame",
+    "name": "The Quacks of Quedlinburg: The Alchemists",
+    "year": 2020,
+    "score": 80
+   },
+   {
+    "id": 409496,
+    "type": "boardgame",
+    "name": "The Quacks of Quedlinburg: The Duel",
+    "year": 2024,
+    "score": 80
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "The White Castle: Matcha",
+  "c": "Bílý hrad: Matcha",
+  "currentId": 371942,
+  "currentName": "The White Castle",
+  "currentYear": 2023,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 420321,
+    "type": "boardgame",
+    "name": "The White Castle: Matcha",
+    "year": 2024,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Ticket to Ride: Europe",
+  "c": "Jízdenky prosím! Evropa",
+  "currentId": 9209,
+  "currentName": "Ticket to Ride",
+  "currentYear": 2004,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 14996,
+    "type": "boardgame",
+    "name": "Ticket to Ride: Europe",
+    "year": 2005,
+    "score": 100
+   },
+   {
+    "id": 329841,
+    "type": "boardgame",
+    "name": "Ticket to Ride: Europe – 15th Anniversary",
+    "year": 2021,
+    "score": 80
+   },
+   {
+    "id": 185306,
+    "type": "boardgame",
+    "name": "Ticket to Ride: Europe – Orient Express",
+    "year": 2015,
+    "score": 80
+   },
+   {
+    "id": 218208,
+    "type": "boardgame",
+    "name": "Ticket to Ride: First Journey (Europe)",
+    "year": 2017,
+    "score": 80
+   },
+   {
+    "id": 243684,
+    "type": "boardgame",
+    "name": "Ticket to Ride: Europe – London/København",
+    "year": 2017,
+    "score": 75
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Timeline Twist: Pop Culture Edition",
+  "c": "Kdy se to stalo? Popkultura",
+  "currentId": 379290,
+  "currentName": "Timeline Twist",
+  "currentYear": 2023,
+  "verdict": "no-candidates",
+  "candidates": []
+ },
+ {
+  "sect": "collection",
+  "t": "Tiny Towns: Tiny Trees",
+  "c": "Městečka na dlani: Památný strom",
+  "currentId": 265736,
+  "currentName": "Tiny Towns",
+  "currentYear": 2019,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 321679,
+    "type": "boardgame",
+    "name": "Tiny Towns: Tiny Trees",
+    "year": 2020,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Trails: A parks game",
+  "c": "Parky: Na cestách",
+  "currentId": 338628,
+  "currentName": "Trails",
+  "currentYear": 2021,
+  "verdict": "already-correct",
+  "candidates": [
+   {
+    "id": 338628,
+    "type": "boardgame",
+    "name": "Parky: Na cestách",
+    "year": 2021,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Trouble game",
+  "c": "Trouble game",
+  "currentId": 1410,
+  "currentName": "Trouble",
+  "currentYear": 1965,
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 18294,
+    "type": "boardgame",
+    "name": "Double Trouble / The Calendar Game",
+    "year": 1996,
+    "score": 75
+   },
+   {
+    "id": 1410,
+    "type": "boardgame",
+    "name": "Frozen: Olaf's in Trouble Game",
+    "year": 1965,
+    "score": 75
+   },
+   {
+    "id": 420555,
+    "type": "boardgame",
+    "name": "Trouble Game: On the Moon",
+    "year": 2020,
+    "score": 75
+   },
+   {
+    "id": 204286,
+    "type": "boardgame",
+    "name": "Big Trouble in Little China: The Game",
+    "year": 2018,
+    "score": 70
+   },
+   {
+    "id": 257089,
+    "type": "boardgame",
+    "name": "Big Trouble in Little China: The Game – Deluxe Edition",
+    "year": 2018,
+    "score": 70
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Underwater Cities: New Discoveries",
+  "c": "Podmořská města: Nové objevy",
+  "currentId": 247763,
+  "currentName": "Underwater Cities",
+  "currentYear": 2018,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 276104,
+    "type": "boardgame",
+    "name": "Underwater Cities: New Discoveries",
+    "year": 2019,
+    "score": 100
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Valeria: Card Kingdoms – Flames and Frost",
+  "c": "Království Valerie: Karetní hra - Plameny a mráz",
+  "currentId": 194247,
+  "currentName": "Valeria: Card Kingdoms – Flames & Frost",
+  "currentYear": 2017,
+  "verdict": "already-correct",
+  "candidates": [
+   {
+    "id": 194247,
+    "type": "boardgame",
+    "name": "Valeria: Card Kingdoms – Flames & Frost",
+    "year": 2017,
+    "score": 50
+   },
+   {
+    "id": 365715,
+    "type": "boardgame",
+    "name": "Valeria: Card Kingdoms – Flames & Frost: Kickstarter Edition",
+    "year": 2017,
+    "score": 50
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Zombicide: Green Horde",
+  "c": "Zombicide: Zelená horda",
+  "currentId": 113924,
+  "currentName": "Zombicide",
+  "currentYear": 2012,
+  "verdict": "exact-match-available",
+  "candidates": [
+   {
+    "id": 224710,
+    "type": "boardgame",
+    "name": "Zombicide: Green Horde",
+    "year": 2018,
+    "score": 100
+   },
+   {
+    "id": 230345,
+    "type": "boardgame",
+    "name": "Zombicide: Green Horde – Fatty Bursters",
+    "year": 2018,
+    "score": 80
+   },
+   {
+    "id": 250534,
+    "type": "boardgame",
+    "name": "Zombicide: Green Horde – Horde Box",
+    "year": 2018,
+    "score": 80
+   },
+   {
+    "id": 254772,
+    "type": "boardgame",
+    "name": "Zombicide: Green Horde – Liam Survivor",
+    "year": 2018,
+    "score": 80
+   },
+   {
+    "id": 260354,
+    "type": "boardgame",
+    "name": "Zombicide: Green Horde – North the Halfling",
+    "year": 2018,
+    "score": 75
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Arcs Leaders And Lore Pack",
+  "c": "Arcs: balicek vudcu a pribehu",
+  "currentId": 419279,
+  "currentName": "Arcs: Leaders & Lore Pack",
+  "currentYear": 2024,
+  "verdict": "already-correct",
+  "candidates": [
+   {
+    "id": 419279,
+    "type": "boardgame",
+    "name": "Arcs: Leaders & Lore Pack",
+    "year": 2024,
+    "score": 48
+   }
+  ]
+ },
+ {
+  "sect": "collection",
+  "t": "Fort Cats And Dogs Expansion",
+  "c": "FORT: kočky a psi",
+  "currentId": 341066,
+  "currentName": "Fort: Cats & Dogs Expansion",
+  "currentYear": 2021,
+  "verdict": "already-correct",
+  "candidates": [
+   {
+    "id": 341066,
+    "type": "boardgame",
+    "name": "Fort: Cats & Dogs Expansion",
+    "year": 2021,
+    "score": 48
+   }
+  ]
+ }
+]
