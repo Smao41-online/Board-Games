@@ -10,7 +10,7 @@ name: Deploy Galaxy App
 on:
   push:
     branches: [Galaxy_App]
-    paths: ['app/**', '.github/workflows/pages-app.yml']
+    paths: ['app/**', 'Galaxy_App_off/**', '.github/workflows/pages-app.yml']
   schedule:
     - cron: '20 */6 * * *'
   workflow_dispatch:
@@ -43,12 +43,15 @@ jobs:
             echo "gh-pages does not exist yet — run the galaxy's Pages deploy first."
             exit 0
           fi
-          rm -rf site/app
+          rm -rf site/app site/Galaxy_App_off
           cp -r src/app site/app
+          # preview copy of the disconnected snapshot, so it can be tried on a
+          # real phone before it is published anywhere else
+          [ -d src/Galaxy_App_off ] && cp -r src/Galaxy_App_off site/Galaxy_App_off
           cd site
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add app
+          git add app Galaxy_App_off
           if git diff --cached --quiet; then
             echo "app already up to date on the site"
           else
@@ -56,4 +59,6 @@ jobs:
             git push
           fi
       - name: Where it lives
-        run: echo "https://smao41-online.github.io/Board-Games/app/"
+        run: |
+          echo "app      https://smao41-online.github.io/Board-Games/app/"
+          echo "snapshot https://smao41-online.github.io/Board-Games/Galaxy_App_off/"

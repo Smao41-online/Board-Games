@@ -315,6 +315,13 @@ function norm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[�
 const lsGet=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d;}catch(e){return d;}};
 const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}};
 
+/* ---- offline-snapshot build ----
+   scripts/build_offline_app.py flips OFFLINE to true and fills BAKED with a copy
+   of the collection, producing a build that never contacts the database (or any
+   repository) at all. The live app leaves both untouched. */
+let OFFLINE=false, BAKED=null;
+/*BAKED_SLOT*/
+
 const LS_USER='user.games.v1', LS_REMOVED='user.removed.v1', LS_OVERRIDES='user.overrides.v1',
       LS_BC='bc.index.v1', LS_SNAP='galaxy.snapshot.v1';
 const REPO='Smao41-online/Board-Games', BRANCH='claude/board-game-database-solar-9avghh';
@@ -387,6 +394,12 @@ function applyLocal(){
   for(const g of [...GAMES,...WISHLIST]) if(g.bc) bcIndex[String(g.bc)]={t:g.t,id:g.b||0,src:'shared'};
 }
 async function loadData(force){
+  if(OFFLINE){
+    GAMES=(BAKED.c||[]).slice(); WISHLIST=(BAKED.w||[]).slice();
+    idMap=BAKED.ids||{}; things=BAKED.things||{}; dataWhen=BAKED.when||'';
+    applyLocal(); buildFilters(); render();
+    return true;
+  }
   const snap=lsGet(LS_SNAP,null);
   if(snap&&!force){ GAMES=snap.c; WISHLIST=snap.w; idMap=snap.ids; things=snap.things; dataWhen=snap.when;
     applyLocal(); buildFilters(); render(); }
@@ -622,15 +635,16 @@ function openGame(g){
     <div class="attrs">${rows.map(([k,v])=>`<div>${k}<b>${esc(v)}</b></div>`).join('')}</div>
     ${gNotes(g)?`<div class="warn" style="background:rgba(255,255,255,.04);border-color:var(--border);color:var(--muted)">📝 ${esc(gNotes(g))}</div>`:''}
     ${d.desc?`<div class="desc">${esc(d.desc)}</div>`:''}
-    <div class="acts three">
+    ${OFFLINE?`<div class="acts"><button class="btn wide" id="aShare">↗ Share this game</button></div>`
+      :`<div class="acts three">
       <button class="btn" id="aShare">↗ Share</button>
       <button class="btn" id="aEdit">✏️ Edit</button>
       <button class="btn" id="aSync">🔄 Sync</button>
-    </div>
+    </div>`}
     <div class="acts" style="margin-top:8px">
       ${id?`<a class="btn" href="https://boardgamegeek.com/boardgame/${id}" target="_blank" rel="noopener">🎲 BoardGameGeek</a>`:'<span></span>'}
       ${gAlt(g)?`<a class="btn" href="${esc(gAlt(g))}" target="_blank" rel="noopener">${/kickstarter/i.test(gAlt(g))?'🚀 Kickstarter':'🌐 Link'}</a>`:(g.u?`<a class="btn" href="${esc(g.u)}" target="_blank" rel="noopener">🔗 Shop page</a>`:'<span></span>')}
-      <button class="btn danger wide" id="aDel">🗑 Remove from the galaxy</button>
+      ${OFFLINE?'':`<button class="btn danger wide" id="aDel">🗑 Remove from the galaxy</button>`}
     </div>`);
   const step=d=>{
     if(pos<0)return;
@@ -651,9 +665,9 @@ function openGame(g){
     },{passive:true});
   })();
   $('aShare').onclick=()=>shareGame(g);
-  $('aEdit').onclick=()=>openEdit(g);
-  $('aSync').onclick=async()=>{ await loadData(true); toast('🔄 Refreshed from the online database'); openGame(g); };
-  $('aDel').onclick=()=>{
+  if($('aEdit'))$('aEdit').onclick=()=>openEdit(g);
+  if($('aSync'))$('aSync').onclick=async()=>{ await loadData(true); toast('🔄 Refreshed from the online database'); openGame(g); };
+  if($('aDel'))$('aDel').onclick=()=>{
     if(!confirm('Remove “'+gTitle(g)+'” from your galaxy?'))return;
     if(g.us){
       const store=tab==='C'?userStore.C:userStore.W;
@@ -871,19 +885,21 @@ $('btnStartCam').onclick=()=>startCam();
 $('btnStopCam').onclick=stopCam;
 let scanMode='bar';
 function setMode(m){
+  if(OFFLINE)m='bar';                       /* the snapshot has no title reading */
   scanMode=m;
   document.body.classList.toggle('titlemode',m==='title');
-  $('mBar').classList.toggle('on',m==='bar');
-  $('mTitle').classList.toggle('on',m==='title');
-  $('btnShoot').style.display=m==='title'?'block':'none';
+  const mb=$('mBar'), mt=$('mTitle'), sh=$('btnShoot');
+  if(mb)mb.classList.toggle('on',m==='bar');
+  if(mt)mt.classList.toggle('on',m==='title');
+  if(sh)sh.style.display=m==='title'?'block':'none';
   $('camhint').textContent=m==='title'
     ? 'Fill the frame with the game’s name, then tap “Read this title”'
     : 'Hold the barcode inside the yellow slot';
   if(m==='title'){ scanning=false; try{ if(zxing){zxing.reset();zxing=null;} }catch(e){} }
   else if(stream){ scanning=true; attachDecoder(); }
 }
-$('mBar').onclick=()=>setMode('bar');
-$('mTitle').onclick=()=>setMode('title');
+if($('mBar'))$('mBar').onclick=()=>setMode('bar');
+if($('mTitle'))$('mTitle').onclick=()=>setMode('title');
 
 function findByTitle(t){
   const key=norm(t);
@@ -912,12 +928,12 @@ async function onCode(code){
     const hit=findByTitle(known.t);
     scanResult((hit?verdictHTML(known.t,hit.where,hit.g):verdictHTML(known.t,null,null,''))
       +`<div class="note">Barcode <span class="mono">${esc(code)}</span> — remembered${known.src==='shared'?' from the shared database':' on this phone'}.</div>`
-      +(hit?'':`<div class="acts" style="margin-top:10px"><button class="btn primary wide" id="sAdd">☀️ Add “${esc(known.t)}”</button></div>`));
-    if(!hit)$('sAdd').onclick=()=>openAdd(known.t);
+      +((hit||OFFLINE)?'':`<div class="acts" style="margin-top:10px"><button class="btn primary wide" id="sAdd">☀️ Add “${esc(known.t)}”</button></div>`));
+    if(!hit&&$('sAdd'))$('sAdd').onclick=()=>openAdd(known.t);
     return;
   }
   scanResult(`<div class="note"><span class="sp"></span>Barcode <span class="mono">${esc(code)}</span> — looking it up…</div>`);
-  const guess=await lookupBarcode(code);
+  const guess=OFFLINE?'':await lookupBarcode(code);
   renderUnknownCode(code,guess);
 }
 async function lookupBarcode(code){
@@ -964,6 +980,27 @@ async function lookupBarcode(code){
 const isCzechEan=c=>/^859/.test(String(c));
 function renderUnknownCode(code,guess){
   const hit=guess?findByTitle(guess):null;
+  if(OFFLINE){
+    scanResult(`<div class="verdict v-new"><h3>✕ Not in this collection</h3>
+        <p>No game in this snapshot carries that barcode.</p></div>
+      <div class="note">Barcode <span class="mono">${esc(code)}</span></div>
+      <label class="f">Check by name instead</label>
+      <input class="f" id="bcQ" placeholder="type a few letters…" autocomplete="off">
+      <div class="rowlist" id="bcPick"></div>`);
+    const paint=()=>{
+      const q=$('bcQ').value.trim();
+      const list=q?searchLocal(q).slice(0,6):[];
+      $('bcPick').innerHTML=list.length
+        ? list.map(g=>`<button class="rowbtn" data-t="${esc(gTitle(g))}"><b>${esc(gTitle(g))}</b><span>in this collection</span></button>`).join('')
+        : (q?'<div class="note">Nothing by that name in this collection.</div>':'');
+    };
+    $('bcQ').addEventListener('input',paint);
+    $('bcPick').addEventListener('click',e=>{
+      const b=e.target.closest('button'); if(!b)return;
+      const h=findByTitle(b.dataset.t); if(h)openGame(h.g);
+    });
+    return;
+  }
   const near=guess?searchLocal(guess).slice(0,5):[];
   scanResult(
     (hit?verdictHTML(guess,hit.where,hit.g):'')
@@ -1087,7 +1124,7 @@ async function readTitleFromPhoto(){
       +'). It needs a connection the first time. You can still add the game by hand.</div>');
   }
 }
-$('btnShoot').onclick=readTitleFromPhoto;
+if($('btnShoot'))$('btnShoot').onclick=readTitleFromPhoto;
 
 /* ===================== tonight ===================== */
 let tPlayers=4, tTime=60;
@@ -1344,7 +1381,7 @@ function showView(id){
   const galaxy=id==='vGalaxy';
   $('q').parentElement.style.display=galaxy?'block':'none';
   $('filters').style.display=galaxy?'flex':'none';
-  $('fab').style.display=(id==='vMore')?'none':'grid';
+  const fab=$('fab'); if(fab)fab.style.display=(id==='vMore')?'none':'grid';
   if(id!=='vScan')stopCam();
   if(id==='vTonight'){buildPickers();buildGenres();tonight();}
   if(id==='vMore')buildMore();
@@ -1378,9 +1415,46 @@ document.querySelector('nav').addEventListener('click',e=>{
   seed(); draw(); addEventListener('resize',seed);
 })();
 
+/* ===================== offline-snapshot trimming =====================
+   A shared snapshot is read-only and talks to nothing, so the parts that add,
+   edit or fetch are removed outright rather than left to fail. */
+function applyOfflineBuild(){
+  if(!OFFLINE)return;
+  document.body.classList.add('offline-build');
+  $('fab').remove();                                   /* no adding by hand */
+  const more=document.querySelector('nav button[data-v="vMore"]');
+  if(more)more.remove();                               /* no menu */
+  const mv=$('vMore'); if(mv)mv.remove();
+  $('btnRefresh').remove();                            /* nothing to refresh */
+  const mt=$('mTitle'); if(mt)mt.remove();              /* title reading needs a download */
+  const mb=$('mBar'); if(mb&&mb.parentElement)mb.parentElement.remove();
+  const sh=$('btnShoot'); if(sh)sh.remove();
+  const hsub=$('hsub'); if(hsub)hsub.textContent='Ušákova sbírka · snapshot';
+  const info=document.createElement('button');
+  info.className='iconbtn'; info.id='btnAbout'; info.textContent='ⓘ';
+  info.title='About this app';
+  document.querySelector('header').appendChild(info);
+  info.onclick=showAbout;
+}
+function showAbout(){
+  const standalone=window.navigator.standalone||matchMedia('(display-mode: standalone)').matches;
+  sheet(sheetHead('🪐 About')
+    +`<div class="note" style="font-size:13px;line-height:1.7">
+        <b>Board Game Galaxy</b> — a snapshot of a private board game collection
+        (${GAMES.length} games, ${WISHLIST.length} on the wishlist), taken ${esc((dataWhen||'').slice(0,10)||'recently')}.
+        <br><br>Everything is stored inside the app: it reads no database and sends nothing anywhere.
+        Box art is loaded from BoardGameGeek's public image servers when you are online.
+        <br><br><b>Scan</b> tells you whether a game is in this collection — handy in a shop.
+        <br><b>Tonight</b> suggests what fits your table.
+      </div>`
+    +(standalone?'<div class="warn ok" style="margin-top:12px">Installed — running from your home screen.</div>'
+      :`<div class="warn" style="margin-top:12px">📲 To keep it: in <b>Safari</b>, tap <b>Share</b> → <b>Add to Home Screen</b>. It then opens full screen and works with no signal.</div>`));
+}
+
 /* ===================== boot ===================== */
 if('serviceWorker' in navigator)
   addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+applyOfflineBuild();
 loadData(false);
 </script>
 </body>
