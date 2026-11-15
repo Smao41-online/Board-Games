@@ -1,0 +1,41 @@
+name: Audit BGG links
+
+# Maintenance tool, run by hand. Finds collection entries whose BoardGameGeek
+# record is a shorter title than the game's own name (a game pointing at its
+# base game's entry) and searches BGG for better candidates, using the token.
+# It only writes a report — data/games.json is never changed automatically,
+# because an expansion deliberately linked to its base game looks identical
+# to a genuine mislink and only a human can tell them apart.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bgg-data           # shares the lane with the harvest; never run both at once
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/board-game-database-solar-9avghh
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/audit_links.mjs
+        env:
+          BGG_TOKEN: ${{ secrets.BGG_TOKEN }}
+      - name: Commit the report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/link_audit.json
+          git diff --cached --quiet || git commit -m "BGG link audit report"
+          git pull --rebase origin claude/board-game-database-solar-9avghh || true
+          git push
