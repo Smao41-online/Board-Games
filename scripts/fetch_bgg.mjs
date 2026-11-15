@@ -315,7 +315,11 @@ function save() {
 // ---------- phase 1: resolve ids ----------
 const targets = new Map();
 for (const g of all) { const k = norm(g.t); if (k && !targets.has(k)) targets.set(k, g); }
-for (const [k, g] of targets) if (g.b && !ids[k]) ids[k] = g.b;
+/* An explicit `b` in games.json is a human decision (a pasted BGG link, a
+   published id-fix, a corrected mislink) and always wins — including over an
+   id a previous run guessed. Without this, relinking a game that already had
+   a wrong id silently did nothing. */
+for (const [k, g] of targets) if (g.b && ids[k] !== g.b) ids[k] = g.b;
 
 /* audit previously matched ids with the strict rule — drop mismatches so they resolve again */
 let audited = 0;
