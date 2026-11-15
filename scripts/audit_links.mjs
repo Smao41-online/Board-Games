@@ -89,6 +89,23 @@ function score(title, cand) {
   return Math.round(60 * covered / A.length);
 }
 
+/* BGG's search is literal: a dash, a parenthetical or a trailing "expansion"
+   makes it return nothing, so try progressively plainer forms of the title. */
+function queryVariants(t, c) {
+  const out = [];
+  const add = s => { s = String(s || '').replace(/\s+/g, ' ').trim(); if (s.length > 2 && !out.includes(s)) out.push(s); };
+  for (const base of [t, c].filter(Boolean)) {
+    add(base);
+    add(base.replace(/\s*\([^)]*\)/g, ''));                       // drop "(Deluxe edition)"
+    add(base.replace(/[–—]/g, ' '));                              // en/em dash confuses search
+    add(base.replace(/\s*[:–—-]\s*/g, ' '));                      // flatten all separators
+    add(base.replace(/\b(expansion|expansions|deluxe|edition|package|set|big box)\b/gi, ''));
+    const colon = base.split(/[:–—]/);
+    if (colon.length > 1) { add(colon[0]); add(colon.slice(1).join(' ')); }
+  }
+  return out.slice(0, 6);
+}
+
 const games = JSON.parse(fs.readFileSync('data/games.json', 'utf8'));
 const bgg = JSON.parse(fs.readFileSync('data/bgg.json', 'utf8'));
 const ids = bgg.ids || {}, things = bgg.things || {};
@@ -114,9 +131,10 @@ const report = [];
 let n = 0;
 for (const s of suspects) {
   const seen = new Map();
-  for (const q of [s.t, s.c].filter(Boolean)) {
+  for (const q of queryVariants(s.t, s.c)) {
     for (const r of await search(q)) if (!seen.has(r.id)) seen.set(r.id, r);
-    await sleep(400);
+    await sleep(350);
+    if ([...seen.values()].some(r => score(s.t, r.name) >= 100)) break;   // exact hit, stop early
   }
   const cands = [...seen.values()]
     .map(r => ({ ...r, score: Math.max(score(s.t, r.name), s.c ? score(s.c, r.name) : 0) }))
