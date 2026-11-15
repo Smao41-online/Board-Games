@@ -19,6 +19,7 @@ the step-by-step maintenance procedures; use it for any change to this project.
 | `scripts/bake_galaxy.py` | Re-bakes both HTML files from the data files (inlines GAMES/WISHLIST into BG_database.html, fills BGG_BAKED in BGG_Galaxy.html). |
 | `scripts/fetch_bgg.mjs` | Server-side harvest (BGG token XML search + Wikidata SPARQL + geekdo JSON API). Time-budgeted and resumable. |
 | `scripts/apply_publish.mjs` | Merges a publish issue's ```json payload into data/games.json. |
+| `scripts/audit_links.mjs` | Maintenance audit (workflow_dispatch `audit-links.yml`): finds games whose BGG record is a shorter title than their own name and proposes candidates. Reports only — writes `data/link_audit.json`. |
 
 ## GitHub Actions
 
@@ -84,7 +85,14 @@ enrichment ~5–10 min.
 7. **User-added games dedupe on load**: a localStorage game whose norm title is
    already in the shipped GAMES list is dropped from the store (it "graduated"
    via publish). Don't remove that logic or users get duplicate cards.
-8. localStorage keys: `user.games.v1` (added), `user.removed.v1` (removed, by
+8. **An explicit `b` in games.json always wins over a harvested id.**
+   `fetch_bgg.mjs` used to apply `b` only when the game had no id yet, so
+   relinking an already-linked game did nothing — which also silently broke the
+   Edit → Publish id-fix path. 65 games were mislinked this way (an entry
+   pointing at its base game's record: `Ticket to Ride: Europe` → `Ticket to
+   Ride`). When auditing, remember a game's **Czech field matching the base
+   name** can disguise a mislink as correct (`Pax Pamir 2nd edition`).
+9. localStorage keys: `user.games.v1` (added), `user.removed.v1` (removed, by
    stable index), `user.overrides.v1` (edits/syncs), `bgg.ids.v2`/`bgg.things.v2`
    (cache), `zh.extra.v1`.
 
