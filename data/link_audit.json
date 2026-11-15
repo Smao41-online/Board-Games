@@ -14,34 +14,6 @@
     "name": "Agricola (Revised Edition)",
     "year": 2016,
     "score": 100
-   },
-   {
-    "id": 31260,
-    "type": "boardgame",
-    "name": "Agricola",
-    "year": 2007,
-    "score": 100
-   },
-   {
-    "id": 359999,
-    "type": "boardgame",
-    "name": "Agricola 15",
-    "year": 2022,
-    "score": 85
-   },
-   {
-    "id": 9364,
-    "type": "boardgame",
-    "name": "Agricola Doppelkopf",
-    "year": 1895,
-    "score": 85
-   },
-   {
-    "id": 113413,
-    "type": "boardgame",
-    "name": "Agricola Ereigniskarten",
-    "year": 2011,
-    "score": 85
    }
   ]
  },
@@ -88,14 +60,42 @@
   "currentId": 230802,
   "currentName": "Azul",
   "currentYear": 2017,
-  "verdict": "strong-candidate",
+  "verdict": "uncertain",
   "candidates": [
    {
     "id": 294345,
     "type": "boardgame",
-    "name": "Azul: Křišťálová mozaika – rozšíření",
+    "name": "Azul: Crystal Mosaic",
     "year": 2020,
-    "score": 85
+    "score": 45
+   },
+   {
+    "id": 292743,
+    "type": "boardgame",
+    "name": "Azul: Summer Pavilion – Objective Tiles Mini Expansion",
+    "year": 2019,
+    "score": 30
+   },
+   {
+    "id": 271512,
+    "type": "boardgame",
+    "name": "5211: Azul",
+    "year": 2019,
+    "score": 20
+   },
+   {
+    "id": 29793,
+    "type": "boardgame",
+    "name": "ATS: Axis Legion – Spanish Division Azul on the Eastern Front",
+    "year": 2007,
+    "score": 20
+   },
+   {
+    "id": 230802,
+    "type": "boardgame",
+    "name": "Azul",
+    "year": 2017,
+    "score": 20
    }
   ]
  },
@@ -106,8 +106,44 @@
   "currentId": 3955,
   "currentName": "BANG!",
   "currentYear": 2002,
-  "verdict": "no-candidates",
-  "candidates": []
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 11861,
+    "type": "boardgame",
+    "name": "Bang Box",
+    "year": 1969,
+    "score": 30
+   },
+   {
+    "id": 3804,
+    "type": "boardgame",
+    "name": "Bang i brødskiva",
+    "year": 1994,
+    "score": 30
+   },
+   {
+    "id": 115004,
+    "type": "boardgame",
+    "name": "Bang It In",
+    "year": 0,
+    "score": 30
+   },
+   {
+    "id": 18740,
+    "type": "boardgame",
+    "name": "Bang on the Spot",
+    "year": 2003,
+    "score": 30
+   },
+   {
+    "id": 169637,
+    "type": "boardgame",
+    "name": "Bang the Button!!!",
+    "year": 2014,
+    "score": 30
+   }
+  ]
  },
  {
   "sect": "collection",
@@ -124,6 +160,34 @@
     "name": "Barrage: The Leeghwater Project",
     "year": 2019,
     "score": 85
+   },
+   {
+    "id": 251247,
+    "type": "boardgame",
+    "name": "Barrage",
+    "year": 2019,
+    "score": 20
+   },
+   {
+    "id": 198135,
+    "type": "boardgame",
+    "name": "Barrage Battle",
+    "year": 2017,
+    "score": 20
+   },
+   {
+    "id": 17960,
+    "type": "boardgame",
+    "name": "Barrage Routier",
+    "year": 0,
+    "score": 20
+   },
+   {
+    "id": 304453,
+    "type": "boardgame",
+    "name": "Barrage: 5th Player Expansion",
+    "year": 2020,
+    "score": 20
    }
   ]
  },
@@ -162,11 +226,32 @@
     "score": 40
    },
    {
-    "id": 217006,
+    "id": 118615,
     "type": "boardgame",
-    "name": "Carcassonne: Expansion 10 – Circus & Artists",
-    "year": 2017,
-    "score": 20
+    "name": "Carcassonne Mini 1",
+    "year": 2012,
+    "score": 40
+   },
+   {
+    "id": 194024,
+    "type": "boardgameexpansion",
+    "name": "Carcassonne: Star Wars – Erweiterung 1",
+    "year": 2016,
+    "score": 40
+   },
+   {
+    "id": 341942,
+    "type": "boardgame",
+    "name": "Escape Room: The Game – Exp 1",
+    "year": 2021,
+    "score": 40
+   },
+   {
+    "id": 141998,
+    "type": "boardgame",
+    "name": "Krosmaster: Arena – Exp #1 – Fire & Ice",
+    "year": 2013,
+    "score": 40
    }
   ]
  },
@@ -185,6 +270,34 @@
     "name": "Carcassonne: Expansion 10 – Circus & Artists",
     "year": 2017,
     "score": 40
+   },
+   {
+    "id": 89952,
+    "type": "boardgame",
+    "name": "Carcassonne: 10 Year Special Edition",
+    "year": 2011,
+    "score": 40
+   },
+   {
+    "id": 248808,
+    "type": "boardgame",
+    "name": "Am Pranger (Fan-Erweiterung zu Carcassonne)",
+    "year": 2010,
+    "score": 20
+   },
+   {
+    "id": 248798,
+    "type": "boardgame",
+    "name": "Angler & Fischfarm (Fan Erweiterung für Carcassonne)",
+    "year": 2013,
+    "score": 20
+   },
+   {
+    "id": 376556,
+    "type": "boardgame",
+    "name": "Antwerpen (fan expansion for Carcassonne)",
+    "year": 2022,
+    "score": 20
    }
   ]
  },
@@ -217,6 +330,20 @@
     "name": "The Land Surveyors 2 (fan expansion for Carcassonne)",
     "year": 2020,
     "score": 40
+   },
+   {
+    "id": 141008,
+    "type": "boardgame",
+    "name": "Carcassonne Big Box 2",
+    "year": 2008,
+    "score": 40
+   },
+   {
+    "id": 230751,
+    "type": "boardgame",
+    "name": "Carcassonne für 2",
+    "year": 2017,
+    "score": 40
    }
   ]
  },
@@ -242,6 +369,27 @@
     "name": "Corn Circles 3 (fan expansion for Carcassonne)",
     "year": 2013,
     "score": 40
+   },
+   {
+    "id": 141007,
+    "type": "boardgame",
+    "name": "Carcassonne Big Box 3",
+    "year": 2010,
+    "score": 40
+   },
+   {
+    "id": 118614,
+    "type": "boardgame",
+    "name": "Carcassonne Mini 3",
+    "year": 2012,
+    "score": 40
+   },
+   {
+    "id": 142052,
+    "type": "boardgame",
+    "name": "Krosmaster: Arena – Exp #3 – Percimol Rules",
+    "year": 2013,
+    "score": 40
    }
   ]
  },
@@ -259,6 +407,34 @@
     "type": "boardgame",
     "name": "Carcassonne: 4. Expansion – The Tower",
     "year": 2006,
+    "score": 40
+   },
+   {
+    "id": 140711,
+    "type": "boardgame",
+    "name": "Carcassonne Big Box 4",
+    "year": 2012,
+    "score": 40
+   },
+   {
+    "id": 118617,
+    "type": "boardgame",
+    "name": "Carcassonne Mini 4",
+    "year": 2012,
+    "score": 40
+   },
+   {
+    "id": 433231,
+    "type": "boardgame",
+    "name": "Carcassonne: 4 Seasons – The Autumn",
+    "year": 2024,
+    "score": 40
+   },
+   {
+    "id": 420726,
+    "type": "boardgame",
+    "name": "Carcassonne: 4 Seasons – The Spring",
+    "year": 2024,
     "score": 40
    }
   ]
@@ -278,6 +454,34 @@
     "name": "Carcassonne: Expansion 5 – Abbey & Mayor",
     "year": 2007,
     "score": 40
+   },
+   {
+    "id": 164127,
+    "type": "boardgame",
+    "name": "Carcassonne Big Box 5",
+    "year": 2014,
+    "score": 40
+   },
+   {
+    "id": 142065,
+    "type": "boardgame",
+    "name": "Krosmaster: Arena – Exp #5 – Goultard Control",
+    "year": 2013,
+    "score": 40
+   },
+   {
+    "id": 166922,
+    "type": "boardgame",
+    "name": "Krosmaster: Arena – Season 2 Exp #5 – Dura Lex Duc Rex",
+    "year": 2014,
+    "score": 40
+   },
+   {
+    "id": 21385,
+    "type": "boardgame",
+    "name": "Carcassonne A Torony",
+    "year": 2006,
+    "score": 24
    }
   ]
  },
@@ -295,6 +499,34 @@
     "type": "boardgame",
     "name": "Carcassonne: Expansion 6 – Count, King & Robber",
     "year": 2007,
+    "score": 40
+   },
+   {
+    "id": 230914,
+    "type": "boardgame",
+    "name": "Carcassonne Big Box 6",
+    "year": 2017,
+    "score": 40
+   },
+   {
+    "id": 118616,
+    "type": "boardgame",
+    "name": "Carcassonne Mini 6",
+    "year": 2012,
+    "score": 40
+   },
+   {
+    "id": 142069,
+    "type": "boardgame",
+    "name": "Krosmaster: Arena – Exp #6 – Close Quarters",
+    "year": 2013,
+    "score": 40
+   },
+   {
+    "id": 166921,
+    "type": "boardgame",
+    "name": "Krosmaster: Arena – Season 2 Exp #6 – Dragoon Power",
+    "year": 2014,
     "score": 40
    }
   ]
@@ -314,6 +546,34 @@
     "name": "Carcassonne: Expansion 7 – The Catapult",
     "year": 2008,
     "score": 40
+   },
+   {
+    "id": 364405,
+    "type": "boardgame",
+    "name": "Carcassonne Big Box 7",
+    "year": 2021,
+    "score": 40
+   },
+   {
+    "id": 142073,
+    "type": "boardgame",
+    "name": "Krosmaster: Arena – Exp #7 – Bad Boys",
+    "year": 2013,
+    "score": 40
+   },
+   {
+    "id": 166920,
+    "type": "boardgame",
+    "name": "Krosmaster: Arena – Season 2 Exp #7 – Bam-Boom",
+    "year": 2014,
+    "score": 40
+   },
+   {
+    "id": 382115,
+    "type": "boardgame",
+    "name": "Stuka Leader Exp #7: Aces",
+    "year": 2023,
+    "score": 40
    }
   ]
  },
@@ -332,6 +592,34 @@
     "name": "Carcassonne: Expansion 8 – Bridges, Castles and Bazaars",
     "year": 2010,
     "score": 40
+   },
+   {
+    "id": 142072,
+    "type": "boardgame",
+    "name": "Krosmaster: Arena – Exp #8 – Shak Attack",
+    "year": 2013,
+    "score": 40
+   },
+   {
+    "id": 166924,
+    "type": "boardgame",
+    "name": "Krosmaster: Arena – Season 2 Exp #8 – Holy Missile",
+    "year": 2014,
+    "score": 40
+   },
+   {
+    "id": 21385,
+    "type": "boardgame",
+    "name": "Carcassonne A Torony",
+    "year": 2006,
+    "score": 24
+   },
+   {
+    "id": 248808,
+    "type": "boardgame",
+    "name": "Am Pranger (Fan-Erweiterung zu Carcassonne)",
+    "year": 2010,
+    "score": 20
    }
   ]
  },
@@ -350,6 +638,34 @@
     "name": "Carcassonne: Expansion 9 – Hills & Sheep",
     "year": 2014,
     "score": 40
+   },
+   {
+    "id": 21385,
+    "type": "boardgame",
+    "name": "Carcassonne A Torony",
+    "year": 2006,
+    "score": 24
+   },
+   {
+    "id": 368336,
+    "type": "boardgame",
+    "name": "CATastrophe: A Game of 9 Lives – Paws Out, Claws Out Expansion",
+    "year": 2022,
+    "score": 24
+   },
+   {
+    "id": 248808,
+    "type": "boardgame",
+    "name": "Am Pranger (Fan-Erweiterung zu Carcassonne)",
+    "year": 2010,
+    "score": 20
+   },
+   {
+    "id": 248798,
+    "type": "boardgame",
+    "name": "Angler & Fischfarm (Fan Erweiterung für Carcassonne)",
+    "year": 2013,
+    "score": 20
    }
   ]
  },
@@ -435,6 +751,13 @@
     "name": "Carcassonne: Games Quarterly Promo Tiles",
     "year": 2006,
     "score": 30
+   },
+   {
+    "id": 248808,
+    "type": "boardgame",
+    "name": "Am Pranger (Fan-Erweiterung zu Carcassonne)",
+    "year": 2010,
+    "score": 30
    }
   ]
  },
@@ -453,6 +776,34 @@
     "name": "The Kids of Carcassonne",
     "year": 2009,
     "score": 90
+   },
+   {
+    "id": 248808,
+    "type": "boardgame",
+    "name": "Am Pranger (Fan-Erweiterung zu Carcassonne)",
+    "year": 2010,
+    "score": 30
+   },
+   {
+    "id": 248798,
+    "type": "boardgame",
+    "name": "Angler & Fischfarm (Fan Erweiterung für Carcassonne)",
+    "year": 2013,
+    "score": 30
+   },
+   {
+    "id": 376556,
+    "type": "boardgame",
+    "name": "Antwerpen (fan expansion for Carcassonne)",
+    "year": 2022,
+    "score": 30
+   },
+   {
+    "id": 248802,
+    "type": "boardgame",
+    "name": "Ein Apfel am Tag (Fan Erweiterung für Carcassonne)",
+    "year": 2008,
+    "score": 30
    }
   ]
  },
@@ -473,31 +824,17 @@
     "score": 100
    },
    {
-    "id": 315767,
-    "type": "boardgame",
-    "name": "Kartografové: Hrdinové",
-    "year": 2021,
-    "score": 85
-   },
-   {
-    "id": 394559,
-    "type": "boardgame",
-    "name": "Kartografové: Architekti minirozšíření",
-    "year": 2024,
-    "score": 80
-   },
-   {
-    "id": 356086,
-    "type": "boardgame",
-    "name": "Kartografové: Balíček hrdinů",
-    "year": 2022,
-    "score": 80
-   },
-   {
     "id": 302884,
     "type": "boardgame",
     "name": "Cartographers: A Roll Player Tale – Ambush Promo Pack",
     "year": 2020,
+    "score": 75
+   },
+   {
+    "id": 273353,
+    "type": "boardgame",
+    "name": "Cartographers: A Roll Player Tale – Skills Mini Expansion",
+    "year": 2019,
     "score": 75
    }
   ]
@@ -519,13 +856,6 @@
     "score": 100
    },
    {
-    "id": 91534,
-    "type": "boardgame",
-    "name": "Catan: Rychlá karetní hra",
-    "year": 2011,
-    "score": 85
-   },
-   {
     "id": 21817,
     "type": "boardgame",
     "name": "Catan Card Game: Artisans & Benefactors",
@@ -545,6 +875,13 @@
     "name": "Catan Card Game: Barbarians & Traders Upgrade Kit",
     "year": 2003,
     "score": 70
+   },
+   {
+    "id": 29718,
+    "type": "boardgame",
+    "name": "The Settlers of Catan Card Game: Knights & Merchants",
+    "year": 1999,
+    "score": 70
    }
   ]
  },
@@ -555,8 +892,44 @@
   "currentId": 239188,
   "currentName": "Chronicles of Crime",
   "currentYear": 2018,
-  "verdict": "no-candidates",
-  "candidates": []
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 313301,
+    "type": "boardgame",
+    "name": "Chronicles of Crime: The Millennium Series – Chronicles of Time Expansion",
+    "year": 2020,
+    "score": 51
+   },
+   {
+    "id": 302312,
+    "type": "boardgame",
+    "name": "Chronicles of Crime: 2400",
+    "year": 2021,
+    "score": 34
+   },
+   {
+    "id": 381331,
+    "type": "boardgame",
+    "name": "Chronicles of Crime: 2400 – Man vs Meeple 2022 Promo Cards",
+    "year": 2023,
+    "score": 34
+   },
+   {
+    "id": 239188,
+    "type": "boardgame",
+    "name": "Chronicles of Crime",
+    "year": 2018,
+    "score": 26
+   },
+   {
+    "id": 300300,
+    "type": "boardgame",
+    "name": "Chronicles of Crime: 1400",
+    "year": 2020,
+    "score": 26
+   }
+  ]
  },
  {
   "sect": "collection",
@@ -654,8 +1027,30 @@
   "currentId": 354307,
   "currentName": "Crown of Ash",
   "currentYear": 2024,
-  "verdict": "no-candidates",
-  "candidates": []
+  "verdict": "already-correct",
+  "candidates": [
+   {
+    "id": 354307,
+    "type": "boardgame",
+    "name": "Crown of Ash",
+    "year": 2024,
+    "score": 36
+   },
+   {
+    "id": 460307,
+    "type": "boardgame",
+    "name": "Crown of Ash: Monuments Expansion",
+    "year": 2026,
+    "score": 36
+   },
+   {
+    "id": 347081,
+    "type": "boardgame",
+    "name": "Lost Empires: Crown of Ashes",
+    "year": 2022,
+    "score": 24
+   }
+  ]
  },
  {
   "sect": "collection",
@@ -754,6 +1149,13 @@
     "name": "Dungeons of Infinity: Legacy of Lux",
     "year": 2027,
     "score": 75
+   },
+   {
+    "id": 7118,
+    "type": "boardgame",
+    "name": "Ace of Aces: Handy Rotary Deluxe Edition",
+    "year": 1986,
+    "score": 36
    }
   ]
  },
@@ -851,13 +1253,6 @@
     "name": "Kemet: Blut und Sand",
     "year": 2021,
     "score": 100
-   },
-   {
-    "id": 313475,
-    "type": "boardgame",
-    "name": "Kemet: Krev a písek – Kniha mrtvých",
-    "year": 2021,
-    "score": 80
    }
   ]
  },
@@ -868,8 +1263,44 @@
   "currentId": 172010,
   "currentName": "KeYstoNe",
   "currentYear": 2015,
-  "verdict": "no-candidates",
-  "candidates": []
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 420539,
+    "type": "boardgame",
+    "name": "Keystone: North America – Second Edition",
+    "year": 2025,
+    "score": 48
+   },
+   {
+    "id": 457443,
+    "type": "boardgame",
+    "name": "Keystone: North America – Second Edition: 4-Player Upgrade Pack",
+    "year": 2025,
+    "score": 48
+   },
+   {
+    "id": 457444,
+    "type": "boardgame",
+    "name": "Keystone: North America – Second Edition: Coastal Expansion – 4-Player Upgrade Pack",
+    "year": 2025,
+    "score": 48
+   },
+   {
+    "id": 329939,
+    "type": "boardgame",
+    "name": "Keystone: North America",
+    "year": 2022,
+    "score": 36
+   },
+   {
+    "id": 420622,
+    "type": "boardgame",
+    "name": "Keystone: North America – Coastal Expansion",
+    "year": 2025,
+    "score": 36
+   }
+  ]
  },
  {
   "sect": "collection",
@@ -950,8 +1381,44 @@
   "currentId": 245643,
   "currentName": "Luxor",
   "currentYear": 2018,
-  "verdict": "no-candidates",
-  "candidates": []
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 419793,
+    "type": "boardgame",
+    "name": "Pyramido: Forgotten Treasures",
+    "year": 2025,
+    "score": 40
+   },
+   {
+    "id": 429492,
+    "type": "boardgame",
+    "name": "Crime Scene: Luxor 1932",
+    "year": 2023,
+    "score": 20
+   },
+   {
+    "id": 253763,
+    "type": "boardgame",
+    "name": "Expedition Luxor",
+    "year": 2018,
+    "score": 20
+   },
+   {
+    "id": 1205,
+    "type": "boardgame",
+    "name": "Luxor",
+    "year": 2001,
+    "score": 20
+   },
+   {
+    "id": 245643,
+    "type": "boardgame",
+    "name": "Luxor",
+    "year": 2018,
+    "score": 20
+   }
+  ]
  },
  {
   "sect": "collection",
@@ -1221,8 +1688,44 @@
   "currentId": 315584,
   "currentName": "Reign",
   "currentYear": 2020,
-  "verdict": "no-candidates",
-  "candidates": []
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 421644,
+    "type": "boardgame",
+    "name": "The End of a Reign: The Battle of Naseby, June 14, 1645",
+    "year": 2024,
+    "score": 36
+   },
+   {
+    "id": 457287,
+    "type": "boardgame",
+    "name": "Don't Starve: The Board Game – Reign of Giants",
+    "year": 2027,
+    "score": 24
+   },
+   {
+    "id": 453790,
+    "type": "boardgame",
+    "name": "Frosthaven: The Reign of the Lost Cabal (Promo Scenario)",
+    "year": 2025,
+    "score": 24
+   },
+   {
+    "id": 282256,
+    "type": "boardgame",
+    "name": "A Game of Thrones: The Card Game (Second Edition) – Long May He Reign",
+    "year": 2019,
+    "score": 24
+   },
+   {
+    "id": 220837,
+    "type": "boardgame",
+    "name": "Magic: The Gathering – 2011 Core Set: Reign of Vampirism",
+    "year": 2010,
+    "score": 24
+   }
+  ]
  },
  {
   "sect": "collection",
@@ -1231,8 +1734,37 @@
   "currentId": 339895,
   "currentName": "Relics of Rajavihara: Montalo's Revenge",
   "currentYear": 2021,
-  "verdict": "no-candidates",
-  "candidates": []
+  "verdict": "already-correct",
+  "candidates": [
+   {
+    "id": 339895,
+    "type": "boardgame",
+    "name": "Relics of Rajavihara: Montalo's Revenge",
+    "year": 2021,
+    "score": 50
+   },
+   {
+    "id": 341153,
+    "type": "boardgame",
+    "name": "Relics of Rajavihara: Thrill Seeker Expansion Pack",
+    "year": 2021,
+    "score": 40
+   },
+   {
+    "id": 308493,
+    "type": "boardgame",
+    "name": "Relics of Rajavihara",
+    "year": 2021,
+    "score": 30
+   },
+   {
+    "id": 457643,
+    "type": "boardgame",
+    "name": "Relics of Rajavihara: A Year of Relics",
+    "year": 2025,
+    "score": 30
+   }
+  ]
  },
  {
   "sect": "collection",
@@ -1403,6 +1935,34 @@
     "name": "Sherlock Holmes: Trojitá výzva – Edice 3",
     "year": 2019,
     "score": 80
+   },
+   {
+    "id": 244163,
+    "type": "boardgame",
+    "name": "Sherlock Holmes: The Challenge Of Irene Adler",
+    "year": 2016,
+    "score": 48
+   },
+   {
+    "id": 2119,
+    "type": "boardgame",
+    "name": "221B Baker St.: Sherlock Holmes & the Time Machine",
+    "year": 1996,
+    "score": 36
+   },
+   {
+    "id": 342806,
+    "type": "boardgame",
+    "name": "221B Baker St.: Sherlock Holmes & the Time Machine – Set #2",
+    "year": 1997,
+    "score": 36
+   },
+   {
+    "id": 132041,
+    "type": "boardgame",
+    "name": "Additional Sherlock Holmes Cases for 221B Baker Street, The Master Detective Game",
+    "year": 1989,
+    "score": 36
    }
   ]
  },
@@ -1418,9 +1978,37 @@
    {
     "id": 393179,
     "type": "boardgame",
-    "name": "Loděnice (druhé vydání)",
+    "name": "Shipyard (Second Edition)",
     "year": 2023,
-    "score": 80
+    "score": 40
+   },
+   {
+    "id": 469742,
+    "type": "boardgame",
+    "name": "5150: Shipyard",
+    "year": 2026,
+    "score": 20
+   },
+   {
+    "id": 465204,
+    "type": "boardgame",
+    "name": "Nebulirium Shipyard",
+    "year": 2027,
+    "score": 20
+   },
+   {
+    "id": 55600,
+    "type": "boardgame",
+    "name": "Shipyard",
+    "year": 2009,
+    "score": 20
+   },
+   {
+    "id": 410012,
+    "type": "boardgame",
+    "name": "Shipyard Auction",
+    "year": 2023,
+    "score": 20
    }
   ]
  },
@@ -1459,24 +2047,10 @@
     "score": 100
    },
    {
-    "id": 67185,
-    "type": "boardgame",
-    "name": "Sobek",
-    "year": 2010,
-    "score": 100
-   },
-   {
     "id": 355887,
     "type": "boardgame",
     "name": "Sobek: 2 Players – Treasures of the Pharaoh",
     "year": 2022,
-    "score": 70
-   },
-   {
-    "id": 324416,
-    "type": "boardgame",
-    "name": "Cleopatra and the Society of Architects: Deluxe Edition – The Cult of Sobek",
-    "year": 2020,
     "score": 70
    }
   ]
@@ -1521,6 +2095,34 @@
     "name": "Tapestry: Plans and Ploys",
     "year": 2020,
     "score": 85
+   },
+   {
+    "id": 18585,
+    "type": "boardgame",
+    "name": "Tapestry",
+    "year": 2005,
+    "score": 20
+   },
+   {
+    "id": 286096,
+    "type": "boardgame",
+    "name": "Tapestry",
+    "year": 2019,
+    "score": 20
+   },
+   {
+    "id": 349998,
+    "type": "boardgame",
+    "name": "Tapestry: Arts & Architecture",
+    "year": 2021,
+    "score": 20
+   },
+   {
+    "id": 379578,
+    "type": "boardgame",
+    "name": "Tapestry: Fantasies & Futures",
+    "year": 2023,
+    "score": 20
    }
   ]
  },
@@ -1541,32 +2143,25 @@
     "score": 100
    },
    {
-    "id": 45358,
+    "id": 373915,
     "type": "boardgame",
-    "name": "Alhambra: Big Box",
-    "year": 2009,
-    "score": 80
+    "name": "Alhambra: The Red Palace",
+    "year": 2023,
+    "score": 75
    },
    {
-    "id": 430259,
+    "id": 269139,
     "type": "boardgame",
-    "name": "Alhambra: Building Sites",
-    "year": 2024,
-    "score": 80
-   },
-   {
-    "id": 140709,
-    "type": "boardgame",
-    "name": "Alhambra: Family Box",
-    "year": 2011,
-    "score": 80
-   },
-   {
-    "id": 251830,
-    "type": "boardgame",
-    "name": "Alhambra: Mega Box",
+    "name": "Alhambra: Designers' Expansion – Bathhouses / Wishing Well / Palace Designers",
     "year": 2019,
-    "score": 80
+    "score": 70
+   },
+   {
+    "id": 252423,
+    "type": "boardgame",
+    "name": "Alhambra: Designers' Expansion – Palace Staff",
+    "year": 2019,
+    "score": 70
    }
   ]
  },
@@ -1687,8 +2282,44 @@
   "currentId": 379290,
   "currentName": "Timeline Twist",
   "currentYear": 2023,
-  "verdict": "no-candidates",
-  "candidates": []
+  "verdict": "uncertain",
+  "candidates": [
+   {
+    "id": 379554,
+    "type": "boardgame",
+    "name": "Timeline Twist: Pop Culture",
+    "year": 2023,
+    "score": 48
+   },
+   {
+    "id": 425683,
+    "type": "boardgame",
+    "name": "Name 5: Pop Culture Party Edition",
+    "year": 2014,
+    "score": 36
+   },
+   {
+    "id": 283497,
+    "type": "boardgame",
+    "name": "Pictomania (Second Edition): Bonus Cards – Pop Culture / Geek",
+    "year": 2019,
+    "score": 36
+   },
+   {
+    "id": 429453,
+    "type": "boardgame",
+    "name": "Poetry for Neanderthals: Pop Culture Edition",
+    "year": 2024,
+    "score": 36
+   },
+   {
+    "id": 409925,
+    "type": "boardgame",
+    "name": "Star Wars: Timeline Twist",
+    "year": 2023,
+    "score": 24
+   }
+  ]
  },
  {
   "sect": "collection",
@@ -1715,14 +2346,42 @@
   "currentId": 338628,
   "currentName": "Trails",
   "currentYear": 2021,
-  "verdict": "already-correct",
+  "verdict": "uncertain",
   "candidates": [
    {
-    "id": 338628,
+    "id": 456360,
     "type": "boardgame",
-    "name": "Parky: Na cestách",
-    "year": 2021,
-    "score": 100
+    "name": "Lucky Bears: A National Parks Board Game",
+    "year": 2024,
+    "score": 45
+   },
+   {
+    "id": 18376,
+    "type": "boardgame",
+    "name": "Gumby and Pokey Playful Trails Game",
+    "year": 1968,
+    "score": 30
+   },
+   {
+    "id": 242125,
+    "type": "boardgame",
+    "name": "Rabbit Trails: The Play on Words Game",
+    "year": 2017,
+    "score": 30
+   },
+   {
+    "id": 30059,
+    "type": "boardgame",
+    "name": "The Rocky Mountain National Park Game: Tricky Trails",
+    "year": 2000,
+    "score": 30
+   },
+   {
+    "id": 96327,
+    "type": "boardgame",
+    "name": "Treasure Trails Bible Game",
+    "year": 1953,
+    "score": 30
    }
   ]
  },
@@ -1812,6 +2471,27 @@
     "name": "Valeria: Card Kingdoms – Flames & Frost: Kickstarter Edition",
     "year": 2017,
     "score": 50
+   },
+   {
+    "id": 170561,
+    "type": "boardgame",
+    "name": "Valeria: Card Kingdoms",
+    "year": 2016,
+    "score": 30
+   },
+   {
+    "id": 274228,
+    "type": "boardgame",
+    "name": "Valeria: Card Kingdoms – Crimson Seas",
+    "year": 2019,
+    "score": 30
+   },
+   {
+    "id": 294308,
+    "type": "boardgame",
+    "name": "Valeria: Card Kingdoms – Crimson Seas (Kickstarter Edition)",
+    "year": 2019,
+    "score": 30
    }
   ]
  },
@@ -1876,6 +2556,34 @@
     "name": "Arcs: Leaders & Lore Pack",
     "year": 2024,
     "score": 48
+   },
+   {
+    "id": 468034,
+    "type": "boardgame",
+    "name": "Arcs: Lost Vaults & Fated Leaders Expansion",
+    "year": 2027,
+    "score": 24
+   },
+   {
+    "id": 359871,
+    "type": "boardgame",
+    "name": "Arcs",
+    "year": 2024,
+    "score": 12
+   },
+   {
+    "id": 468035,
+    "type": "boardgame",
+    "name": "Arcs: Beyond the Reach Campaign Expansion",
+    "year": 2027,
+    "score": 12
+   },
+   {
+    "id": 468037,
+    "type": "boardgame",
+    "name": "Arcs: Halls of Power Expansion",
+    "year": 2027,
+    "score": 12
    }
   ]
  },
@@ -1894,6 +2602,34 @@
     "name": "Fort: Cats & Dogs Expansion",
     "year": 2021,
     "score": 48
+   },
+   {
+    "id": 1618,
+    "type": "boardgame",
+    "name": "French Foreign Legion: A Game of Desperate Fighting in a Desert Fort",
+    "year": 1982,
+    "score": 30
+   },
+   {
+    "id": 475797,
+    "type": "boardgame",
+    "name": "A Hellish Fight: The Battle for Fort Sumter, September 8, 1863",
+    "year": 2026,
+    "score": 30
+   },
+   {
+    "id": 433370,
+    "type": "boardgame",
+    "name": "A Most Resolute Action: The Battle of Fort Meigs, May 5, 1813",
+    "year": 2024,
+    "score": 30
+   },
+   {
+    "id": 252291,
+    "type": "boardgame",
+    "name": "A Rock and a Hard Place: The Battle of Fort Benghaisa, 1942",
+    "year": 2018,
+    "score": 30
    }
   ]
  }
