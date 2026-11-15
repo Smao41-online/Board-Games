@@ -83,6 +83,12 @@ json.dump(man, open(os.path.join(OUT, "manifest.webmanifest"), "w", encoding="ut
           ensure_ascii=False, indent=2)
 sw = open(os.path.join(SRC, "sw.js"), encoding="utf-8").read()
 sw = sw.replace("galaxy-shell-v1", "galaxy-off-shell-v1").replace("galaxy-data-v1", "galaxy-off-data-v1")
+# The snapshot fetches no data file, so the data-caching branch is dead code —
+# and it is the one place left that names a repository host. Switch it off
+# rather than leave a live-data path in a file handed to strangers.
+sw, n = re.subn(r"const isData = url => .*;", "const isData = () => false;", sw, count=1)
+assert n == 1, "isData not found in app/sw.js"
+assert "githubusercontent" not in sw, "repository host still present in sw.js"
 open(os.path.join(OUT, "sw.js"), "w", encoding="utf-8").write(sw)
 
 size = os.path.getsize(os.path.join(OUT, "index.html")) // 1024

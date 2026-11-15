@@ -27,7 +27,7 @@ self.addEventListener('activate', e => {
   })());
 });
 
-const isData = url => /\/data\/(games|bgg)\.json/.test(url) || /raw\.githubusercontent\.com/.test(url);
+const isData = () => false;
 
 self.addEventListener('fetch', e => {
   const req = e.request;
