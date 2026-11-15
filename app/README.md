@@ -59,6 +59,35 @@ BoardGameGeek live, via Wikidata and the public relays — pick a result and the
 art, rating, players and play time come with it. Pasting a BGG link skips the search
 entirely.
 
+## The public snapshot
+
+`Galaxy_App_off/` is a **disconnected copy** of this app, built by
+`python3 scripts/build_offline_app.py`: the whole collection and its BoardGameGeek
+records are baked into the page, and the add button, the ⋯ menu, publishing, refresh
+and title-reading are removed. It reads no database and no repository, and the build
+asserts the owner name, repo name and raw URL are gone from the file before writing it.
+Personal notes are stripped unless `--keep-notes` is passed.
+
+It is published, as a folder and as a release zip, in the **public** repository
+`Smao41-online/Public-Release` → <https://smao41-online.github.io/Public-Release/board-game-galaxy/>.
+Nothing of this private repository goes with it.
+
+To refresh it after games have been added:
+
+```bash
+python3 scripts/build_offline_app.py          # rebuild from data/games.json + data/bgg.json
+# then, in a clone of Public-Release:
+rm -rf board-game-galaxy/{index.html,sw.js,manifest.webmanifest,icon-*.png,vendor}
+cp -r ../Board-Games/Galaxy_App_off/. board-game-galaxy/   # keeps board-game-galaxy/README.md
+```
+
+Commit and push to `main` — Pages redeploys, and anyone who installed it picks the new
+snapshot up the next time they open it online. The snapshot date and game count in
+`board-game-galaxy/README.md` are written by hand, so update them too. A release zip is
+optional: **Actions → Publish a build** with `project=board-game-galaxy`,
+`version=<date>`, `source_repo=Smao41-online/Public-Release`,
+`source_path=board-game-galaxy`.
+
 ## Known limits
 
 - **The camera needs https.** Opening `index.html` from a file on disk cannot work —
