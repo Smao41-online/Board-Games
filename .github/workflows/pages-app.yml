@@ -1,0 +1,59 @@
+name: Deploy Galaxy App
+
+# Publishes app/ (and the vendored scanner + icons) into the existing gh-pages
+# site, WITHOUT touching the PC galaxy's own deploy. It copies the folder in
+# rather than rebuilding the site, so the two branches never fight.
+#
+# The PC galaxy's pages.yml rebuilds gh-pages from scratch on its own pushes,
+# which removes app/ again — so this also runs on a schedule to put it back.
+
+on:
+  push:
+    branches: [Galaxy_App]
+    paths: ['app/**', '.github/workflows/pages-app.yml']
+  schedule:
+    - cron: '20 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-app
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the app branch
+        uses: actions/checkout@v4
+        with:
+          ref: Galaxy_App
+          path: src
+      - name: Check out the published site
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: site
+        continue-on-error: true
+      - name: Copy the app into the site
+        run: |
+          if [ ! -d site/.git ]; then
+            echo "gh-pages does not exist yet — run the galaxy's Pages deploy first."
+            exit 0
+          fi
+          rm -rf site/app
+          cp -r src/app site/app
+          cd site
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app
+          if git diff --cached --quiet; then
+            echo "app already up to date on the site"
+          else
+            git commit -m "Publish Galaxy App"
+            git push
+          fi
+      - name: Where it lives
+        run: echo "https://smao41-online.github.io/Board-Games/app/"

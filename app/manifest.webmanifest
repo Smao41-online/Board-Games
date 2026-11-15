@@ -1,0 +1,16 @@
+{
+  "name": "Board Game Galaxy",
+  "short_name": "Galaxy",
+  "description": "Ušákova sbírka — the board game collection, in your pocket.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#04060f",
+  "theme_color": "#04060f",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

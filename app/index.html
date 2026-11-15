@@ -1,0 +1,1033 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<title>Board Game Galaxy</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#04060f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Galaxy">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<link rel="mask-icon" href="icon-192.png" color="#ffcf6e">
+<style>
+:root{
+  --bg:#04060f; --ink:#e9edff; --muted:#98a0c6; --faint:#6a7199;
+  --card:rgba(13,18,38,.82); --card-solid:#0d1226;
+  --border:rgba(122,140,255,.22); --border-strong:rgba(140,160,255,.45);
+  --gold:#ffcf6e; --gold-deep:#f0a63c; --accent:#8a7bff; --teal:#57d7c7; --danger:#ff8f8f;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --tab:calc(56px + env(safe-area-inset-bottom));
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;overscroll-behavior-y:none}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;overflow:hidden;
+}
+#stars{position:fixed;inset:0;z-index:0}
+#glow{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(60vmax 44vmax at 80% -6%,rgba(138,123,255,.17),transparent 62%),
+             radial-gradient(48vmax 36vmax at 6% 104%,rgba(255,207,110,.11),transparent 60%)}
+.app{position:relative;z-index:1;height:100%;display:flex;flex-direction:column}
+
+/* ---------- top bar ---------- */
+header{
+  padding:calc(env(safe-area-inset-top) + 10px) 14px 8px;display:flex;gap:9px;align-items:center;
+  background:linear-gradient(180deg,rgba(4,6,15,.96),rgba(4,6,15,.72));backdrop-filter:blur(8px);
+}
+h1{font-size:17px;margin:0;font-weight:700;letter-spacing:-.02em;white-space:nowrap}
+h1 small{display:block;font-size:10.5px;color:var(--faint);font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.spacer{flex:1}
+.iconbtn{
+  width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:rgba(13,18,38,.8);
+  color:var(--ink);font-size:15px;display:grid;place-items:center;cursor:pointer;flex:0 0 auto;font-family:inherit;
+}
+.iconbtn:active{transform:scale(.93)}
+#q{
+  width:100%;background:rgba(10,14,30,.9);border:1px solid var(--border);border-radius:11px;
+  color:var(--ink);font-size:16px;padding:9px 12px;font-family:inherit;
+}
+#q:focus{outline:none;border-color:var(--border-strong)}
+.filters{display:flex;gap:7px;padding:8px 14px 2px;overflow-x:auto;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.chipsel{
+  background:rgba(13,18,38,.85);border:1px solid var(--border);color:var(--muted);
+  border-radius:999px;padding:5px 11px;font-size:12.5px;white-space:nowrap;font-family:inherit;
+}
+.chipsel.on{border-color:var(--gold);color:var(--gold)}
+
+/* ---------- views ---------- */
+main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px 12px calc(var(--tab) + 76px)}
+.view{display:none}
+.view.on{display:block}
+.count{font-size:11.5px;color:var(--faint);padding:6px 2px 10px;font-family:var(--mono);letter-spacing:.06em}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+.card{
+  background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;
+  display:flex;flex-direction:column;cursor:pointer;
+}
+.card:active{transform:scale(.98);border-color:var(--border-strong)}
+.thumb{position:relative;aspect-ratio:1;background:#0a0e1e;display:grid;place-items:center;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.planet{width:58%;aspect-ratio:1;border-radius:50%}
+.badge{
+  position:absolute;font-size:10px;padding:2.5px 6px;border-radius:999px;backdrop-filter:blur(4px);
+  background:rgba(4,6,15,.72);border:1px solid var(--border);
+}
+.b-rate{right:5px;top:5px;color:var(--gold)}
+.b-lang{left:5px;top:5px;color:var(--muted)}
+.b-new{left:5px;bottom:5px;color:var(--teal)}
+.cbody{padding:8px 9px 10px}
+.ct{font-size:12.6px;font-weight:650;line-height:1.25;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.ccz{font-size:11px;color:var(--faint);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cmeta{font-size:10.5px;color:var(--muted);margin-top:5px;display:flex;gap:7px;flex-wrap:wrap}
+
+/* ---------- sun FAB ---------- */
+#fab{
+  position:fixed;right:16px;bottom:calc(var(--tab) + 14px);z-index:40;
+  width:58px;height:58px;border-radius:50%;border:0;cursor:pointer;
+  background:radial-gradient(circle at 36% 32%,#fff3cf,var(--gold) 36%,var(--gold-deep) 70%,#b4670f);
+  box-shadow:0 0 22px rgba(255,190,90,.5),0 6px 18px rgba(0,0,0,.45);
+  font-size:30px;color:rgba(60,30,0,.6);font-weight:300;line-height:1;display:grid;place-items:center;
+  font-family:inherit;
+}
+#fab:active{transform:scale(.92)}
+
+/* ---------- tab bar ---------- */
+nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;
+  padding-bottom:env(safe-area-inset-bottom);
+  background:rgba(7,10,22,.94);backdrop-filter:blur(14px);border-top:1px solid rgba(122,140,255,.16);
+}
+nav button{
+  flex:1;background:none;border:0;color:var(--faint);font-family:inherit;font-size:10px;
+  padding:7px 0 6px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;letter-spacing:.02em;
+}
+nav button i{font-style:normal;font-size:19px;line-height:1}
+nav button.on{color:var(--gold)}
+
+/* ---------- sheets ---------- */
+.sheet{
+  position:fixed;inset:0;z-index:60;background:rgba(2,4,10,.72);backdrop-filter:blur(5px);
+  display:none;align-items:flex-end;
+}
+.sheet.show{display:flex}
+.sheet-in{
+  width:100%;max-height:92vh;overflow-y:auto;background:var(--card-solid);
+  border-radius:20px 20px 0 0;border-top:1px solid var(--border-strong);
+  padding:10px 16px calc(env(safe-area-inset-bottom) + 22px);
+  animation:rise .22s ease;
+}
+@keyframes rise{from{transform:translateY(26px);opacity:.4}}
+.grab{width:38px;height:4px;border-radius:99px;background:rgba(140,160,255,.35);margin:0 auto 12px}
+.sheet h2{font-size:19px;margin:2px 0 3px;line-height:1.2;letter-spacing:-.02em}
+.sheet .cz{color:var(--faint);font-size:13px;margin-bottom:12px}
+.hero{width:100%;aspect-ratio:1.35;border-radius:14px;overflow:hidden;background:#0a0e1e;display:grid;place-items:center;margin-bottom:12px}
+.hero img{width:100%;height:100%;object-fit:contain}
+.attrs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 14px}
+.attrs div{background:rgba(255,255,255,.035);border:1px solid var(--border);border-radius:10px;padding:7px 8px;font-size:10.5px;color:var(--faint)}
+.attrs b{display:block;color:var(--ink);font-size:13.5px;margin-top:2px;font-weight:650}
+.cats{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.cat{font-size:10.5px;color:var(--accent);border:1px solid rgba(138,123,255,.35);border-radius:999px;padding:2.5px 8px}
+.desc{font-size:13px;line-height:1.55;color:var(--muted);margin-bottom:14px}
+.acts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.acts.three{grid-template-columns:repeat(3,1fr)}
+.btn{
+  background:rgba(20,26,52,.9);border:1px solid var(--border-strong);color:var(--ink);
+  border-radius:11px;padding:11px 10px;font-size:13.5px;font-family:inherit;cursor:pointer;text-align:center;
+}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:linear-gradient(180deg,var(--gold),var(--gold-deep));color:#2a1800;border:0;font-weight:650}
+.btn.danger{color:var(--danger);border-color:rgba(255,143,143,.4)}
+.btn.wide{grid-column:1/-1}
+label.f{display:block;font-size:11.5px;color:var(--faint);margin:10px 0 4px;letter-spacing:.04em}
+input.f,textarea.f,select.f{
+  width:100%;background:#0a0e1e;border:1px solid var(--border);border-radius:10px;color:var(--ink);
+  padding:10px 11px;font-size:16px;font-family:inherit;
+}
+textarea.f{resize:vertical;min-height:64px;font-size:14px}
+.note{font-size:12px;color:var(--faint);line-height:1.5;margin-top:10px}
+.warn{
+  background:rgba(255,207,110,.1);border:1px solid rgba(255,207,110,.45);border-radius:11px;
+  padding:10px 12px;font-size:12.5px;color:var(--gold);line-height:1.5;margin:10px 0;
+}
+.ok{background:rgba(87,215,199,.1);border-color:rgba(87,215,199,.45);color:var(--teal)}
+.bad{background:rgba(255,143,143,.1);border-color:rgba(255,143,143,.45);color:var(--danger)}
+
+/* ---------- scan ---------- */
+#camwrap{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:3/4;margin-bottom:12px}
+#cam{width:100%;height:100%;object-fit:cover}
+#reticle{
+  position:absolute;left:12%;right:12%;top:33%;height:22%;
+  border:2px solid rgba(255,207,110,.85);border-radius:12px;box-shadow:0 0 0 2000px rgba(0,0,0,.35);
+}
+#reticle::after{content:"";position:absolute;left:6px;right:6px;top:50%;height:2px;background:rgba(255,207,110,.9);
+  box-shadow:0 0 10px rgba(255,207,110,.9)}
+#camhint{position:absolute;left:0;right:0;bottom:10px;text-align:center;font-size:12px;color:#fff;
+  text-shadow:0 1px 6px #000;padding:0 16px}
+.verdict{border-radius:14px;padding:14px;margin-bottom:12px;border:1px solid var(--border)}
+.verdict h3{margin:0 0 4px;font-size:16px}
+.verdict p{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
+.v-own{background:rgba(87,215,199,.12);border-color:rgba(87,215,199,.5)}
+.v-wish{background:rgba(255,207,110,.12);border-color:rgba(255,207,110,.5)}
+.v-new{background:rgba(138,123,255,.12);border-color:rgba(138,123,255,.5)}
+.rowlist{display:flex;flex-direction:column;gap:7px;margin-top:10px}
+.rowbtn{
+  display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.03);border:1px solid var(--border);
+  border-radius:11px;padding:9px 11px;font-size:13px;cursor:pointer;text-align:left;color:var(--ink);font-family:inherit;width:100%;
+}
+.rowbtn b{font-weight:650}
+.rowbtn span{color:var(--faint);font-size:11.5px;margin-left:auto;text-align:right}
+.mono{font-family:var(--mono);font-size:12px;color:var(--teal);word-break:break-all}
+.empty{text-align:center;color:var(--faint);font-size:13px;padding:40px 20px;line-height:1.6}
+.sp{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.25);border-top-color:var(--gold);
+  border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--tab) + 86px);z-index:70;
+  background:rgba(13,18,38,.97);border:1px solid var(--border-strong);border-radius:12px;
+  padding:10px 15px;font-size:13px;max-width:88vw;text-align:center;opacity:0;transition:opacity .2s;pointer-events:none;
+}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas><div id="glow"></div>
+
+<div class="app">
+  <header>
+    <h1>🪐 Galaxy<small id="hsub">Ušákova sbírka</small></h1>
+    <div class="spacer"></div>
+    <button class="iconbtn" id="btnRefresh" title="Refresh from the online database">⟳</button>
+  </header>
+  <div style="padding:2px 14px 0"><input id="q" type="search" placeholder="Search either language…" autocomplete="off" enterkeyhint="search"></div>
+  <div class="filters" id="filters">
+    <button class="chipsel on" data-tab="C">🪐 Collection</button>
+    <button class="chipsel" data-tab="W">✨ Wishlist</button>
+    <select class="chipsel" id="fLang"><option value="">Language</option></select>
+    <select class="chipsel" id="fPlayers"><option value="">Players</option></select>
+    <select class="chipsel" id="fSort">
+      <option value="t">A–Z</option><option value="r">Top rated</option>
+      <option value="y">Newest</option><option value="w">Lightest</option>
+    </select>
+  </div>
+
+  <main>
+    <section class="view on" id="vGalaxy">
+      <div class="count" id="count">loading…</div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <section class="view" id="vScan">
+      <div id="scanIdle" class="empty">
+        <div style="font-size:40px;margin-bottom:10px">📷</div>
+        Point the camera at the barcode on the box.<br>No barcode? It will read the title instead.
+        <div style="margin-top:16px"><button class="btn primary" id="btnStartCam">Start camera</button></div>
+        <div class="note" style="margin-top:14px">The camera needs permission the first time, and only works over https — not from a file on disk.</div>
+      </div>
+      <div id="scanLive" style="display:none">
+        <div id="camwrap"><video id="cam" playsinline muted autoplay></video><div id="reticle"></div><div id="camhint">Looking for a barcode…</div></div>
+        <div class="acts">
+          <button class="btn" id="btnShoot">📸 Read the title instead</button>
+          <button class="btn danger" id="btnStopCam">Stop</button>
+        </div>
+      </div>
+      <div id="scanOut"></div>
+    </section>
+
+    <section class="view" id="vTonight">
+      <div class="count">What fits tonight?</div>
+      <label class="f">Players</label>
+      <div class="filters" id="pPick" style="padding:0 0 4px"></div>
+      <label class="f">Time available</label>
+      <div class="filters" id="tPick" style="padding:0 0 4px"></div>
+      <div id="tonightOut" style="margin-top:14px"></div>
+    </section>
+
+    <section class="view" id="vMore">
+      <div class="count">Collection tools</div>
+      <div class="rowlist" id="moreList"></div>
+      <div class="note" id="dataNote"></div>
+    </section>
+  </main>
+
+  <button id="fab" aria-label="Add a game by hand">+</button>
+
+  <nav>
+    <button class="on" data-v="vGalaxy"><i>🪐</i>Galaxy</button>
+    <button data-v="vScan"><i>📷</i>Scan</button>
+    <button data-v="vTonight"><i>🎲</i>Tonight</button>
+    <button data-v="vMore"><i>⋯</i>More</button>
+  </nav>
+</div>
+
+<div class="sheet" id="sheet"><div class="sheet-in" id="sheetIn"></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="vendor/zxing.min.js"></script>
+<script>
+/* ===================== helpers & state ===================== */
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function norm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
+  .replace(/[’´'`]/g,'').replace(/[^a-z0-9]+/g,' ').trim();}
+const lsGet=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d;}catch(e){return d;}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}};
+
+const LS_USER='user.games.v1', LS_REMOVED='user.removed.v1', LS_OVERRIDES='user.overrides.v1',
+      LS_BC='bc.index.v1', LS_SNAP='galaxy.snapshot.v1';
+const REPO='Smao41-online/Board-Games', BRANCH='claude/board-game-database-solar-9avghh';
+const RAW='https://raw.githubusercontent.com/'+REPO+'/'+BRANCH+'/data/';
+const DATA_SOURCES=[ '../data/', RAW ];
+
+let GAMES=[], WISHLIST=[], idMap={}, things={}, tab='C', currentList=[], dataWhen='';
+let userStore=lsGet(LS_USER,{C:[],W:[]}), removedStore=lsGet(LS_REMOVED,{C:[],W:[]}),
+    overrides=lsGet(LS_OVERRIDES,{}), bcIndex=lsGet(LS_BC,{});
+if(!Array.isArray(userStore.C))userStore.C=[]; if(!Array.isArray(userStore.W))userStore.W=[];
+if(!Array.isArray(removedStore.C))removedStore.C=[]; if(!Array.isArray(removedStore.W))removedStore.W=[];
+
+const ovOf=g=>overrides[norm(g.t)];
+const gTitle=g=>{const o=ovOf(g);return (o&&o.g&&o.g.t)||g.t;};
+const gCzech=g=>{const o=ovOf(g);return (o&&o.g&&o.g.c!=null)?o.g.c:(g.c||'');};
+const gNotes=g=>{const o=ovOf(g);return (o&&o.g&&o.g.n!=null)?o.g.n:(g.n||'');};
+const gAlt=g=>{const o=ovOf(g);return (o&&o.g&&o.g.au!=null)?o.g.au:(g.au||'');};
+const idOf=g=>{const o=ovOf(g);if(o&&o.id!=null)return o.id;return idMap[norm(g.t)]||g.b||0;};
+function bggOf(g){
+  const o=ovOf(g),id=idOf(g);
+  let d=(id&&things[id])?things[id]:null;
+  if(o&&o.det)d=o.det;
+  if(o&&o.patch)d={...(d||{}),...o.patch};
+  return d?{cats:[],mechs:[],designers:[],...d}:null;
+}
+function hueOf(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))%360;return h;}
+/* Box art can fail: offline, a dead URL, or an image host that is unreachable.
+   Fall back to the procedural planet rather than leaving an empty hole. */
+function artFail(img,hue){
+  const d=document.createElement('div'); d.className='planet';
+  d.style.background=`radial-gradient(circle at 34% 30%,hsl(${hue} 70% 78%),hsl(${hue} 65% 42%) 60%,hsl(${hue} 70% 22%))`;
+  if(img.parentElement)img.replaceWith(d);
+}
+function playerRange(p){
+  if(!p)return null;
+  const m=String(p).match(/(\d+)\s*[–—-]\s*(\d+)/);
+  if(m)return [+m[1],+m[2]];
+  const s=String(p).match(/(\d+)/);
+  return s?[+s[1],+s[1]]:null;
+}
+function toast(msg,ms){const t=$('toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._k);t._k=setTimeout(()=>t.classList.remove('show'),ms||2600);}
+
+/* ===================== data ===================== */
+async function grab(file){
+  for(const base of DATA_SOURCES){
+    try{
+      const r=await fetch(base+file,{cache:'no-store'});
+      if(r.ok)return await r.json();
+    }catch(e){}
+  }
+  return null;
+}
+function applyLocal(){
+  GAMES.forEach((g,i)=>g._i=i); WISHLIST.forEach((g,i)=>g._i=i);
+  for(let i=GAMES.length-1;i>=0;i--)if(removedStore.C.some(x=>x.i===GAMES[i]._i))GAMES.splice(i,1);
+  for(let i=WISHLIST.length-1;i>=0;i--)if(removedStore.W.some(x=>x.i===WISHLIST[i]._i))WISHLIST.splice(i,1);
+  /* a locally added game that has since been published drops its local copy */
+  let changed=false;
+  for(const [k,list] of [['C',GAMES],['W',WISHLIST]]){
+    const base=new Set(list.map(g=>norm(g.t))), keep=[];
+    for(const g of userStore[k]){
+      if(base.has(norm(g.t))){changed=true;continue;}
+      g.us=1;keep.push(g);list.push(g);
+    }
+    userStore[k]=keep;
+  }
+  if(changed)lsSet(LS_USER,userStore);
+  /* barcodes published into the shared data feed the local index */
+  for(const g of [...GAMES,...WISHLIST]) if(g.bc) bcIndex[String(g.bc)]={t:g.t,id:g.b||0,src:'shared'};
+}
+async function loadData(force){
+  const snap=lsGet(LS_SNAP,null);
+  if(snap&&!force){ GAMES=snap.c; WISHLIST=snap.w; idMap=snap.ids; things=snap.things; dataWhen=snap.when;
+    applyLocal(); buildFilters(); render(); }
+  const [games,bgg]=await Promise.all([grab('games.json'),grab('bgg.json')]);
+  if(!games||!bgg){ if(!snap){$('count').textContent='⚠️ No data yet — connect once so the collection can download.';} return false; }
+  GAMES=games.collection||[]; WISHLIST=games.wishlist||[];
+  idMap=bgg.ids||{}; things=bgg.things||{}; dataWhen=bgg.generated||'';
+  try{ lsSet(LS_SNAP,{c:GAMES,w:WISHLIST,ids:idMap,things:things,when:dataWhen}); }
+  catch(e){ /* a full snapshot can exceed the quota — the service worker still caches it */ }
+  applyLocal(); buildFilters(); render();
+  return true;
+}
+
+/* ===================== galaxy list ===================== */
+function buildFilters(){
+  const langs=[...new Set(GAMES.map(g=>g.l).filter(Boolean))].sort();
+  const fl=$('fLang'); if(fl.options.length<2)
+    langs.forEach(l=>{const o=document.createElement('option');o.value=l;o.textContent=l;fl.appendChild(o);});
+  const fp=$('fPlayers'); if(fp.options.length<2)
+    [1,2,3,4,5,6,8].forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n+(n===8?'+':'')+' players';fp.appendChild(o);});
+}
+function matches(g){
+  const q=norm($('q').value);
+  if(q){
+    const d=bggOf(g);
+    const hay=[gTitle(g),gCzech(g),g.t,g.c,d&&d.name].filter(Boolean).map(norm);
+    if(!hay.some(h=>h.includes(q)))return false;
+  }
+  if($('fLang').value && g.l!==$('fLang').value)return false;
+  if($('fPlayers').value){
+    const n=+$('fPlayers').value, d=bggOf(g);
+    let r=playerRange(g.p); if(!r&&d&&d.minP)r=[d.minP,d.maxP||d.minP];
+    if(!r)return false;
+    if(n===8){if(r[1]<8)return false;} else if(n<r[0]||n>r[1])return false;
+  }
+  return true;
+}
+function sortGames(list){
+  const s=$('fSort').value;
+  const by={
+    t:(a,b)=>gTitle(a).localeCompare(gTitle(b),'cs'),
+    r:(a,b)=>((bggOf(b)||{}).rating||0)-((bggOf(a)||{}).rating||0),
+    y:(a,b)=>((bggOf(b)||{}).year||0)-((bggOf(a)||{}).year||0),
+    w:(a,b)=>((bggOf(a)||{}).weight||9)-((bggOf(b)||{}).weight||9),
+  }[s]||by_t;
+  return list.slice().sort(by);
+}
+function by_t(a,b){return gTitle(a).localeCompare(gTitle(b),'cs');}
+function cardHTML(g,i){
+  const d=bggOf(g)||{}, hue=hueOf(gTitle(g));
+  const art=d.thumb||d.img;
+  const players=g.p||(d.minP?(d.minP===d.maxP?d.minP:d.minP+'–'+d.maxP):'');
+  return `<div class="card" data-i="${i}">
+    <div class="thumb">
+      ${art?`<img loading="lazy" src="${esc(art)}" alt="" onerror="artFail(this,${hue})">`
+           :`<div class="planet" style="background:radial-gradient(circle at 34% 30%,hsl(${hue} 70% 78%),hsl(${hue} 65% 42%) 60%,hsl(${hue} 70% 22%))"></div>`}
+      ${g.l?`<span class="badge b-lang">${esc(g.l)}</span>`:''}
+      ${d.rating?`<span class="badge b-rate">★ ${d.rating.toFixed(1)}</span>`:''}
+      ${g.us?`<span class="badge b-new">✦ added</span>`:''}
+    </div>
+    <div class="cbody">
+      <div class="ct">${esc(gTitle(g))}</div>
+      ${gCzech(g)&&norm(gCzech(g))!==norm(gTitle(g))?`<div class="ccz">${esc(gCzech(g))}</div>`:''}
+      <div class="cmeta">${players?'<span>👥 '+esc(players)+'</span>':''}${d.time?'<span>⏱ '+d.time+'m</span>':''}</div>
+    </div>
+  </div>`;
+}
+function render(){
+  const src=tab==='C'?GAMES:WISHLIST;
+  currentList=sortGames(src.filter(matches));
+  $('grid').innerHTML=currentList.length?currentList.map(cardHTML).join('')
+    :'<div class="empty" style="grid-column:1/-1">Nothing in this sector…</div>';
+  $('count').textContent=`${currentList.length} of ${src.length} ${tab==='C'?'games':'wishlist items'}`
+    +(dataWhen?` · data ${dataWhen.slice(0,10)}`:'');
+}
+$('grid').addEventListener('click',e=>{
+  const c=e.target.closest('.card'); if(!c)return;
+  openGame(currentList[+c.dataset.i]);
+});
+$('q').addEventListener('input',render);
+for(const el of ['fLang','fPlayers','fSort'])$(el).addEventListener('change',render);
+$('filters').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-tab]'); if(!b)return;
+  tab=b.dataset.tab;
+  document.querySelectorAll('#filters button[data-tab]').forEach(x=>x.classList.toggle('on',x===b));
+  render();
+});
+$('btnRefresh').onclick=async()=>{toast('⟳ Fetching the latest…');const ok=await loadData(true);toast(ok?'✅ Up to date':'⚠️ Could not reach the database');};
+
+/* ===================== sheets ===================== */
+function sheet(html){ $('sheetIn').innerHTML='<div class="grab"></div>'+html; $('sheet').classList.add('show'); }
+function closeSheet(){ $('sheet').classList.remove('show'); }
+$('sheet').addEventListener('click',e=>{ if(e.target===$('sheet'))closeSheet(); });
+
+function openGame(g){
+  const d=bggOf(g)||{}, id=idOf(g), hue=hueOf(gTitle(g)), art=d.img||d.thumb;
+  const players=g.p||(d.minP?(d.minP===d.maxP?String(d.minP):d.minP+'–'+d.maxP):'–');
+  const rows=[['Players',players],['Age',g.a||(d.age?d.age+'+':'–')],['Play time',d.time?d.time+' min':'–'],
+    ['BGG rating',d.rating?'★ '+d.rating.toFixed(1):'–'],['Complexity',d.weight?d.weight.toFixed(1)+'/5':'–'],['Year',d.year||'–']];
+  sheet(`
+    <div class="hero">${art?`<img src="${esc(art)}" alt="" onerror="artFail(this,${hue})">`
+      :`<div class="planet" style="width:46%;background:radial-gradient(circle at 34% 30%,hsl(${hue} 70% 78%),hsl(${hue} 65% 42%) 60%,hsl(${hue} 70% 22%))"></div>`}</div>
+    <h2>${esc(gTitle(g))}</h2>
+    ${gCzech(g)&&norm(gCzech(g))!==norm(gTitle(g))?`<div class="cz">${esc(gCzech(g))}</div>`:''}
+    ${d.cats&&d.cats.length?`<div class="cats">${d.cats.slice(0,6).map(c=>`<span class="cat">${esc(c)}</span>`).join('')}</div>`:''}
+    <div class="attrs">${rows.map(([k,v])=>`<div>${k}<b>${esc(v)}</b></div>`).join('')}</div>
+    ${gNotes(g)?`<div class="warn" style="background:rgba(255,255,255,.04);border-color:var(--border);color:var(--muted)">📝 ${esc(gNotes(g))}</div>`:''}
+    ${d.desc?`<div class="desc">${esc(d.desc)}</div>`:''}
+    <div class="acts three">
+      <button class="btn" id="aShare">↗ Share</button>
+      <button class="btn" id="aEdit">✏️ Edit</button>
+      <button class="btn" id="aSync">🔄 Sync</button>
+    </div>
+    <div class="acts" style="margin-top:8px">
+      ${id?`<a class="btn" href="https://boardgamegeek.com/boardgame/${id}" target="_blank" rel="noopener">🎲 BoardGameGeek</a>`:'<span></span>'}
+      ${gAlt(g)?`<a class="btn" href="${esc(gAlt(g))}" target="_blank" rel="noopener">${/kickstarter/i.test(gAlt(g))?'🚀 Kickstarter':'🌐 Link'}</a>`:(g.u?`<a class="btn" href="${esc(g.u)}" target="_blank" rel="noopener">🔗 Shop page</a>`:'<span></span>')}
+      <button class="btn danger wide" id="aDel">🗑 Remove from the galaxy</button>
+    </div>`);
+  $('aShare').onclick=()=>shareGame(g);
+  $('aEdit').onclick=()=>openEdit(g);
+  $('aSync').onclick=async()=>{ await loadData(true); toast('🔄 Refreshed from the online database'); openGame(g); };
+  $('aDel').onclick=()=>{
+    if(!confirm('Remove “'+gTitle(g)+'” from your galaxy?'))return;
+    if(g.us){
+      const store=tab==='C'?userStore.C:userStore.W;
+      const j=store.findIndex(x=>norm(x.t)===norm(g.t)); if(j>-1)store.splice(j,1);
+      lsSet(LS_USER,userStore);
+    }else{
+      const rem=tab==='C'?removedStore.C:removedStore.W;
+      if(!rem.some(x=>x.i===g._i))rem.push({i:g._i,t:g.t});
+      lsSet(LS_REMOVED,removedStore);
+    }
+    const list=tab==='C'?GAMES:WISHLIST, k=list.indexOf(g); if(k>-1)list.splice(k,1);
+    closeSheet(); render(); toast('Removed');
+  };
+}
+
+function openEdit(g){
+  const d=bggOf(g)||{}, id=idOf(g), v=x=>x==null?'':x;
+  sheet(`
+    <h2>✏️ Edit</h2><div class="cz">${esc(gTitle(g))}</div>
+    <label class="f">Title</label><input class="f" id="eT" value="${esc(gTitle(g))}">
+    <label class="f">Czech / second-language title</label><input class="f" id="eC" value="${esc(gCzech(g))}">
+    <label class="f">Notes</label><input class="f" id="eN" value="${esc(gNotes(g))}" placeholder="borrowed to Petr, missing 2 cards…">
+    <label class="f">Alternative URL</label><input class="f" id="eA" value="${esc(gAlt(g))}" placeholder="Kickstarter / shop link">
+    <label class="f">BoardGameGeek id</label><input class="f" id="eI" inputmode="numeric" value="${v(id||'')}">
+    <div class="acts" style="margin-top:14px">
+      <button class="btn" id="eCancel">Cancel</button>
+      <button class="btn primary" id="eSave">💾 Save</button>
+      <button class="btn danger wide" id="eReset">↺ Reset to the shared data</button>
+    </div>
+    <div class="note">Saved on this phone. Publish sends your title, notes, link and id corrections to the shared database.</div>`);
+  $('eCancel').onclick=()=>openGame(g);
+  $('eReset').onclick=()=>{ delete overrides[norm(g.t)]; lsSet(LS_OVERRIDES,overrides); render(); openGame(g); };
+  $('eSave').onclick=()=>{
+    const o=overrides[norm(g.t)]||{};
+    const nt=$('eT').value.trim(), nc=$('eC').value.trim(), nn=$('eN').value.trim(), na=$('eA').value.trim();
+    const nid=+String($('eI').value).trim();
+    if(nid){ if(nid!==id)o.uf=1; o.id=nid; }
+    const gp={};
+    if(nt&&nt!==g.t)gp.t=nt;
+    if(nc!==(g.c||''))gp.c=nc;
+    if(nn!==(g.n||''))gp.n=nn;
+    if(na!==(g.au||''))gp.au=na;
+    if(Object.keys(gp).length){o.g={...(o.g||{}),...gp};o.tf=1;} else if(o.g){delete o.g;delete o.tf;}
+    overrides[norm(g.t)]=o; lsSet(LS_OVERRIDES,overrides);
+    render(); openGame(g); toast('Saved on this phone');
+  };
+}
+
+/* ===================== add by hand (the sun) ===================== */
+function openAdd(prefill){
+  sheet(`
+    <h2>☀️ Add a game</h2>
+    <div class="cz">Paste a BoardGameGeek link and everything fills itself in.</div>
+    <label class="f">Title, or a BGG link</label>
+    <input class="f" id="aT" value="${esc(prefill||'')}" placeholder="Cascadia  ·  boardgamegeek.com/boardgame/295947">
+    <label class="f">Czech / second-language title</label><input class="f" id="aC" placeholder="optional">
+    <label class="f">Add to</label>
+    <select class="f" id="aDest"><option value="C">🪐 Collection</option><option value="W">✨ Wishlist</option></select>
+    <label class="f">Language</label>
+    <select class="f" id="aL"><option value="">–</option><option>CZ</option><option>EN</option><option>SK</option><option>DE</option></select>
+    <label class="f">Notes</label><input class="f" id="aN" placeholder="optional">
+    <div class="acts" style="margin-top:14px">
+      <button class="btn" id="aCancel">Cancel</button>
+      <button class="btn primary" id="aOK">🚀 Add</button>
+    </div>
+    <div class="note" id="aNote"></div>`);
+  $('aDest').value=tab;
+  $('aCancel').onclick=closeSheet;
+  $('aOK').onclick=()=>{
+    let t=$('aT').value.trim(); if(!t){toast('Enter a title first');return;}
+    const hit=bggFromText(t); let b=0;
+    if(hit){ b=hit.id; if(hit.title)t=hit.title; }
+    const dest=$('aDest').value;
+    if((dest==='C'?GAMES:WISHLIST).some(x=>norm(gTitle(x))===norm(t))
+       && !confirm('That looks like it is already in the list. Add anyway?'))return;
+    const g={t,us:1};
+    if($('aC').value.trim())g.c=$('aC').value.trim();
+    if($('aL').value)g.l=$('aL').value;
+    if($('aN').value.trim())g.n=$('aN').value.trim();
+    if(b){ g.b=b; g.u='https://boardgamegeek.com/boardgame/'+b; }
+    (dest==='C'?GAMES:WISHLIST).push(g);
+    (dest==='C'?userStore.C:userStore.W).push(g);
+    lsSet(LS_USER,userStore);
+    tab=dest; document.querySelectorAll('#filters button[data-tab]').forEach(x=>x.classList.toggle('on',x.dataset.tab===dest));
+    closeSheet(); render();
+    toast(b?'Added with its BGG id — publish to fill in the rest':'Added — publish to fetch its BGG data');
+  };
+}
+function bggFromText(s){
+  const q=String(s||'').trim();
+  const m=q.match(/boardgame(?:expansion)?\/(\d+)(?:\/([^/?#]+))?/)||q.match(/^#?(\d{4,7})$/);
+  if(!m)return null;
+  const slug=m[2]?decodeURIComponent(m[2]).replace(/[-_]+/g,' ').trim():'';
+  return {id:+m[1],title:slug?slug.replace(/\b[a-z]/g,c=>c.toUpperCase()):''};
+}
+$('fab').onclick=()=>openAdd('');
+
+/* ===================== scan ===================== */
+let stream=null, scanning=false, zxing=null, rafId=0, lastCode='';
+function setScanUI(live){ $('scanIdle').style.display=live?'none':'block'; $('scanLive').style.display=live?'block':'none'; }
+/* A result replaces the camera panel instead of appearing underneath it, so the
+   answer is the first thing on screen and the next scan is one tap away. */
+function scanResult(html){
+  $('scanIdle').style.display='none'; $('scanLive').style.display='none';
+  $('scanOut').innerHTML=html+
+    '<div class="acts" style="margin-top:14px"><button class="btn primary wide" id="scanAgain">📷 Scan another</button></div>';
+  const b=$('scanAgain'); if(b)b.onclick=()=>{ $('scanOut').innerHTML=''; startCam(); };
+  document.querySelector('main').scrollTop=0;
+}
+async function startCam(){
+  $('scanOut').innerHTML='';
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+    $('scanOut').innerHTML='<div class="warn bad">This browser gives the page no camera access. On iPhone use Safari, and open the app over https (not a file).</div>';
+    return;
+  }
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280}}});
+  }catch(e){
+    $('scanOut').innerHTML='<div class="warn bad">Camera blocked: '+esc(e&&e.name||'unknown')
+      +'.<br>On iPhone: Settings → Safari → Camera → Allow, then reopen the app.</div>';
+    return;
+  }
+  const v=$('cam'); v.srcObject=stream; await v.play().catch(()=>{});
+  setScanUI(true); scanning=true; lastCode='';
+  if('BarcodeDetector' in window){
+    try{
+      const det=new window.BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e','code_128']});
+      $('camhint').textContent='Looking for a barcode…';
+      const tick=async()=>{
+        if(!scanning)return;
+        try{ const hits=await det.detect(v); if(hits&&hits.length)return onCode(hits[0].rawValue); }catch(e){}
+        rafId=requestAnimationFrame(tick);
+      };
+      tick(); return;
+    }catch(e){}
+  }
+  /* Safari has no BarcodeDetector — use the bundled scanner */
+  try{
+    zxing=new ZXing.BrowserMultiFormatReader();
+    $('camhint').textContent='Looking for a barcode…';
+    zxing.decodeFromStream(stream,v,(res,err)=>{ if(res&&scanning)onCode(res.getText()); });
+  }catch(e){
+    $('camhint').textContent='Barcode reader unavailable — use “Read the title instead”.';
+  }
+}
+function stopCam(){
+  scanning=false; cancelAnimationFrame(rafId);
+  try{ if(zxing){zxing.reset();zxing=null;} }catch(e){}
+  if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; }
+  $('cam').srcObject=null; setScanUI(false);
+}
+$('btnStartCam').onclick=startCam;
+$('btnStopCam').onclick=stopCam;
+
+function findByTitle(t){
+  const key=norm(t);
+  for(const [list,where] of [[GAMES,'C'],[WISHLIST,'W']])
+    for(const g of list){
+      const d=bggOf(g);
+      if(norm(gTitle(g))===key||norm(gCzech(g))===key||(d&&d.name&&norm(d.name)===key))return {g,where};
+    }
+  return null;
+}
+function verdictHTML(name,where,g,extra){
+  if(where==='C'){
+    const d=bggOf(g)||{};
+    return `<div class="verdict v-own"><h3>✓ You already own this</h3>
+      <p><b>${esc(gTitle(g))}</b>${d.rating?' · ★ '+d.rating.toFixed(1):''}${gNotes(g)?'<br>📝 '+esc(gNotes(g)):''}</p></div>`;
+  }
+  if(where==='W')return `<div class="verdict v-wish"><h3>✦ It is on your wishlist</h3><p><b>${esc(gTitle(g))}</b></p></div>`;
+  return `<div class="verdict v-new"><h3>✕ Not in your galaxy</h3><p>${esc(name)}</p></div>`+(extra||'');
+}
+async function onCode(code){
+  if(!code||code===lastCode)return;
+  lastCode=code; scanning=false; stopCam();
+  if(navigator.vibrate)navigator.vibrate(30);
+  const known=bcIndex[String(code)];
+  if(known){
+    const hit=findByTitle(known.t);
+    scanResult((hit?verdictHTML(known.t,hit.where,hit.g):verdictHTML(known.t,null,null,''))
+      +`<div class="note">Barcode <span class="mono">${esc(code)}</span> — remembered${known.src==='shared'?' from the shared database':' on this phone'}.</div>`
+      +(hit?'':`<div class="acts" style="margin-top:10px"><button class="btn primary wide" id="sAdd">☀️ Add “${esc(known.t)}”</button></div>`));
+    if(!hit)$('sAdd').onclick=()=>openAdd(known.t);
+    return;
+  }
+  scanResult(`<div class="note"><span class="sp"></span>Barcode <span class="mono">${esc(code)}</span> — looking it up…</div>`);
+  const guess=await lookupBarcode(code);
+  renderUnknownCode(code,guess);
+}
+async function lookupBarcode(code){
+  /* A public database, so it may be slow, rate-limited or unreachable. Give it a
+     short leash: an unanswered lookup must never leave the user staring at a
+     spinner when confirming the game by hand takes one tap. */
+  try{
+    const r=await fetch('https://api.upcitemdb.com/prod/trial/lookup?upc='+encodeURIComponent(code),
+      {cache:'no-store',signal:AbortSignal.timeout(6000)});
+    if(r.ok){ const j=await r.json(); const it=(j.items||[])[0];
+      if(it&&it.title)return String(it.title).replace(/\s*\((?:board\s*game|desková hra)\)\s*/i,'').trim(); }
+  }catch(e){}
+  return '';
+}
+function renderUnknownCode(code,guess){
+  const hit=guess?findByTitle(guess):null;
+  const list=guess?searchLocal(guess):[];
+  scanResult(
+    (hit?verdictHTML(guess,hit.where,hit.g):'')
+    +`<div class="warn">⚠️ ${guess
+        ? 'Unconfirmed match from a public barcode database: <b>'+esc(guess)+'</b>. Check it is really this game before accepting it.'
+        : 'This barcode is not known yet.'}<br>Confirm the game once and the app remembers this barcode for good — and shares it when you publish.</div>`
+    +`<div class="note">Barcode <span class="mono">${esc(code)}</span></div>`
+    +`<div class="rowlist" id="bcPick">`
+      +(list.length?list.slice(0,6).map(g=>`<button class="rowbtn" data-t="${esc(gTitle(g))}"><b>${esc(gTitle(g))}</b><span>in your galaxy</span></button>`).join(''):'')
+      +(guess?`<button class="rowbtn" data-new="${esc(guess)}"><b>${esc(guess)}</b><span>accept &amp; add</span></button>`:'')
+      +`<button class="rowbtn" data-search="1"><b>🔎 Find it by name…</b><span>search your galaxy</span></button>`
+      +`<button class="rowbtn" data-manual="1"><b>☀️ Type it in myself</b><span>manual add</span></button>`
+    +`</div>`);
+  $('bcPick').addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b)return;
+    if(b.dataset.t){ rememberCode(code,b.dataset.t); const h=findByTitle(b.dataset.t); if(h)openGame(h.g); }
+    else if(b.dataset.new){ rememberCode(code,b.dataset.new); openAdd(b.dataset.new); }
+    else if(b.dataset.search){ showView('vGalaxy'); $('q').value=guess||''; render(); $('q').focus(); }
+    else if(b.dataset.manual){ openAdd(guess||''); }
+  });
+}
+function searchLocal(t){
+  const k=norm(t), words=k.split(' ').filter(w=>w.length>2);
+  const score=g=>{
+    const hay=[gTitle(g),gCzech(g)].map(norm);
+    if(hay.some(h=>h===k))return 3;
+    if(hay.some(h=>h.includes(k)||k.includes(h)))return 2;
+    const hit=words.filter(w=>hay.some(h=>h.includes(w))).length;
+    return words.length&&hit/words.length>=.6?1:0;
+  };
+  return [...GAMES,...WISHLIST].map(g=>[score(g),g]).filter(x=>x[0]>0)
+    .sort((a,b)=>b[0]-a[0]).map(x=>x[1]);
+}
+function rememberCode(code,title){
+  bcIndex[String(code)]={t:title,id:0,src:'local'};
+  lsSet(LS_BC,bcIndex);
+  toast('Barcode remembered for “'+title+'”');
+}
+
+/* ---- photo → read the title (engine downloaded on first use) ---- */
+let tess=null;
+async function readTitleFromPhoto(){
+  const v=$('cam');
+  if(!v||!v.videoWidth){toast('Start the camera first');return;}
+  const c=document.createElement('canvas');
+  c.width=v.videoWidth; c.height=v.videoHeight;
+  c.getContext('2d').drawImage(v,0,0);
+  stopCam();
+  scanResult('<div class="note"><span class="sp"></span>Reading the title off the box…<br>The text engine downloads once (a few MB) and is then kept on the phone.</div>');
+  try{
+    if(!tess){
+      await new Promise((res,rej)=>{
+        const s=document.createElement('script');
+        s.src='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+        s.onload=res; s.onerror=()=>rej(new Error('download failed'));
+        document.head.appendChild(s);
+      });
+      tess=await Tesseract.createWorker('eng');
+    }
+    const {data}=await tess.recognize(c);
+    const lines=(data.text||'').split('\n').map(s=>s.trim())
+      .filter(s=>s.length>2&&/[A-Za-zÀ-ž]{3}/.test(s))
+      .sort((a,b)=>b.length-a.length).slice(0,6);
+    if(!lines.length){ scanResult('<div class="warn bad">No readable text on that photo. Try filling the frame with the title, or add it by hand.</div>'); return; }
+    scanResult(`<div class="warn">⚠️ Read off the box — pick the line that is the game's name.</div>`
+      +`<div class="rowlist" id="ocrPick">`+lines.map(l=>`<button class="rowbtn" data-t="${esc(l)}"><b>${esc(l)}</b><span>use this</span></button>`).join('')
+      +`<button class="rowbtn" data-manual="1"><b>☀️ Type it in myself</b><span>manual add</span></button></div>`);
+    $('ocrPick').addEventListener('click',e=>{
+      const b=e.target.closest('button'); if(!b)return;
+      const t=b.dataset.t;
+      if(!t)return openAdd('');
+      const hit=findByTitle(t)||((searchLocal(t)[0])?{g:searchLocal(t)[0],where:'C'}:null);
+      if(hit){ openGame(hit.g); } else { openAdd(t); }
+    });
+  }catch(e){
+    scanResult('<div class="warn bad">Could not load the text engine ('+esc(e.message||'offline')
+      +'). It needs a connection the first time. You can still add the game by hand.</div>');
+  }
+}
+$('btnShoot').onclick=readTitleFromPhoto;
+
+/* ===================== tonight ===================== */
+let tPlayers=4, tTime=60;
+function buildPickers(){
+  $('pPick').innerHTML=[1,2,3,4,5,6,7,8].map(n=>`<button class="chipsel${n===tPlayers?' on':''}" data-p="${n}">${n}${n===8?'+':''}</button>`).join('');
+  $('tPick').innerHTML=[30,45,60,90,120,999].map(m=>`<button class="chipsel${m===tTime?' on':''}" data-t="${m}">${m===999?'any':m+'m'}</button>`).join('');
+}
+$('pPick').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;tPlayers=+b.dataset.p;buildPickers();tonight();});
+$('tPick').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;tTime=+b.dataset.t;buildPickers();tonight();});
+function tonight(){
+  const out=GAMES.filter(g=>{
+    const d=bggOf(g)||{};
+    let r=playerRange(g.p); if(!r&&d.minP)r=[d.minP,d.maxP||d.minP];
+    if(!r)return false;
+    if(tPlayers===8?r[1]<8:(tPlayers<r[0]||tPlayers>r[1]))return false;
+    if(tTime!==999&&d.time&&d.time>tTime)return false;
+    return true;
+  }).sort((a,b)=>((bggOf(b)||{}).rating||0)-((bggOf(a)||{}).rating||0));
+  $('tonightOut').innerHTML=out.length
+    ? `<div class="count">${out.length} fit — best rated first</div><div class="grid">${out.slice(0,24).map((g,i)=>cardHTML(g,i)).join('')}</div>`
+    : '<div class="empty">Nothing matches that combination.<br>Try more time, or a different player count.</div>';
+  const grid=$('tonightOut').querySelector('.grid');
+  if(grid)grid.addEventListener('click',e=>{const c=e.target.closest('.card');if(c)openGame(out[+c.dataset.i]);});
+}
+
+/* ===================== share ===================== */
+async function shareGame(g){
+  const d=bggOf(g)||{}, id=idOf(g);
+  const link=id?('https://boardgamegeek.com/boardgame/'+id):'https://smao41-online.github.io/Board-Games/';
+  const text=`${gTitle(g)}${gCzech(g)&&norm(gCzech(g))!==norm(gTitle(g))?' ('+gCzech(g)+')':''}`
+    +`${d.rating?' · ★ '+d.rating.toFixed(1):''}${d.minP?' · '+d.minP+(d.maxP&&d.maxP!==d.minP?'–'+d.maxP:'')+' players':''}`
+    +`${d.time?' · '+d.time+' min':''}`;
+  try{
+    const file=await gameCard(g);
+    if(file&&navigator.canShare&&navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],text,title:gTitle(g)});
+      return;
+    }
+  }catch(e){ if(e&&e.name==='AbortError')return; }
+  try{
+    if(navigator.share){ await navigator.share({title:gTitle(g),text,url:link}); return; }
+  }catch(e){ if(e&&e.name==='AbortError')return; }
+  try{ await navigator.clipboard.writeText(text+'\n'+link); toast('Copied to the clipboard'); }
+  catch(e){ toast('Sharing is not available here'); }
+}
+function loadImg(src){
+  return new Promise(res=>{
+    const im=new Image(); im.crossOrigin='anonymous';
+    im.onload=()=>res(im); im.onerror=()=>res(null); im.src=src;
+  });
+}
+async function gameCard(g){
+  const d=bggOf(g)||{}, W=1080, H=1350;
+  const c=document.createElement('canvas'); c.width=W; c.height=H;
+  const x=c.getContext('2d');
+  x.fillStyle='#04060f'; x.fillRect(0,0,W,H);
+  for(let i=0;i<220;i++){
+    x.globalAlpha=Math.random()*.7+.1; x.fillStyle=Math.random()<.15?'#ffcf6e':'#dfe6ff';
+    x.beginPath(); x.arc(Math.random()*W,Math.random()*H,Math.random()*1.9+.4,0,6.283); x.fill();
+  }
+  x.globalAlpha=1;
+  const gr=x.createRadialGradient(W*.8,-80,20,W*.8,-80,900);
+  gr.addColorStop(0,'rgba(138,123,255,.3)'); gr.addColorStop(1,'rgba(138,123,255,0)');
+  x.fillStyle=gr; x.fillRect(0,0,W,H);
+  const art=d.img||d.thumb;
+  const im=art?await loadImg(art):null;
+  const bx=90,by=150,bw=W-180,bh=620;
+  x.save(); roundRect(x,bx,by,bw,bh,28); x.clip();
+  if(im){
+    const s=Math.max(bw/im.width,bh/im.height);
+    x.drawImage(im,bx+(bw-im.width*s)/2,by+(bh-im.height*s)/2,im.width*s,im.height*s);
+  }else{
+    const hue=hueOf(gTitle(g));
+    const pg=x.createRadialGradient(bx+bw*.38,by+bh*.32,20,bx+bw/2,by+bh/2,bw*.7);
+    pg.addColorStop(0,`hsl(${hue} 70% 72%)`); pg.addColorStop(1,`hsl(${hue} 70% 20%)`);
+    x.fillStyle=pg; x.fillRect(bx,by,bw,bh);
+  }
+  x.restore();
+  x.strokeStyle='rgba(140,160,255,.35)'; x.lineWidth=2; roundRect(x,bx,by,bw,bh,28); x.stroke();
+  x.fillStyle='#ffcf6e'; x.font='600 30px -apple-system,Segoe UI,Roboto,sans-serif';
+  x.fillText('BOARD GAME GALAXY', 90, 100);
+  x.fillStyle='#e9edff'; x.font='800 62px -apple-system,Segoe UI,Roboto,sans-serif';
+  const title=wrap(x,gTitle(g),W-180,2);
+  title.forEach((l,i)=>x.fillText(l,90,860+i*72));
+  let y=880+title.length*72;
+  const cz=gCzech(g);
+  if(cz&&norm(cz)!==norm(gTitle(g))){ x.fillStyle='#98a0c6'; x.font='400 36px -apple-system,Segoe UI,Roboto,sans-serif';
+    x.fillText(wrap(x,cz,W-180,1)[0],90,y); y+=58; }
+  const bits=[];
+  if(d.rating)bits.push('★ '+d.rating.toFixed(1));
+  if(d.minP)bits.push('👥 '+d.minP+(d.maxP&&d.maxP!==d.minP?'–'+d.maxP:''));
+  if(d.time)bits.push('⏱ '+d.time+' min');
+  if(d.year)bits.push(String(d.year));
+  x.fillStyle='#e9edff'; x.font='500 34px -apple-system,Segoe UI,Roboto,sans-serif';
+  x.fillText(bits.join('   ·   '),90,y+34);
+  x.fillStyle='#6a7199'; x.font='400 26px -apple-system,Segoe UI,Roboto,sans-serif';
+  x.fillText('Ušákova sbírka',90,H-70);
+  const blob=await new Promise(r=>c.toBlob(r,'image/png',.92)).catch(()=>null);
+  if(!blob)return null;
+  return new File([blob],(norm(gTitle(g)).replace(/ /g,'-')||'game')+'.png',{type:'image/png'});
+}
+function roundRect(x,a,b,w,h,r){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);
+  x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath();}
+function wrap(x,text,max,lines){
+  const words=String(text).split(' '),out=[];let line='';
+  for(const w of words){
+    const t=line?line+' '+w:w;
+    if(x.measureText(t).width>max&&line){out.push(line);line=w;if(out.length===lines-1&&words.indexOf(w)<words.length-1){}}
+    else line=t;
+    if(out.length>=lines)break;
+  }
+  if(line&&out.length<lines)out.push(line);
+  return out.length?out:[String(text)];
+}
+async function shareCollection(){
+  const url='https://smao41-online.github.io/Board-Games/app/';
+  const text=`Ušákova sbírka — ${GAMES.length} board games`;
+  try{ if(navigator.share){await navigator.share({title:'Board Game Galaxy',text,url});return;} }catch(e){ if(e&&e.name==='AbortError')return; }
+  try{ await navigator.clipboard.writeText(text+'\n'+url); toast('Link copied'); }catch(e){ toast('Could not share'); }
+}
+
+/* ===================== publish ===================== */
+function cleanPub(g){const o={};for(const k of['t','c','l','p','a','n','u','b','au','bc'])if(g[k]!=null&&g[k]!=='')o[k]=g[k];return o.t?o:null;}
+function publishPayload(){
+  const add={collection:(userStore.C||[]).map(cleanPub).filter(Boolean),
+             wishlist:(userStore.W||[]).map(cleanPub).filter(Boolean)};
+  /* attach any barcode this phone learned for a game being published */
+  const bcFor=t=>{const k=norm(t);for(const code in bcIndex)if(bcIndex[code].src==='local'&&norm(bcIndex[code].t)===k)return code;return '';};
+  for(const list of [add.collection,add.wishlist]) for(const g of list){const c=bcFor(g.t); if(c)g.bc=c;}
+  const fix=[];
+  for(const key in overrides){
+    const o=overrides[key]; if(!o||(!o.uf&&!o.tf))continue;
+    const g=[...GAMES,...WISHLIST].find(x=>norm(x.t)===key);
+    if(!g||g.us)continue;
+    const f={t:g.t};
+    if(o.uf&&o.id!=null)f.b=o.id;
+    if(o.tf&&o.g){if(o.g.t)f.nt=o.g.t;if(o.g.c!=null)f.c=o.g.c;if(o.g.n!=null)f.n=o.g.n;if(o.g.au!=null)f.au=o.g.au;}
+    const c=bcFor(g.t); if(c)f.bc=c;
+    if(f.b!=null||f.nt||f.c!=null||f.n!=null||f.au!=null||f.bc)fix.push(f);
+  }
+  return {add,fix};
+}
+function openPublish(){
+  const p=publishPayload(), n=p.add.collection.length+p.add.wishlist.length;
+  if(!n&&!p.fix.length){ sheet('<h2>🚀 Publish</h2><div class="note">Nothing waiting. Games you add or edit on this phone show up here.</div>'); return; }
+  const pretty=JSON.stringify(p,null,1);
+  const title='[publish] '+n+' game(s), '+p.fix.length+' fix(es)';
+  const body='Sent from the Galaxy app.\n\n```json\n'+pretty+'\n```';
+  const url='https://github.com/'+REPO+'/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);
+  const big=url.length>7000;
+  sheet(`<h2>🚀 Publish</h2>
+    <div class="cz">${n} new game(s) · ${p.fix.length} correction(s)</div>
+    <div class="warn">A GitHub page opens with everything filled in. Press <b>Submit new issue</b> there — that is the only button you need.<br>
+      Then wait about 5 minutes: the robot adds them and fetches the BoardGameGeek data, and replies on that page with what it found.</div>
+    ${big?'<div class="warn bad">This batch is too large for a pre-filled page. Copy the text below, then paste it into the issue description.</div>'
+         :''}
+    <div class="acts">
+      <button class="btn" id="pCopy">📋 Copy the JSON</button>
+      <button class="btn primary" id="pGo">Open GitHub</button>
+    </div>
+    <div class="note">After the robot replies, press ⟳ at the top to pull the enriched data back in.</div>`);
+  $('pCopy').onclick=async()=>{try{await navigator.clipboard.writeText('```json\n'+pretty+'\n```');toast('Copied — paste it into the issue');}catch(e){toast('Copy failed');}};
+  $('pGo').onclick=()=>window.open(big?('https://github.com/'+REPO+'/issues/new?title='+encodeURIComponent(title)):url,'_blank','noopener');
+}
+
+/* ===================== more ===================== */
+function buildMore(){
+  const added=(userStore.C||[]).length+(userStore.W||[]).length;
+  const fixes=Object.values(overrides).filter(o=>o&&(o.uf||o.tf)).length;
+  const codes=Object.keys(bcIndex).length;
+  const rows=[
+    ['🚀','Publish to the shared database',(added+fixes)?`${added} new · ${fixes} edited`:'nothing waiting','pub'],
+    ['↗','Share the collection','link to this app','sharecol'],
+    ['⟳','Refresh from the database',dataWhen?('data '+dataWhen.slice(0,10)):'never','refresh'],
+    ['🏷','Barcodes remembered',codes?codes+' on this phone':'none yet','codes'],
+    ['📲','Install on the home screen','full screen, works offline','install'],
+    ['🩺','Diagnostics','camera, storage, connection','diag'],
+  ];
+  $('moreList').innerHTML=rows.map(([i,t,s,k])=>
+    `<button class="rowbtn" data-k="${k}"><b>${i} ${esc(t)}</b><span>${esc(s)}</span></button>`).join('');
+  $('dataNote').innerHTML=`The phone and the PC galaxy read the same database. Anything you publish here reaches both.`;
+}
+$('moreList').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  const k=b.dataset.k;
+  if(k==='pub')openPublish();
+  else if(k==='sharecol')shareCollection();
+  else if(k==='refresh')$('btnRefresh').click();
+  else if(k==='codes')showCodes();
+  else if(k==='install')showInstall();
+  else if(k==='diag')showDiag();
+});
+function showCodes(){
+  const keys=Object.keys(bcIndex);
+  sheet('<h2>🏷 Barcodes</h2>'+(keys.length
+    ?`<div class="note">Scanned once, remembered for good. Local ones travel to everyone else when you publish.</div>
+      <div class="rowlist">${keys.map(c=>`<div class="rowbtn"><b>${esc(bcIndex[c].t)}</b><span class="mono">${esc(c)}</span></div>`).join('')}</div>
+      <div class="acts" style="margin-top:12px"><button class="btn danger wide" id="bcClear">Forget all barcodes</button></div>`
+    :'<div class="note">None yet. Scan a box and confirm the game once — after that the barcode is recognised instantly, even offline.</div>'));
+  if(keys.length)$('bcClear').onclick=()=>{ if(confirm('Forget every remembered barcode?')){bcIndex={};lsSet(LS_BC,bcIndex);closeSheet();buildMore();toast('Cleared');} };
+}
+function showInstall(){
+  const standalone=window.navigator.standalone||window.matchMedia('(display-mode: standalone)').matches;
+  sheet(`<h2>📲 Install</h2>`+(standalone
+    ?'<div class="warn ok">Already installed — you are running it from the home screen.</div>'
+    :`<div class="note" style="font-size:13px;line-height:1.7">
+        In <b>Safari</b> (it must be Safari, not Chrome):<br>
+        1. Tap the <b>Share</b> button at the bottom<br>
+        2. Scroll to <b>Add to Home Screen</b><br>
+        3. Tap <b>Add</b><br><br>
+        It then opens full screen with its own icon, keeps working without signal, and the camera behaves like a normal app.</div>`));
+}
+async function showDiag(){
+  const out=[];
+  out.push(['Served over https', location.protocol==='https:'?'yes':'NO — the camera will not work']);
+  out.push(['Camera API', (navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)?'available':'missing']);
+  out.push(['Barcode engine', ('BarcodeDetector' in window)?'built into the browser':(window.ZXing?'bundled scanner':'MISSING')]);
+  out.push(['Share sheet', navigator.share?(navigator.canShare?'with images':'links only'):'not available']);
+  out.push(['Offline cache', ('serviceWorker' in navigator)?(navigator.serviceWorker.controller?'active':'registering'):'unsupported']);
+  out.push(['Installed', (window.navigator.standalone||matchMedia('(display-mode: standalone)').matches)?'yes':'running in Safari']);
+  out.push(['Games loaded', GAMES.length+' + '+WISHLIST.length+' wishlist']);
+  out.push(['BGG records', Object.keys(things).length]);
+  out.push(['Data generated', dataWhen||'—']);
+  sheet('<h2>🩺 Diagnostics</h2><div class="rowlist">'
+    +out.map(([k,v])=>`<div class="rowbtn"><b>${esc(k)}</b><span>${esc(v)}</span></div>`).join('')+'</div>');
+}
+
+/* ===================== navigation ===================== */
+function showView(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id===id));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===id));
+  const galaxy=id==='vGalaxy';
+  $('q').parentElement.style.display=galaxy?'block':'none';
+  $('filters').style.display=galaxy?'flex':'none';
+  $('fab').style.display=(id==='vMore')?'none':'grid';
+  if(id!=='vScan')stopCam();
+  if(id==='vTonight'){buildPickers();tonight();}
+  if(id==='vMore')buildMore();
+  document.querySelector('main').scrollTop=0;
+}
+document.querySelector('nav').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(b)showView(b.dataset.v);
+});
+
+/* ===================== starfield ===================== */
+(function(){
+  const c=$('stars'),x=c.getContext('2d');let st=[],w,h;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function seed(){
+    w=c.width=innerWidth*devicePixelRatio; h=c.height=innerHeight*devicePixelRatio;
+    c.style.width=innerWidth+'px'; c.style.height=innerHeight+'px';
+    st=[]; const n=Math.min(170,Math.round(innerWidth*innerHeight/7000));
+    for(let i=0;i<n;i++){const d=Math.random();
+      st.push({x:Math.random()*w,y:Math.random()*h,r:(d*1.3+.25)*devicePixelRatio,
+        a:.16+d*.6,v:(d*.09+.012)*devicePixelRatio,g:Math.random()<.13});}
+  }
+  function draw(){
+    x.clearRect(0,0,w,h);
+    for(const s of st){
+      if(!reduce){s.x-=s.v;if(s.x<-2)s.x=w+2;}
+      x.globalAlpha=s.a; x.fillStyle=s.g?'#ffcf6e':'#dfe6ff';
+      x.beginPath();x.arc(s.x,s.y,s.r,0,6.283);x.fill();
+    }
+    x.globalAlpha=1; requestAnimationFrame(draw);
+  }
+  seed(); draw(); addEventListener('resize',seed);
+})();
+
+/* ===================== boot ===================== */
+if('serviceWorker' in navigator)
+  addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+loadData(false);
+</script>
+</body>
+</html>
