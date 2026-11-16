@@ -1,0 +1,1603 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<title>Board Game Galaxy</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#04060f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Galaxy">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<link rel="mask-icon" href="icon-192.png" color="#ffcf6e">
+<style>
+:root{
+  --bg:#04060f; --ink:#e9edff; --muted:#98a0c6; --faint:#6a7199;
+  --card:rgba(13,18,38,.82); --card-solid:#0d1226;
+  --border:rgba(122,140,255,.22); --border-strong:rgba(140,160,255,.45);
+  --gold:#ffcf6e; --gold-deep:#f0a63c; --accent:#8a7bff; --teal:#57d7c7; --danger:#ff8f8f;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --tab:calc(56px + env(safe-area-inset-bottom));
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;overscroll-behavior-y:none}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;overflow:hidden;
+}
+#stars{position:fixed;inset:0;z-index:0}
+#glow{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(60vmax 44vmax at 80% -6%,rgba(138,123,255,.17),transparent 62%),
+             radial-gradient(48vmax 36vmax at 6% 104%,rgba(255,207,110,.11),transparent 60%)}
+.app{position:relative;z-index:1;height:100%;display:flex;flex-direction:column}
+
+/* ---------- top bar ---------- */
+header{
+  padding:calc(env(safe-area-inset-top) + 10px) 14px 8px;display:flex;gap:9px;align-items:center;
+  background:linear-gradient(180deg,rgba(4,6,15,.96),rgba(4,6,15,.72));backdrop-filter:blur(8px);
+}
+h1{font-size:17px;margin:0;font-weight:700;letter-spacing:-.02em;white-space:nowrap}
+h1 small{display:block;font-size:10.5px;color:var(--faint);font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.spacer{flex:1}
+.iconbtn{
+  width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:rgba(13,18,38,.8);
+  color:var(--ink);font-size:15px;display:grid;place-items:center;cursor:pointer;flex:0 0 auto;font-family:inherit;
+}
+.iconbtn:active{transform:scale(.93)}
+#q{
+  width:100%;background:rgba(10,14,30,.9);border:1px solid var(--border);border-radius:11px;
+  color:var(--ink);font-size:16px;padding:9px 12px;font-family:inherit;
+}
+#q:focus{outline:none;border-color:var(--border-strong)}
+.filters{display:flex;gap:7px;padding:8px 14px 2px;overflow-x:auto;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.chipsel{
+  background:rgba(13,18,38,.85);border:1px solid var(--border);color:var(--muted);
+  border-radius:999px;padding:5px 11px;font-size:12.5px;white-space:nowrap;font-family:inherit;
+}
+.chipsel.on{border-color:var(--gold);color:var(--gold)}
+
+/* ---------- views ---------- */
+main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px 12px calc(var(--tab) + 76px)}
+.view{display:none}
+.view.on{display:block}
+.count{font-size:11.5px;color:var(--faint);padding:6px 2px 10px;font-family:var(--mono);letter-spacing:.06em}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+.card{
+  background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;
+  display:flex;flex-direction:column;cursor:pointer;
+}
+.card:active{transform:scale(.98);border-color:var(--border-strong)}
+.thumb{position:relative;aspect-ratio:1;background:#0a0e1e;display:grid;place-items:center;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.planet{width:58%;aspect-ratio:1;border-radius:50%}
+.badge{
+  position:absolute;font-size:10px;padding:2.5px 6px;border-radius:999px;backdrop-filter:blur(4px);
+  background:rgba(4,6,15,.72);border:1px solid var(--border);
+}
+.b-rate{right:5px;top:5px;color:var(--gold)}
+.b-lang{left:5px;top:5px;color:var(--muted)}
+.b-new{left:5px;bottom:5px;color:var(--teal)}
+.cbody{padding:8px 9px 10px}
+.ct{font-size:12.6px;font-weight:650;line-height:1.25;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.ccz{font-size:11px;color:var(--faint);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cmeta{font-size:10.5px;color:var(--muted);margin-top:5px;display:flex;gap:7px;flex-wrap:wrap}
+
+/* ---------- sun FAB ---------- */
+#fab{
+  position:fixed;right:16px;bottom:calc(var(--tab) + 14px);z-index:40;
+  width:58px;height:58px;border-radius:50%;border:0;cursor:pointer;
+  background:radial-gradient(circle at 36% 32%,#fff3cf,var(--gold) 36%,var(--gold-deep) 70%,#b4670f);
+  box-shadow:0 0 22px rgba(255,190,90,.5),0 6px 18px rgba(0,0,0,.45);
+  font-size:30px;color:rgba(60,30,0,.6);font-weight:300;line-height:1;display:grid;place-items:center;
+  font-family:inherit;
+}
+#fab:active{transform:scale(.92)}
+
+/* ---------- tab bar ---------- */
+nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;
+  padding-bottom:env(safe-area-inset-bottom);
+  background:rgba(7,10,22,.94);backdrop-filter:blur(14px);border-top:1px solid rgba(122,140,255,.16);
+}
+nav button{
+  flex:1;background:none;border:0;color:var(--faint);font-family:inherit;font-size:10px;
+  padding:7px 0 6px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;letter-spacing:.02em;
+}
+nav button i{font-style:normal;font-size:19px;line-height:1}
+nav button.on{color:var(--gold)}
+
+/* ---------- sheets ---------- */
+.sheet{
+  position:fixed;inset:0;z-index:60;background:rgba(2,4,10,.72);backdrop-filter:blur(5px);
+  display:none;align-items:flex-end;
+}
+.sheet.show{display:flex}
+.sheet-in{
+  width:100%;max-height:92vh;overflow-y:auto;background:var(--card-solid);
+  border-radius:20px 20px 0 0;border-top:1px solid var(--border-strong);
+  padding:10px 16px calc(env(safe-area-inset-bottom) + 22px);
+  animation:rise .22s ease;transition:transform .18s ease;
+}
+@keyframes rise{from{transform:translateY(26px);opacity:.4}}
+.grab{width:38px;height:4px;border-radius:99px;background:rgba(140,160,255,.35);margin:0 auto 10px}
+.sheet-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;position:sticky;top:0;
+  background:var(--card-solid);padding:2px 0 8px;z-index:2}
+.sheet-title{font-size:17px;font-weight:700;letter-spacing:-.02em}
+.sheet-top .pos{font-family:var(--mono);font-size:11px;color:var(--faint);min-width:52px;text-align:center}
+.sheet-top .iconbtn{width:34px;height:34px;font-size:17px}
+.sheet-top #sheetX{margin-left:auto}
+.sheet h2{font-size:19px;margin:2px 0 3px;line-height:1.2;letter-spacing:-.02em}
+.sheet .cz{color:var(--faint);font-size:13px;margin-bottom:12px}
+.hero{width:100%;aspect-ratio:1.35;border-radius:14px;overflow:hidden;background:#0a0e1e;display:grid;place-items:center;margin-bottom:12px}
+.hero img{width:100%;height:100%;object-fit:contain}
+.attrs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 14px}
+.attrs div{background:rgba(255,255,255,.035);border:1px solid var(--border);border-radius:10px;padding:7px 8px;font-size:10.5px;color:var(--faint)}
+.attrs b{display:block;color:var(--ink);font-size:13.5px;margin-top:2px;font-weight:650}
+.cats{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.cat{font-size:10.5px;color:var(--accent);border:1px solid rgba(138,123,255,.35);border-radius:999px;padding:2.5px 8px}
+.desc{font-size:13px;line-height:1.55;color:var(--muted);margin-bottom:14px}
+.acts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.acts.three{grid-template-columns:repeat(3,1fr)}
+.btn{
+  background:rgba(20,26,52,.9);border:1px solid var(--border-strong);color:var(--ink);
+  border-radius:11px;padding:11px 10px;font-size:13.5px;font-family:inherit;cursor:pointer;text-align:center;
+}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:linear-gradient(180deg,var(--gold),var(--gold-deep));color:#2a1800;border:0;font-weight:650}
+.btn.danger{color:var(--danger);border-color:rgba(255,143,143,.4)}
+.btn.wide{grid-column:1/-1}
+label.f{display:block;font-size:11.5px;color:var(--faint);margin:10px 0 4px;letter-spacing:.04em}
+input.f,textarea.f,select.f{
+  width:100%;background:#0a0e1e;border:1px solid var(--border);border-radius:10px;color:var(--ink);
+  padding:10px 11px;font-size:16px;font-family:inherit;
+}
+textarea.f{resize:vertical;min-height:64px;font-size:14px}
+.note{font-size:12px;color:var(--faint);line-height:1.5;margin-top:10px}
+.warn{
+  background:rgba(255,207,110,.1);border:1px solid rgba(255,207,110,.45);border-radius:11px;
+  padding:10px 12px;font-size:12.5px;color:var(--gold);line-height:1.5;margin:10px 0;
+}
+.ok{background:rgba(87,215,199,.1);border-color:rgba(87,215,199,.45);color:var(--teal)}
+.bad{background:rgba(255,143,143,.1);border-color:rgba(255,143,143,.45);color:var(--danger)}
+
+/* ---------- scan ---------- */
+#camwrap{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:3/4;margin-bottom:12px}
+#cam{width:100%;height:100%;object-fit:cover}
+#reticle{
+  position:absolute;left:10%;right:10%;top:38%;height:16%;
+  border:2px solid rgba(255,207,110,.9);border-radius:10px;box-shadow:0 0 0 2000px rgba(0,0,0,.38);
+}
+#reticle::after{content:"";position:absolute;left:6px;right:6px;top:50%;height:2px;background:rgba(255,207,110,.95);
+  box-shadow:0 0 10px rgba(255,207,110,.95)}
+/* title mode: a tall frame with corner marks and a label — deliberately a very
+   different shape from the barcode slot, so it is obvious what to aim at */
+#titlebox{display:none;position:absolute;left:8%;right:8%;top:22%;height:42%;
+  box-shadow:0 0 0 2000px rgba(0,0,0,.42);border-radius:14px}
+#titlebox::before,#titlebox::after{content:"";position:absolute;width:30px;height:30px;border:3px solid var(--teal)}
+#titlebox::before{left:-2px;top:-2px;border-right:0;border-bottom:0;border-radius:14px 0 0 0}
+#titlebox::after{right:-2px;bottom:-2px;border-left:0;border-top:0;border-radius:0 0 14px 0}
+#titlebox span{position:absolute;left:0;right:0;top:-26px;text-align:center;font-size:11.5px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--teal);text-shadow:0 1px 6px #000}
+#titlebox i{position:absolute;width:30px;height:30px;border:3px solid var(--teal);font-style:normal}
+#titlebox i.tr{right:-2px;top:-2px;border-left:0;border-bottom:0;border-radius:0 14px 0 0}
+#titlebox i.bl{left:-2px;bottom:-2px;border-right:0;border-top:0;border-radius:0 0 0 14px}
+body.titlemode #reticle{display:none}
+body.titlemode #titlebox{display:block}
+#camhint{position:absolute;left:0;right:0;bottom:10px;text-align:center;font-size:12px;color:#fff;
+  text-shadow:0 1px 6px #000;padding:0 16px}
+.verdict{border-radius:14px;padding:14px;margin-bottom:12px;border:1px solid var(--border)}
+.verdict h3{margin:0 0 4px;font-size:16px}
+.verdict p{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
+.v-own{background:rgba(87,215,199,.12);border-color:rgba(87,215,199,.5)}
+.v-wish{background:rgba(255,207,110,.12);border-color:rgba(255,207,110,.5)}
+.v-new{background:rgba(138,123,255,.12);border-color:rgba(138,123,255,.5)}
+.rowlist{display:flex;flex-direction:column;gap:7px;margin-top:10px}
+.rowbtn{
+  display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.03);border:1px solid var(--border);
+  border-radius:11px;padding:9px 11px;font-size:13px;cursor:pointer;text-align:left;color:var(--ink);font-family:inherit;width:100%;
+}
+.rowbtn b{font-weight:650}
+.rowbtn span{color:var(--faint);font-size:11.5px;margin-left:auto;text-align:right}
+.mono{font-family:var(--mono);font-size:12px;color:var(--teal);word-break:break-all}
+.empty{text-align:center;color:var(--faint);font-size:13px;padding:40px 20px;line-height:1.6}
+.sp{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.25);border-top-color:var(--gold);
+  border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--tab) + 86px);z-index:70;
+  background:rgba(13,18,38,.97);border:1px solid var(--border-strong);border-radius:12px;
+  padding:10px 15px;font-size:13px;max-width:88vw;text-align:center;opacity:0;transition:opacity .2s;pointer-events:none;
+}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas><div id="glow"></div>
+
+<div class="app">
+  <header>
+    <h1>🪐 Galaxy<small id="hsub">Ušákova sbírka</small></h1>
+    <div class="spacer"></div>
+    <button class="iconbtn" id="btnRefresh" title="Refresh from the online database">⟳</button>
+  </header>
+  <div style="padding:2px 14px 0"><input id="q" type="search" placeholder="Search either language…" autocomplete="off" enterkeyhint="search"></div>
+  <div class="filters" id="filters">
+    <button class="chipsel on" data-tab="C">🪐 Collection</button>
+    <button class="chipsel" data-tab="W">✨ Wishlist</button>
+    <select class="chipsel" id="fLang"><option value="">Language</option></select>
+    <select class="chipsel" id="fPlayers"><option value="">Players</option></select>
+    <select class="chipsel" id="fSort">
+      <option value="t">A–Z</option><option value="r">Top rated</option>
+      <option value="y">Newest</option><option value="w">Lightest</option>
+    </select>
+  </div>
+
+  <main>
+    <section class="view on" id="vGalaxy">
+      <div class="count" id="count">loading…</div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <section class="view" id="vScan">
+      <div id="scanIdle" class="empty">
+        <div style="font-size:40px;margin-bottom:10px">📷</div>
+        Point the camera at the barcode on the box.<br>No barcode? It will read the title instead.
+        <div style="margin-top:16px"><button class="btn primary" id="btnStartCam">Start camera</button></div>
+        <div class="note" style="margin-top:14px">The camera needs permission the first time, and only works over https — not from a file on disk.</div>
+      </div>
+      <div id="scanLive" style="display:none">
+        <div class="filters" style="padding:0 0 8px">
+          <button class="chipsel on" id="mBar">▌▌ Barcode</button>
+          <button class="chipsel" id="mTitle">🔤 Title on the box</button>
+        </div>
+        <div id="camwrap"><video id="cam" playsinline muted autoplay></video>
+          <div id="reticle"></div><div id="titlebox"><span>game title here</span><i class="tr"></i><i class="bl"></i></div>
+          <div id="camhint">Looking for a barcode…</div></div>
+        <div class="acts" id="scanActs">
+          <button class="btn danger" id="btnStopCam">Stop</button>
+          <button class="btn primary" id="btnShoot" style="display:none">📸 Read this title</button>
+        </div>
+      </div>
+      <div id="scanOut"></div>
+    </section>
+
+    <section class="view" id="vTonight">
+      <div class="count">Suggestions from your own shelf</div>
+      <label class="f">Players at the table</label>
+      <div class="filters" id="pPick" style="padding:0 0 4px"></div>
+      <label class="f">Time available</label>
+      <div class="filters" id="tPick" style="padding:0 0 4px"></div>
+      <label class="f">Type of game</label>
+      <div style="display:flex;gap:8px">
+        <select class="f" id="tGenre" style="flex:1"><option value="">Any genre</option></select>
+        <select class="f" id="tWeight" style="flex:1">
+          <option value="">Any weight</option>
+          <option value="2">Light (under 2)</option>
+          <option value="3">Medium (2–3)</option>
+          <option value="9">Heavy (3+)</option>
+        </select>
+      </div>
+      <div id="tonightOut" style="margin-top:14px"></div>
+    </section>
+
+    <section class="view" id="vMore">
+      <div class="count">Collection tools</div>
+      <div class="rowlist" id="moreList"></div>
+      <div class="note" id="dataNote"></div>
+    </section>
+  </main>
+
+  <button id="fab" aria-label="Add a game by hand">+</button>
+
+  <nav>
+    <button class="on" data-v="vGalaxy"><i>🪐</i>Galaxy</button>
+    <button data-v="vScan"><i>📷</i>Scan</button>
+    <button data-v="vTonight"><i>🎲</i>Tonight</button>
+    <button data-v="vMore"><i>⋯</i>More</button>
+  </nav>
+</div>
+
+<div class="sheet" id="sheet"><div class="sheet-in" id="sheetIn"></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="vendor/zxing.min.js"></script>
+<script>
+/* ===================== helpers & state ===================== */
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function norm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
+  .replace(/[’´'`]/g,'').replace(/[^a-z0-9]+/g,' ').trim();}
+const lsGet=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d;}catch(e){return d;}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}};
+
+/* ---- offline-snapshot build ----
+   scripts/build_offline_app.py flips OFFLINE to true and fills BAKED with a copy
+   of the collection, producing a build that never contacts the database (or any
+   repository) at all. The live app leaves both untouched. */
+let OFFLINE=false, BAKED=null;
+/*BAKED_SLOT*/
+
+const LS_USER='user.games.v1', LS_REMOVED='user.removed.v1', LS_OVERRIDES='user.overrides.v1',
+      LS_BC='bc.index.v1', LS_SNAP='galaxy.snapshot.v1';
+const REPO='Smao41-online/Board-Games', BRANCH='claude/board-game-database-solar-9avghh';
+const RAW='https://raw.githubusercontent.com/'+REPO+'/'+BRANCH+'/data/';
+const DATA_SOURCES=[ '../data/', RAW ];
+
+let GAMES=[], WISHLIST=[], idMap={}, things={}, tab='C', currentList=[], dataWhen='';
+let userStore=lsGet(LS_USER,{C:[],W:[]}), removedStore=lsGet(LS_REMOVED,{C:[],W:[]}),
+    overrides=lsGet(LS_OVERRIDES,{}), bcIndex=lsGet(LS_BC,{});
+if(!Array.isArray(userStore.C))userStore.C=[]; if(!Array.isArray(userStore.W))userStore.W=[];
+if(!Array.isArray(removedStore.C))removedStore.C=[]; if(!Array.isArray(removedStore.W))removedStore.W=[];
+
+const ovOf=g=>overrides[norm(g.t)];
+const gTitle=g=>{const o=ovOf(g);return (o&&o.g&&o.g.t)||g.t;};
+const gCzech=g=>{const o=ovOf(g);return (o&&o.g&&o.g.c!=null)?o.g.c:(g.c||'');};
+const gNotes=g=>{const o=ovOf(g);return (o&&o.g&&o.g.n!=null)?o.g.n:(g.n||'');};
+const gAlt=g=>{const o=ovOf(g);return (o&&o.g&&o.g.au!=null)?o.g.au:(g.au||'');};
+const idOf=g=>{const o=ovOf(g);if(o&&o.id!=null)return o.id;return idMap[norm(g.t)]||g.b||0;};
+function bggOf(g){
+  const o=ovOf(g),id=idOf(g);
+  let d=(id&&things[id])?things[id]:null;
+  if(o&&o.det)d=o.det;
+  if(o&&o.patch)d={...(d||{}),...o.patch};
+  return d?{cats:[],mechs:[],designers:[],...d}:null;
+}
+function hueOf(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))%360;return h;}
+/* Box art can fail: offline, a dead URL, or an image host that is unreachable.
+   Fall back to the procedural planet rather than leaving an empty hole. */
+let artMisses=0;
+function artFail(img,hue){
+  artMisses++;
+  const d=document.createElement('div'); d.className='planet';
+  d.style.background=`radial-gradient(circle at 34% 30%,hsl(${hue} 70% 78%),hsl(${hue} 65% 42%) 60%,hsl(${hue} 70% 22%))`;
+  if(img.parentElement)img.replaceWith(d);
+}
+/* The big picture on a game's page is a different file from the small one on
+   the card. Offline — or on a connection too weak for it — fall back to the
+   small one, which is almost certainly already cached, before giving up. */
+function artSwap(img,hue){
+  const alt=img.dataset.alt;
+  if(alt&&!img.dataset.tried&&alt!==img.getAttribute('src')){img.dataset.tried='1';img.src=alt;return;}
+  artFail(img,hue);
+}
+/* A picture that failed on a dead connection is not broken — it was never
+   fetched. When signal comes back, draw the grid again so they load. */
+addEventListener('online',()=>{ if(artMisses){artMisses=0;render();} toast('↺ Back online'); });
+addEventListener('offline',()=>{ render(); toast('⚡ Offline — showing what is saved on this phone'); });
+function playerRange(p){
+  if(!p)return null;
+  const m=String(p).match(/(\d+)\s*[–—-]\s*(\d+)/);
+  if(m)return [+m[1],+m[2]];
+  const s=String(p).match(/(\d+)/);
+  return s?[+s[1],+s[1]]:null;
+}
+function toast(msg,ms){const t=$('toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._k);t._k=setTimeout(()=>t.classList.remove('show'),ms||2600);}
+
+/* ===================== data ===================== */
+/* No `no-store` and never without a timeout. The service worker answers from
+   its cache at once and refreshes behind us, so a normal launch costs nothing
+   and a weak connection cannot hang it; ⟳ (force) insists on the network. */
+async function grab(file,force){
+  for(const base of DATA_SOURCES){
+    try{
+      const r=await fetch(base+file+(force?'?fresh=1&t='+Date.now():''),
+        {cache:force?'reload':'default',signal:AbortSignal.timeout(force?20000:9000)});
+      if(r.ok)return await r.json();
+    }catch(e){}
+  }
+  return null;
+}
+function applyLocal(){
+  GAMES.forEach((g,i)=>g._i=i); WISHLIST.forEach((g,i)=>g._i=i);
+  for(let i=GAMES.length-1;i>=0;i--)if(removedStore.C.some(x=>x.i===GAMES[i]._i))GAMES.splice(i,1);
+  for(let i=WISHLIST.length-1;i>=0;i--)if(removedStore.W.some(x=>x.i===WISHLIST[i]._i))WISHLIST.splice(i,1);
+  /* a locally added game that has since been published drops its local copy */
+  let changed=false;
+  for(const [k,list] of [['C',GAMES],['W',WISHLIST]]){
+    const base=new Set(list.map(g=>norm(g.t))), keep=[];
+    for(const g of userStore[k]){
+      if(base.has(norm(g.t))){changed=true;continue;}
+      g.us=1;keep.push(g);list.push(g);
+    }
+    userStore[k]=keep;
+  }
+  if(changed)lsSet(LS_USER,userStore);
+  /* barcodes published into the shared data feed the local index */
+  for(const g of [...GAMES,...WISHLIST]) if(g.bc) bcIndex[String(g.bc)]={t:g.t,id:g.b||0,src:'shared'};
+}
+async function loadData(force){
+  if(OFFLINE){
+    GAMES=(BAKED.c||[]).slice(); WISHLIST=(BAKED.w||[]).slice();
+    idMap=BAKED.ids||{}; things=BAKED.things||{}; dataWhen=BAKED.when||'';
+    applyLocal(); buildFilters(); render();
+    return true;
+  }
+  const snap=lsGet(LS_SNAP,null);
+  if(snap&&!force){ GAMES=snap.c; WISHLIST=snap.w; idMap=snap.ids; things=snap.things; dataWhen=snap.when;
+    applyLocal(); buildFilters(); render(); }
+  const [games,bgg]=await Promise.all([grab('games.json',force),grab('bgg.json',force)]);
+  if(!games||!bgg){ if(!snap){$('count').textContent='⚠️ No data yet — connect once so the collection can download.';} return false; }
+  GAMES=games.collection||[]; WISHLIST=games.wishlist||[];
+  idMap=bgg.ids||{}; things=bgg.things||{}; dataWhen=bgg.generated||'';
+  try{ lsSet(LS_SNAP,{c:GAMES,w:WISHLIST,ids:idMap,things:things,when:dataWhen}); }
+  catch(e){ /* a full snapshot can exceed the quota — the service worker still caches it */ }
+  applyLocal(); buildFilters(); render();
+  return true;
+}
+
+/* ===================== live BoardGameGeek lookup =====================
+   Same route the PC galaxy uses: Wikidata resolves a title to a BGG id (it
+   sends CORS headers, so the browser may call it), and api.geekdo.com serves
+   the details through public relays because it sends none. */
+const GAPI='https://api.geekdo.com';
+const JBUILDERS=[
+  u=>u,
+  u=>'https://api.allorigins.win/raw?url='+encodeURIComponent(u),
+  u=>'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u),
+  u=>'https://r.jina.ai/'+u
+];
+let jIdx=0;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function getJson(url){
+  let ep=jIdx;
+  for(let a=0;a<4;a++){
+    try{
+      const res=await fetch(JBUILDERS[ep](url),{signal:AbortSignal.timeout(12000+2000*a)});
+      if(res.status===200){
+        let txt=await res.text();
+        const i=txt.indexOf('{'); if(i>0)txt=txt.slice(i);
+        const data=JSON.parse(txt);
+        jIdx=ep; return data;
+      }
+      if(res.status===429||res.status>=500){await sleep(700*(a+1));continue;}
+      if(ep===0)return {__http:res.status};
+      ep=(ep+1)%JBUILDERS.length;
+    }catch(e){ ep=(ep+1)%JBUILDERS.length; await sleep(350*(a+1)); }
+  }
+  return null;
+}
+async function wdFetch(url){
+  try{const r=await fetch(url,{signal:AbortSignal.timeout(12000)}); if(r.status===200)return await r.text();}catch(e){}
+  return null;
+}
+async function wdSearchIds(q,lang){
+  const B='https://www.wikidata.org/w/api.php';
+  let t=await wdFetch(B+'?action=wbsearchentities&search='+encodeURIComponent(q)+'&language='+(lang||'en')+'&uselang=en&type=item&limit=8&format=json&origin=*');
+  if(!t)return null;
+  let qids;try{qids=(JSON.parse(t).search||[]).map(x=>x.id);}catch(e){return null;}
+  if(!qids.length)return [];
+  t=await wdFetch(B+'?action=wbgetentities&ids='+qids.join('|')+'&props=claims|labels&languages=en|cs&format=json&origin=*');
+  if(!t)return null;
+  const out=[];
+  try{const ents=JSON.parse(t).entities||{};
+    for(const qid of qids){const e=ents[qid];if(!e)continue;
+      const c=((e.claims||{}).P2339||[])[0];
+      const bid=+((c&&c.mainsnak&&c.mainsnak.datavalue&&c.mainsnak.datavalue.value)||0);
+      if(bid)out.push({id:bid,name:((e.labels&&((e.labels.en&&e.labels.en.value)||(e.labels.cs&&e.labels.cs.value)))||q)});}
+  }catch(e){return null;}
+  return out;
+}
+/* search both languages; null means the network failed, [] means nothing matched */
+async function bggSearch(q){
+  const a=await wdSearchIds(q,'en');
+  if(a&&a.length)return a;
+  const b=await wdSearchIds(q,'cs');
+  if(b&&b.length)return b;
+  return (a===null&&b===null)?null:[];
+}
+const stripHtml=h=>new DOMParser().parseFromString(String(h||''),'text/html').body.textContent||'';
+const imUrl=x=>typeof x==='string'?x:(x&&(x.url||x.src))||null;
+async function fetchThingJson(id){
+  const gid=await getJson(`${GAPI}/api/geekitems?objectid=${id}&objecttype=thing&nosession=1`);
+  if(!gid||gid.__http||!gid.item)return null;
+  const it=gid.item;
+  let stats=null,rank=null;
+  const dyd=await getJson(`${GAPI}/api/dynamicinfo?objectid=${id}&objecttype=thing`);
+  if(dyd&&dyd.item){
+    stats=dyd.item.stats||null;
+    const r=(dyd.item.rankinfo||[])[0];
+    if(r&&/^\d+$/.test(String(r.rank)))rank=+r.rank;
+  }
+  const links=k=>((it.links||{})[k]||[]).map(x=>stripHtml(x.name)).filter(Boolean);
+  let desc=stripHtml(it.description).replace(/\s+/g,' ').trim();
+  if(desc.length>700)desc=desc.slice(0,700)+'…';
+  const num=v=>{const n=+v;return n||null;};
+  const images=it.images||{};
+  return{ name:stripHtml(it.name), year:num(it.yearpublished), minP:num(it.minplayers), maxP:num(it.maxplayers),
+    time:num(it.maxplaytime)||num(it.minplaytime), age:num(it.minage),
+    thumb:imUrl(images.thumb)||imUrl(images.square200)||it.imageurl||null,
+    img:imUrl(images.previewthumb)||it.imageurl||imUrl(images.thumb)||null,
+    cats:links('boardgamecategory'), mechs:links('boardgamemechanic').slice(0,4),
+    designers:links('boardgamedesigner').slice(0,2),
+    rating:stats&&stats.average?+(+stats.average).toFixed(2):null,
+    weight:stats&&stats.avgweight?+(+stats.avgweight).toFixed(2):null, rank, desc };
+}
+
+/* ===================== galaxy list ===================== */
+function buildFilters(){
+  const langs=[...new Set(GAMES.map(g=>g.l).filter(Boolean))].sort();
+  const fl=$('fLang'); if(fl.options.length<2)
+    langs.forEach(l=>{const o=document.createElement('option');o.value=l;o.textContent=l;fl.appendChild(o);});
+  const fp=$('fPlayers'); if(fp.options.length<2)
+    [1,2,3,4,5,6,8].forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n+(n===8?'+':'')+' players';fp.appendChild(o);});
+}
+function matches(g){
+  const q=norm($('q').value);
+  if(q){
+    const d=bggOf(g);
+    const hay=[gTitle(g),gCzech(g),g.t,g.c,d&&d.name].filter(Boolean).map(norm);
+    if(!hay.some(h=>h.includes(q)))return false;
+  }
+  if($('fLang').value && g.l!==$('fLang').value)return false;
+  if($('fPlayers').value){
+    const n=+$('fPlayers').value, d=bggOf(g);
+    let r=playerRange(g.p); if(!r&&d&&d.minP)r=[d.minP,d.maxP||d.minP];
+    if(!r)return false;
+    if(n===8){if(r[1]<8)return false;} else if(n<r[0]||n>r[1])return false;
+  }
+  return true;
+}
+function sortGames(list){
+  const s=$('fSort').value;
+  const by={
+    t:(a,b)=>gTitle(a).localeCompare(gTitle(b),'cs'),
+    r:(a,b)=>((bggOf(b)||{}).rating||0)-((bggOf(a)||{}).rating||0),
+    y:(a,b)=>((bggOf(b)||{}).year||0)-((bggOf(a)||{}).year||0),
+    w:(a,b)=>((bggOf(a)||{}).weight||9)-((bggOf(b)||{}).weight||9),
+  }[s]||by_t;
+  return list.slice().sort(by);
+}
+function by_t(a,b){return gTitle(a).localeCompare(gTitle(b),'cs');}
+function cardHTML(g,i){
+  const d=bggOf(g)||{}, hue=hueOf(gTitle(g));
+  const art=d.thumb||d.img;
+  const players=g.p||(d.minP?(d.minP===d.maxP?d.minP:d.minP+'–'+d.maxP):'');
+  return `<div class="card" data-i="${i}">
+    <div class="thumb">
+      ${art?`<img loading="lazy" decoding="async" src="${esc(art)}" alt="" onerror="artFail(this,${hue})">`
+           :`<div class="planet" style="background:radial-gradient(circle at 34% 30%,hsl(${hue} 70% 78%),hsl(${hue} 65% 42%) 60%,hsl(${hue} 70% 22%))"></div>`}
+      ${g.l?`<span class="badge b-lang">${esc(g.l)}</span>`:''}
+      ${d.rating?`<span class="badge b-rate">★ ${d.rating.toFixed(1)}</span>`:''}
+      ${g.us?`<span class="badge b-new">✦ added</span>`:''}
+    </div>
+    <div class="cbody">
+      <div class="ct">${esc(gTitle(g))}</div>
+      ${gCzech(g)&&norm(gCzech(g))!==norm(gTitle(g))?`<div class="ccz">${esc(gCzech(g))}</div>`:''}
+      <div class="cmeta">${players?'<span>👥 '+esc(players)+'</span>':''}${d.time?'<span>⏱ '+d.time+'m</span>':''}</div>
+    </div>
+  </div>`;
+}
+/* Which filters are hiding things — the empty grid has to say so. Switching to
+   the wishlist with a language or player filter still set from the collection
+   empties it completely, which reads exactly like "the wishlist did not load". */
+function activeFilters(){
+  const f=[];
+  if($('q').value.trim())f.push('search “'+$('q').value.trim()+'”');
+  if($('fLang').value)f.push('language '+$('fLang').value);
+  if($('fPlayers').value)f.push($('fPlayers').value+(+$('fPlayers').value===8?'+':'')+' players');
+  return f;
+}
+function clearFilters(){ $('q').value=''; $('fLang').value=''; $('fPlayers').value=''; render(); }
+function render(){
+  const src=tab==='C'?GAMES:WISHLIST;
+  currentList=sortGames(src.filter(matches));
+  const f=activeFilters();
+  $('grid').innerHTML=currentList.length?currentList.map(cardHTML).join('')
+    :(src.length
+      ?`<div class="empty" style="grid-column:1/-1">Nothing here with ${esc(f.join(' + ')||'these settings')}.
+          ${f.length?'<div class="acts" style="margin-top:12px"><button class="btn" id="clrF">Clear the filters</button></div>':''}</div>`
+      :`<div class="empty" style="grid-column:1/-1">Nothing loaded yet${navigator.onLine?'':' — and you are offline'}.</div>`);
+  const cf=$('clrF'); if(cf)cf.onclick=clearFilters;
+  $('count').textContent=`${currentList.length} of ${src.length} ${tab==='C'?'games':'wishlist items'}`
+    +(dataWhen?` · data ${dataWhen.slice(0,10)}`:'')
+    +(navigator.onLine?'':' · ⚡ offline');
+}
+$('grid').addEventListener('click',e=>{
+  const c=e.target.closest('.card'); if(!c)return;
+  openGame(currentList[+c.dataset.i]);
+});
+$('q').addEventListener('input',render);
+for(const el of ['fLang','fPlayers','fSort'])$(el).addEventListener('change',render);
+$('filters').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-tab]'); if(!b)return;
+  tab=b.dataset.tab;
+  document.querySelectorAll('#filters button[data-tab]').forEach(x=>x.classList.toggle('on',x===b));
+  render();
+});
+$('btnRefresh').onclick=async()=>{toast('⟳ Fetching the latest…');const ok=await loadData(true);toast(ok?'✅ Up to date':'⚠️ Could not reach the database');};
+
+/* ===================== sheets ===================== */
+/* A full-height sheet leaves no backdrop to tap, so every sheet gets an explicit
+   way out: a ✕ button, a swipe down, and the iOS back gesture via history. */
+function sheetHead(title,extra){
+  return `<div class="sheet-top"><div class="sheet-title">${title}</div>${extra||''}
+    <button class="iconbtn" id="sheetX" aria-label="Close">✕</button></div>`;
+}
+let sheetOpen=false;
+function sheet(html){
+  $('sheetIn').innerHTML='<div class="grab"></div>'+html;
+  $('sheet').classList.add('show');
+  const x=$('sheetX'); if(x)x.onclick=closeSheet;
+  if(!sheetOpen){ sheetOpen=true; try{history.pushState({sheet:1},'');}catch(e){} }
+  $('sheetIn').scrollTop=0;
+}
+function closeSheet(){
+  $('sheet').classList.remove('show');
+  if(sheetOpen){ sheetOpen=false; try{ if(history.state&&history.state.sheet)history.back(); }catch(e){} }
+}
+addEventListener('popstate',()=>{ if(sheetOpen){ sheetOpen=false; $('sheet').classList.remove('show'); } });
+$('sheet').addEventListener('click',e=>{ if(e.target===$('sheet'))closeSheet(); });
+/* swipe the sheet down to dismiss */
+(function(){
+  let y0=null;
+  const el=$('sheetIn');
+  el.addEventListener('touchstart',e=>{ y0=(el.scrollTop<=0)?e.touches[0].clientY:null; },{passive:true});
+  el.addEventListener('touchmove',e=>{
+    if(y0===null)return;
+    const dy=e.touches[0].clientY-y0;
+    if(dy>0)el.style.transform='translateY('+Math.min(dy,160)+'px)';
+  },{passive:true});
+  el.addEventListener('touchend',e=>{
+    if(y0===null)return;
+    const dy=e.changedTouches[0].clientY-y0;
+    el.style.transform='';
+    if(dy>90)closeSheet();
+    y0=null;
+  },{passive:true});
+})();
+
+function openGame(g){
+  const d=bggOf(g)||{}, id=idOf(g), hue=hueOf(gTitle(g)), art=d.img||d.thumb;
+  const players=g.p||(d.minP?(d.minP===d.maxP?String(d.minP):d.minP+'–'+d.maxP):'–');
+  const rows=[['Players',players],['Age',g.a||(d.age?d.age+'+':'–')],['Play time',d.time?d.time+' min':'–'],
+    ['BGG rating',d.rating?'★ '+d.rating.toFixed(1):'–'],['Complexity',d.weight?d.weight.toFixed(1)+'/5':'–'],['Year',d.year||'–']];
+  const pos=currentList.indexOf(g);
+  sheet(`
+    ${sheetHead('','<button class="iconbtn" id="gPrev" aria-label="Previous game">‹</button>'
+      +'<span class="pos">'+(pos>=0?(pos+1)+' / '+currentList.length:'')+'</span>'
+      +'<button class="iconbtn" id="gNext" aria-label="Next game">›</button>')}
+    <div class="hero">${art?`<img src="${esc(art)}" data-alt="${esc(d.thumb||'')}" alt="" onerror="artSwap(this,${hue})">`
+      :`<div class="planet" style="width:46%;background:radial-gradient(circle at 34% 30%,hsl(${hue} 70% 78%),hsl(${hue} 65% 42%) 60%,hsl(${hue} 70% 22%))"></div>`}</div>
+    <h2>${esc(gTitle(g))}</h2>
+    ${gCzech(g)&&norm(gCzech(g))!==norm(gTitle(g))?`<div class="cz">${esc(gCzech(g))}</div>`:''}
+    ${d.cats&&d.cats.length?`<div class="cats">${d.cats.slice(0,6).map(c=>`<span class="cat">${esc(c)}</span>`).join('')}</div>`:''}
+    <div class="attrs">${rows.map(([k,v])=>`<div>${k}<b>${esc(v)}</b></div>`).join('')}</div>
+    ${gNotes(g)?`<div class="warn" style="background:rgba(255,255,255,.04);border-color:var(--border);color:var(--muted)">📝 ${esc(gNotes(g))}</div>`:''}
+    ${d.desc?`<div class="desc">${esc(d.desc)}</div>`:''}
+    ${OFFLINE?`<div class="acts"><button class="btn wide" id="aShare">↗ Share this game</button></div>`
+      :`<div class="acts three">
+      <button class="btn" id="aShare">↗ Share</button>
+      <button class="btn" id="aEdit">✏️ Edit</button>
+      <button class="btn" id="aSync">🔄 Sync</button>
+    </div>`}
+    <div class="acts" style="margin-top:8px">
+      ${id?`<a class="btn" href="https://boardgamegeek.com/boardgame/${id}" target="_blank" rel="noopener">🎲 BoardGameGeek</a>`:'<span></span>'}
+      ${gAlt(g)?`<a class="btn" href="${esc(gAlt(g))}" target="_blank" rel="noopener">${/kickstarter/i.test(gAlt(g))?'🚀 Kickstarter':'🌐 Link'}</a>`:(g.u?`<a class="btn" href="${esc(g.u)}" target="_blank" rel="noopener">🔗 Shop page</a>`:'<span></span>')}
+      ${OFFLINE?'':`<button class="btn danger wide" id="aDel">🗑 Remove from the galaxy</button>`}
+    </div>`);
+  const step=d=>{
+    if(pos<0)return;
+    const n=(pos+d+currentList.length)%currentList.length;
+    openGame(currentList[n]);
+  };
+  if($('gPrev'))$('gPrev').onclick=()=>step(-1);
+  if($('gNext'))$('gNext').onclick=()=>step(1);
+  /* swipe left/right inside the sheet moves through the galaxy */
+  (function(){
+    const el=$('sheetIn'); let x0=null,y0=null;
+    el.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY;},{passive:true});
+    el.addEventListener('touchend',e=>{
+      if(x0===null)return;
+      const dx=e.changedTouches[0].clientX-x0, dy=e.changedTouches[0].clientY-y0;
+      if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.6)step(dx<0?1:-1);
+      x0=null;
+    },{passive:true});
+  })();
+  $('aShare').onclick=()=>shareGame(g);
+  if($('aEdit'))$('aEdit').onclick=()=>openEdit(g);
+  if($('aSync'))$('aSync').onclick=async()=>{ await loadData(true); toast('🔄 Refreshed from the online database'); openGame(g); };
+  if($('aDel'))$('aDel').onclick=()=>{
+    if(!confirm('Remove “'+gTitle(g)+'” from your galaxy?'))return;
+    if(g.us){
+      const store=tab==='C'?userStore.C:userStore.W;
+      const j=store.findIndex(x=>norm(x.t)===norm(g.t)); if(j>-1)store.splice(j,1);
+      lsSet(LS_USER,userStore);
+    }else{
+      const rem=tab==='C'?removedStore.C:removedStore.W;
+      if(!rem.some(x=>x.i===g._i))rem.push({i:g._i,t:g.t});
+      lsSet(LS_REMOVED,removedStore);
+    }
+    const list=tab==='C'?GAMES:WISHLIST, k=list.indexOf(g); if(k>-1)list.splice(k,1);
+    closeSheet(); render(); toast('Removed');
+  };
+}
+
+function openEdit(g){
+  const d=bggOf(g)||{}, id=idOf(g), v=x=>x==null?'':x;
+  sheet(`
+    ${sheetHead('✏️ Edit')}<div class="cz">${esc(gTitle(g))}</div>
+    <label class="f">Title</label><input class="f" id="eT" value="${esc(gTitle(g))}">
+    <label class="f">Czech / second-language title</label><input class="f" id="eC" value="${esc(gCzech(g))}">
+    <label class="f">Notes</label><input class="f" id="eN" value="${esc(gNotes(g))}" placeholder="borrowed to Petr, missing 2 cards…">
+    <label class="f">Alternative URL</label><input class="f" id="eA" value="${esc(gAlt(g))}" placeholder="Kickstarter / shop link">
+    <label class="f">BoardGameGeek id</label><input class="f" id="eI" inputmode="numeric" value="${v(id||'')}">
+    <div class="acts" style="margin-top:14px">
+      <button class="btn" id="eCancel">Cancel</button>
+      <button class="btn primary" id="eSave">💾 Save</button>
+      <button class="btn danger wide" id="eReset">↺ Reset to the shared data</button>
+    </div>
+    <div class="note">Saved on this phone. Publish sends your title, notes, link and id corrections to the shared database.</div>`);
+  $('eCancel').onclick=()=>openGame(g);
+  $('eReset').onclick=()=>{ delete overrides[norm(g.t)]; lsSet(LS_OVERRIDES,overrides); render(); openGame(g); };
+  $('eSave').onclick=()=>{
+    const o=overrides[norm(g.t)]||{};
+    const nt=$('eT').value.trim(), nc=$('eC').value.trim(), nn=$('eN').value.trim(), na=$('eA').value.trim();
+    const nid=+String($('eI').value).trim();
+    if(nid){ if(nid!==id)o.uf=1; o.id=nid; }
+    const gp={};
+    if(nt&&nt!==g.t)gp.t=nt;
+    if(nc!==(g.c||''))gp.c=nc;
+    if(nn!==(g.n||''))gp.n=nn;
+    if(na!==(g.au||''))gp.au=na;
+    if(Object.keys(gp).length){o.g={...(o.g||{}),...gp};o.tf=1;} else if(o.g){delete o.g;delete o.tf;}
+    overrides[norm(g.t)]=o; lsSet(LS_OVERRIDES,overrides);
+    render(); openGame(g); toast('Saved on this phone');
+  };
+}
+
+/* ===================== add by hand (the sun) ===================== */
+function openAdd(prefill){
+  sheet(`
+    ${sheetHead('☀️ Add a game')}
+    <div class="cz">Type a name — it checks your galaxy first, then BoardGameGeek. A pasted BGG link fills everything in at once.</div>
+    <label class="f">Title, or a BGG link</label>
+    <input class="f" id="aT" value="${esc(prefill||'')}" placeholder="Cascadia  ·  boardgamegeek.com/boardgame/295947" autocomplete="off">
+    <div id="aFind"></div>
+    <div id="aPreview"></div>
+    <label class="f">Czech / second-language title</label><input class="f" id="aC" placeholder="optional">
+    <div class="ag-row" style="display:flex;gap:8px">
+      <div style="flex:1"><label class="f">Add to</label>
+        <select class="f" id="aDest"><option value="C">🪐 Collection</option><option value="W">✨ Wishlist</option></select></div>
+      <div style="flex:1"><label class="f">Language</label>
+        <select class="f" id="aL"><option value="">–</option><option>CZ</option><option>EN</option><option>SK</option><option>DE</option></select></div>
+    </div>
+    <label class="f">Notes</label><input class="f" id="aN" placeholder="optional">
+    <div class="acts" style="margin-top:14px">
+      <button class="btn" id="aCancel">Cancel</button>
+      <button class="btn primary" id="aOK">🚀 Add</button>
+    </div>`);
+  $('aDest').value=tab;
+  $('aCancel').onclick=closeSheet;
+  let picked=null, timer=null;
+  const preview=d=>{
+    picked=d;
+    $('aPreview').innerHTML=d?`<div class="verdict v-new" style="margin-top:10px">
+      <h3>✓ ${esc(d.name)}</h3><p>${[d.year,d.minP?d.minP+(d.maxP&&d.maxP!==d.minP?'–'+d.maxP:'')+' players':'',
+        d.time?d.time+' min':'',d.rating?'★ '+d.rating.toFixed(1):''].filter(Boolean).join(' · ')}</p></div>`:'';
+  };
+  const run=async()=>{
+    const q=$('aT').value.trim();
+    $('aPreview').innerHTML=''; picked=null;
+    if(q.length<3){$('aFind').innerHTML='';return;}
+    /* a pasted link needs no searching */
+    const link=bggFromText(q);
+    if(link){
+      $('aFind').innerHTML='<div class="note"><span class="sp"></span>Fetching BGG #'+link.id+'…</div>';
+      const det=await fetchThingJson(link.id);
+      if($('aT').value.trim()!==q)return;
+      if(det){ $('aT').value=det.name||link.title||q; $('aFind').innerHTML=''; preview({...det,id:link.id}); picked={...det,id:link.id}; }
+      else{ $('aFind').innerHTML='<div class="warn">Could not reach BGG for the details — the id ('+link.id+') is still saved with the game.</div>';
+            picked={id:link.id,name:link.title||q}; }
+      return;
+    }
+    /* 1. already here? */
+    const dupes=searchLocal(q).slice(0,3);
+    let html=dupes.length?`<div class="warn">Already in your galaxy — open it instead of adding a copy:</div><div class="rowlist">`
+      +dupes.map(g=>`<button class="rowbtn" data-have="${esc(gTitle(g))}"><b>${esc(gTitle(g))}</b><span>open</span></button>`).join('')
+      +`</div>`:'';
+    html+='<div class="note" style="margin-top:8px"><span class="sp"></span>Searching BoardGameGeek…</div>';
+    $('aFind').innerHTML=html;
+    const hits=await bggSearch(q);
+    if($('aT').value.trim()!==q)return;
+    let tail;
+    if(hits===null)tail='<div class="warn">No connection to BoardGameGeek — add it anyway and press ⟳ later, or paste its BGG link.</div>';
+    else if(!hits.length)tail='<div class="note">Nothing on BoardGameGeek under that name. Add it anyway, or paste the BGG link.</div>';
+    else tail='<div class="note" style="margin-top:8px">From BoardGameGeek — pick one to fill in the details:</div><div class="rowlist">'
+      +hits.slice(0,5).map(h=>`<button class="rowbtn" data-bgg="${h.id}" data-n="${esc(h.name)}"><b>${esc(h.name)}</b><span>#${h.id}</span></button>`).join('')
+      +'</div>';
+    $('aFind').innerHTML=(dupes.length?html.split('<div class="note" style="margin-top:8px"><span class="sp">')[0]:'')+tail;
+    $('aFind').onclick=async e=>{
+      const b=e.target.closest('button'); if(!b)return;
+      if(b.dataset.have){ const h=findByTitle(b.dataset.have); if(h)openGame(h.g); return; }
+      if(b.dataset.bgg){
+        $('aFind').innerHTML='<div class="note"><span class="sp"></span>Fetching '+esc(b.dataset.n)+'…</div>';
+        const det=await fetchThingJson(+b.dataset.bgg);
+        if(det){ $('aT').value=det.name; $('aFind').innerHTML=''; picked={...det,id:+b.dataset.bgg}; preview(picked); }
+        else { $('aFind').innerHTML='<div class="warn">Could not fetch that entry — its id is still saved.</div>';
+               picked={id:+b.dataset.bgg,name:b.dataset.n}; }
+      }
+    };
+  };
+  $('aT').addEventListener('input',()=>{clearTimeout(timer);timer=setTimeout(run,550);});
+  if(prefill)run();
+  $('aOK').onclick=()=>{
+    let t=$('aT').value.trim(); if(!t){toast('Enter a title first');return;}
+    let b=0, det=null;
+    if(picked){ b=picked.id||0; if(picked.name)t=picked.name; if(picked.minP||picked.rating)det=picked; }
+    else { const hit=bggFromText(t); if(hit){b=hit.id; if(hit.title)t=hit.title;} }
+    const dest=$('aDest').value;
+    if((dest==='C'?GAMES:WISHLIST).some(x=>norm(gTitle(x))===norm(t))
+       && !confirm('That looks like it is already in the list. Add anyway?'))return;
+    const g={t,us:1};
+    if($('aC').value.trim())g.c=$('aC').value.trim();
+    if($('aL').value)g.l=$('aL').value;
+    if($('aN').value.trim())g.n=$('aN').value.trim();
+    if(b){ g.b=b; g.u='https://boardgamegeek.com/boardgame/'+b; }
+    if(det&&det.minP)g.p=det.minP===det.maxP?String(det.minP):det.minP+'–'+det.maxP;
+    if(det&&det.age)g.a=det.age+'+';
+    if(b&&det){ idMap[norm(t)]=b; things[b]=det; }     /* show its art straight away */
+    (dest==='C'?GAMES:WISHLIST).push(g);
+    (dest==='C'?userStore.C:userStore.W).push(g);
+    lsSet(LS_USER,userStore);
+    tab=dest; document.querySelectorAll('#filters button[data-tab]').forEach(x=>x.classList.toggle('on',x.dataset.tab===dest));
+    closeSheet(); render();
+    toast(det?'Added with its BoardGameGeek data':(b?'Added with its BGG id — publish to fill in the rest':'Added — publish to fetch its BGG data'));
+  };
+}
+function bggFromText(s){
+  const q=String(s||'').trim();
+  const m=q.match(/boardgame(?:expansion)?\/(\d+)(?:\/([^/?#]+))?/)||q.match(/^#?(\d{4,7})$/);
+  if(!m)return null;
+  const slug=m[2]?decodeURIComponent(m[2]).replace(/[-_]+/g,' ').trim():'';
+  return {id:+m[1],title:slug?slug.replace(/\b[a-z]/g,c=>c.toUpperCase()):''};
+}
+$('fab').onclick=()=>openAdd('');
+
+/* ===================== scan ===================== */
+let stream=null, scanning=false, zxing=null, rafId=0, lastCode='';
+function setScanUI(live){ $('scanIdle').style.display=live?'none':'block'; $('scanLive').style.display=live?'block':'none'; }
+/* A result replaces the camera panel instead of appearing underneath it, so the
+   answer is the first thing on screen and the next scan is one tap away. */
+function scanResult(html){
+  $('scanIdle').style.display='none'; $('scanLive').style.display='none';
+  $('scanOut').innerHTML=html+
+    '<div class="acts" style="margin-top:14px"><button class="btn primary wide" id="scanAgain">📷 Scan another</button></div>';
+  const b=$('scanAgain'); if(b)b.onclick=()=>{ $('scanOut').innerHTML=''; startCam(); };
+  document.querySelector('main').scrollTop=0;
+}
+async function startCam(){
+  $('scanOut').innerHTML='';
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+    $('scanOut').innerHTML='<div class="warn bad">This browser gives the page no camera access. On iPhone use Safari, and open the app over https (not a file).</div>';
+    return;
+  }
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280}}});
+  }catch(e){
+    $('scanOut').innerHTML='<div class="warn bad">Camera blocked: '+esc(e&&e.name||'unknown')
+      +'.<br>On iPhone: Settings → Safari → Camera → Allow, then reopen the app.</div>';
+    return;
+  }
+  const v=$('cam'); v.srcObject=stream; await v.play().catch(()=>{});
+  setScanUI(true); scanning=true; lastCode='';
+  setMode(scanMode);
+  if(scanMode==='bar')attachDecoder();
+}
+function attachDecoder(){
+  const v=$('cam');
+  if('BarcodeDetector' in window){
+    try{
+      const det=new window.BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e','code_128']});
+      const tick=async()=>{
+        if(!scanning||scanMode!=='bar')return;
+        try{ const hits=await det.detect(v); if(hits&&hits.length)return onCode(hits[0].rawValue); }catch(e){}
+        rafId=requestAnimationFrame(tick);
+      };
+      tick(); return;
+    }catch(e){}
+  }
+  /* Safari has no BarcodeDetector — use the bundled scanner */
+  try{
+    zxing=new ZXing.BrowserMultiFormatReader();
+    zxing.decodeFromStream(stream,v,(res,err)=>{ if(res&&scanning&&scanMode==='bar')onCode(res.getText()); });
+  }catch(e){
+    $('camhint').textContent='Barcode reader unavailable — use “Read the title instead”.';
+  }
+}
+function stopCam(){
+  scanning=false; cancelAnimationFrame(rafId);
+  try{ if(zxing){zxing.reset();zxing=null;} }catch(e){}
+  if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; }
+  $('cam').srcObject=null; setScanUI(false);
+}
+$('btnStartCam').onclick=()=>startCam();
+$('btnStopCam').onclick=stopCam;
+let scanMode='bar';
+function setMode(m){
+  if(OFFLINE)m='bar';                       /* the snapshot has no title reading */
+  scanMode=m;
+  document.body.classList.toggle('titlemode',m==='title');
+  const mb=$('mBar'), mt=$('mTitle'), sh=$('btnShoot');
+  if(mb)mb.classList.toggle('on',m==='bar');
+  if(mt)mt.classList.toggle('on',m==='title');
+  if(sh)sh.style.display=m==='title'?'block':'none';
+  $('camhint').textContent=m==='title'
+    ? 'Fill the frame with the game’s name, then tap “Read this title”'
+    : 'Hold the barcode inside the yellow slot';
+  if(m==='title'){ scanning=false; try{ if(zxing){zxing.reset();zxing=null;} }catch(e){} }
+  else if(stream){ scanning=true; attachDecoder(); }
+}
+if($('mBar'))$('mBar').onclick=()=>setMode('bar');
+if($('mTitle'))$('mTitle').onclick=()=>setMode('title');
+
+function findByTitle(t){
+  const key=norm(t);
+  for(const [list,where] of [[GAMES,'C'],[WISHLIST,'W']])
+    for(const g of list){
+      const d=bggOf(g);
+      if(norm(gTitle(g))===key||norm(gCzech(g))===key||(d&&d.name&&norm(d.name)===key))return {g,where};
+    }
+  return null;
+}
+function verdictHTML(name,where,g,extra){
+  if(where==='C'){
+    const d=bggOf(g)||{};
+    return `<div class="verdict v-own"><h3>✓ You already own this</h3>
+      <p><b>${esc(gTitle(g))}</b>${d.rating?' · ★ '+d.rating.toFixed(1):''}${gNotes(g)?'<br>📝 '+esc(gNotes(g)):''}</p></div>`;
+  }
+  if(where==='W')return `<div class="verdict v-wish"><h3>✦ It is on your wishlist</h3><p><b>${esc(gTitle(g))}</b></p></div>`;
+  return `<div class="verdict v-new"><h3>✕ Not in your galaxy</h3><p>${esc(name)}</p></div>`+(extra||'');
+}
+async function onCode(code){
+  if(!code||code===lastCode)return;
+  lastCode=code; scanning=false; stopCam();
+  if(navigator.vibrate)navigator.vibrate(30);
+  const known=bcIndex[String(code)];
+  if(known){
+    const hit=findByTitle(known.t);
+    scanResult((hit?verdictHTML(known.t,hit.where,hit.g):verdictHTML(known.t,null,null,''))
+      +`<div class="note">Barcode <span class="mono">${esc(code)}</span> — remembered${known.src==='shared'?' from the shared database':' on this phone'}.</div>`
+      +((hit||OFFLINE)?'':`<div class="acts" style="margin-top:10px"><button class="btn primary wide" id="sAdd">☀️ Add “${esc(known.t)}”</button></div>`));
+    if(!hit&&$('sAdd'))$('sAdd').onclick=()=>openAdd(known.t);
+    return;
+  }
+  scanResult(`<div class="note"><span class="sp"></span>Barcode <span class="mono">${esc(code)}</span> — looking it up…</div>`);
+  const guess=OFFLINE?'':await lookupBarcode(code);
+  renderUnknownCode(code,guess);
+}
+async function lookupBarcode(code){
+  /* Several free databases, tried in turn — each covers a different part of the
+     world and none covers Czech board games well, so this is a hint, never an
+     answer. Short timeouts: confirming by hand is one tap, waiting is worse. */
+  const tries=[
+    async()=>{
+      const r=await fetch('https://api.upcitemdb.com/prod/trial/lookup?upc='+encodeURIComponent(code),
+        {signal:AbortSignal.timeout(5000)});
+      if(!r.ok)return '';
+      const j=await r.json(); const it=(j.items||[])[0];
+      return it&&it.title?it.title:'';
+    },
+    async()=>{   /* Open EAN/GTIN DB — European coverage, Czech products included */
+      const r=await fetch('https://opengtindb.org/?ean='+encodeURIComponent(code)+'&cmd=query&queryid=400000000',
+        {signal:AbortSignal.timeout(5000)});
+      if(!r.ok)return '';
+      const t=await r.text();
+      const m=t.match(/^name=(.+)$/m)||t.match(/^detailname=(.+)$/m);
+      return m?m[1].trim():'';
+    },
+    async()=>{   /* Open Food Facts runs an "all products" mirror that carries non-food EANs */
+      const r=await fetch('https://world.openproductsfacts.org/api/v2/product/'+encodeURIComponent(code)+'.json?fields=product_name',
+        {signal:AbortSignal.timeout(5000)});
+      if(!r.ok)return '';
+      const j=await r.json();
+      return (j&&j.product&&j.product.product_name)||'';
+    },
+  ];
+  for(const t of tries){
+    try{
+      let name=await t();
+      if(name){
+        name=String(name).replace(/\s*\((?:board\s*game|desková hra|spole[čc]enská hra)\)\s*/i,'')
+                         .replace(/\s*[-–]\s*(desková|spole[čc]enská|karetní)\s+hra\s*$/i,'').trim();
+        if(name.length>2)return name;
+      }
+    }catch(e){}
+  }
+  return '';
+}
+/* 859 = a product registered in Czechia; those are the ones global databases miss */
+const isCzechEan=c=>/^859/.test(String(c));
+function renderUnknownCode(code,guess){
+  const hit=guess?findByTitle(guess):null;
+  if(OFFLINE){
+    scanResult(`<div class="verdict v-new"><h3>✕ Not in this collection</h3>
+        <p>No game in this snapshot carries that barcode.</p></div>
+      <div class="note">Barcode <span class="mono">${esc(code)}</span></div>
+      <label class="f">Check by name instead</label>
+      <input class="f" id="bcQ" placeholder="type a few letters…" autocomplete="off">
+      <div class="rowlist" id="bcPick"></div>`);
+    const paint=()=>{
+      const q=$('bcQ').value.trim();
+      const list=q?searchLocal(q).slice(0,6):[];
+      $('bcPick').innerHTML=list.length
+        ? list.map(g=>`<button class="rowbtn" data-t="${esc(gTitle(g))}"><b>${esc(gTitle(g))}</b><span>in this collection</span></button>`).join('')
+        : (q?'<div class="note">Nothing by that name in this collection.</div>':'');
+    };
+    $('bcQ').addEventListener('input',paint);
+    $('bcPick').addEventListener('click',e=>{
+      const b=e.target.closest('button'); if(!b)return;
+      const h=findByTitle(b.dataset.t); if(h)openGame(h.g);
+    });
+    return;
+  }
+  const near=guess?searchLocal(guess).slice(0,5):[];
+  scanResult(
+    (hit?verdictHTML(guess,hit.where,hit.g):'')
+    +`<div class="warn">⚠️ ${guess
+        ? 'Unconfirmed guess from a public barcode database: <b>'+esc(guess)+'</b>. Check it really is this game.'
+        : (isCzechEan(code)
+            ? 'Not found — this is a Czech barcode (859…), and the free databases barely cover Czech editions.'
+            : 'This barcode is not in any database I can reach.')}
+       <br>Name it once and the app remembers this barcode for good — offline, and shared with everyone when you publish.</div>`
+    +`<div class="note">Barcode <span class="mono">${esc(code)}</span></div>`
+    +`<label class="f">Which game is it?</label>
+      <input class="f" id="bcQ" placeholder="type a few letters…" value="${esc(guess||'')}" autocomplete="off">
+      <div class="rowlist" id="bcPick"></div>`);
+  const paint=()=>{
+    const q=$('bcQ').value.trim();
+    const list=q?searchLocal(q).slice(0,6):near;
+    $('bcPick').innerHTML=
+      list.map(g=>`<button class="rowbtn" data-t="${esc(gTitle(g))}"><b>${esc(gTitle(g))}</b><span>in your galaxy</span></button>`).join('')
+      +(q&&!list.some(g=>norm(gTitle(g))===norm(q))
+          ?`<button class="rowbtn" data-new="${esc(q)}"><b>${esc(q)}</b><span>new — look up on BGG</span></button>`:'')
+      +(!q&&!list.length?'<div class="note">Start typing the name of the game.</div>':'');
+  };
+  paint();
+  $('bcQ').addEventListener('input',paint);
+  $('bcPick').addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b)return;
+    if(b.dataset.t){ rememberCode(code,b.dataset.t); const h=findByTitle(b.dataset.t); if(h)openGame(h.g); }
+    else if(b.dataset.new){ rememberCode(code,b.dataset.new); openAdd(b.dataset.new); }
+  });
+}
+function searchLocal(t){
+  const k=norm(t), words=k.split(' ').filter(w=>w.length>2);
+  const score=g=>{
+    const hay=[gTitle(g),gCzech(g)].map(norm);
+    if(hay.some(h=>h===k))return 3;
+    if(hay.some(h=>h.includes(k)||k.includes(h)))return 2;
+    const hit=words.filter(w=>hay.some(h=>h.includes(w))).length;
+    return words.length&&hit/words.length>=.6?1:0;
+  };
+  return [...GAMES,...WISHLIST].map(g=>[score(g),g]).filter(x=>x[0]>0)
+    .sort((a,b)=>b[0]-a[0]).map(x=>x[1]);
+}
+function rememberCode(code,title){
+  bcIndex[String(code)]={t:title,id:0,src:'local'};
+  lsSet(LS_BC,bcIndex);
+  toast('Barcode remembered for “'+title+'”');
+}
+
+/* ---- photo → read the title (engine downloaded on first use) ---- */
+let tess=null;
+async function readTitleFromPhoto(){
+  const v=$('cam');
+  if(!v||!v.videoWidth){toast('Start the camera first');return;}
+  /* crop to exactly the frame drawn on screen, so only the title is read —
+     reading the whole box is what produced the long list of junk lines */
+  const vw=v.videoWidth, vh=v.videoHeight;
+  const cx=vw*0.08, cy=vh*0.22, cw=vw*0.84, ch=vh*0.42;
+  const c=document.createElement('canvas');
+  const scale=Math.min(2,1600/cw);
+  c.width=Math.round(cw*scale); c.height=Math.round(ch*scale);
+  const x=c.getContext('2d');
+  x.drawImage(v,cx,cy,cw,ch,0,0,c.width,c.height);
+  /* grey + contrast: box art is busy, and plain text reads far better */
+  const im=x.getImageData(0,0,c.width,c.height), px=im.data;
+  for(let i=0;i<px.length;i+=4){
+    const g=0.299*px[i]+0.587*px[i+1]+0.114*px[i+2];
+    const t=g<110?0:(g>165?255:(g-110)*(255/55));
+    px[i]=px[i+1]=px[i+2]=t;
+  }
+  x.putImageData(im,0,0);
+  stopCam();
+  scanResult('<div class="note"><span class="sp"></span>Reading the title…<br>The text engine downloads once (a few MB) and is then kept on the phone.</div>');
+  try{
+    if(!tess){
+      await new Promise((res,rej)=>{
+        const sc=document.createElement('script');
+        sc.src='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+        sc.onload=res; sc.onerror=()=>rej(new Error('download failed'));
+        document.head.appendChild(sc);
+      });
+      tess=await Tesseract.createWorker('eng');
+    }
+    const {data}=await tess.recognize(c);
+    /* the title is the BIGGEST text in the frame, not the longest string —
+       rank lines by cap height and keep only a handful */
+    const lines=(data.lines||[])
+      .map(l=>({t:(l.text||'').replace(/\s+/g,' ').trim(),
+                h:(l.bbox?l.bbox.y1-l.bbox.y0:0),
+                conf:l.confidence||0}))
+      .filter(l=>l.t.length>2&&/[A-Za-zÀ-ž]{3}/.test(l.t)&&l.conf>45)
+      .filter(l=>{
+        const letters=(l.t.match(/[A-Za-zÀ-ž]/g)||[]).length;
+        return letters/l.t.replace(/\s/g,'').length>0.55;     /* drop "12+ 2-4 45'" style noise */
+      })
+      .sort((a,b)=>b.h-a.h)
+      .slice(0,3);
+    if(!lines.length){
+      scanResult('<div class="warn bad">No readable name in the frame. Fill the frame with just the title and try again — or add it by hand.</div>'
+        +'<div class="acts" style="margin-top:10px"><button class="btn wide" id="ocrManual">☀️ Type it in myself</button></div>');
+      $('ocrManual').onclick=()=>openAdd('');
+      return;
+    }
+    const best=lines[0];
+    const hit=findByTitle(best.t)||(searchLocal(best.t)[0]?{g:searchLocal(best.t)[0],where:'C'}:null);
+    scanResult(
+      (hit?verdictHTML(best.t,hit.where,hit.g):'')
+      +`<div class="warn">⚠️ Read off the box — confirm it says the right thing.</div>`
+      +`<div class="rowlist" id="ocrPick">`
+        +lines.map((l,i)=>`<button class="rowbtn" data-t="${esc(l.t)}"><b>${esc(l.t)}</b><span>${i===0?'biggest text':'also read'}</span></button>`).join('')
+        +`<button class="rowbtn" data-manual="1"><b>☀️ None of these — type it</b><span>manual add</span></button>`
+      +`</div>`);
+    $('ocrPick').addEventListener('click',e=>{
+      const b=e.target.closest('button'); if(!b)return;
+      if(b.dataset.manual)return openAdd('');
+      const t=b.dataset.t;
+      const h=findByTitle(t)||(searchLocal(t)[0]?{g:searchLocal(t)[0]}:null);
+      if(h&&h.g)openGame(h.g); else openAdd(t);
+    });
+  }catch(e){
+    scanResult('<div class="warn bad">Could not load the text engine ('+esc(e.message||'offline')
+      +'). It needs a connection the first time. You can still add the game by hand.</div>');
+  }
+}
+if($('btnShoot'))$('btnShoot').onclick=readTitleFromPhoto;
+
+/* ===================== tonight ===================== */
+let tPlayers=4, tTime=60;
+function buildPickers(){
+  $('pPick').innerHTML=[1,2,3,4,5,6,7,8].map(n=>`<button class="chipsel${n===tPlayers?' on':''}" data-p="${n}">${n}${n===8?'+':''}</button>`).join('');
+  $('tPick').innerHTML=[30,45,60,90,120,999].map(m=>`<button class="chipsel${m===tTime?' on':''}" data-t="${m}">${m===999?'any':m+'m'}</button>`).join('');
+}
+$('pPick').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;tPlayers=+b.dataset.p;buildPickers();tonight();});
+$('tPick').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;tTime=+b.dataset.t;buildPickers();tonight();});
+function buildGenres(){
+  const sel=$('tGenre'); if(sel.options.length>1)return;
+  const cnt={};
+  for(const g of GAMES){const d=bggOf(g); if(d&&d.cats)for(const c of d.cats)cnt[c]=(cnt[c]||0)+1;}
+  Object.keys(cnt).filter(c=>cnt[c]>=3).sort()
+    .forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c+' ('+cnt[c]+')';sel.appendChild(o);});
+}
+function tonight(){
+  const genre=$('tGenre').value, wmax=+$('tWeight').value||0;
+  const out=GAMES.filter(g=>{
+    const d=bggOf(g)||{};
+    let r=playerRange(g.p); if(!r&&d.minP)r=[d.minP,d.maxP||d.minP];
+    if(!r)return false;
+    if(tPlayers===8?r[1]<8:(tPlayers<r[0]||tPlayers>r[1]))return false;
+    if(tTime!==999&&d.time&&d.time>tTime)return false;
+    if(genre&&!(d.cats||[]).includes(genre))return false;
+    if(wmax){ if(!d.weight)return false;
+      if(wmax===2&&d.weight>=2)return false;
+      if(wmax===3&&(d.weight<2||d.weight>3))return false;
+      if(wmax===9&&d.weight<=3)return false; }
+    return true;
+  }).sort((a,b)=>((bggOf(b)||{}).rating||0)-((bggOf(a)||{}).rating||0));
+  const crit=[`${tPlayers}${tPlayers===8?'+':''} players`,
+              tTime===999?'any length':`under ${tTime} min`,
+              genre||'any genre',
+              wmax?($('tWeight').selectedOptions[0].textContent.split(' (')[0].toLowerCase()):'any weight'].join(' · ');
+  $('tonightOut').innerHTML=out.length
+    ? `<div class="verdict v-new" style="padding:11px 13px"><h3>💡 Suggested — ${out.length} fit</h3>
+         <p>Games you own that match <b>${esc(crit)}</b>, best rated first.</p></div>
+       <div class="grid" style="margin-top:12px">${out.slice(0,24).map((g,i)=>cardHTML(g,i)).join('')}</div>
+       ${out.length>24?'<div class="count" style="text-align:center">showing the top 24</div>':''}`
+    : `<div class="empty">Nothing on your shelf matches <b>${esc(crit)}</b>.<br>Try more time, another genre, or a different player count.</div>`;
+  const grid=$('tonightOut').querySelector('.grid');
+  if(grid)grid.addEventListener('click',e=>{const c=e.target.closest('.card');if(c){currentList=out.slice(0,24);openGame(out[+c.dataset.i]);}});
+}
+$('tGenre').addEventListener('change',tonight);
+$('tWeight').addEventListener('change',tonight);
+
+/* ===================== share ===================== */
+async function shareGame(g){
+  const d=bggOf(g)||{}, id=idOf(g);
+  const link=id?('https://boardgamegeek.com/boardgame/'+id):'https://smao41-online.github.io/Board-Games/';
+  const text=`${gTitle(g)}${gCzech(g)&&norm(gCzech(g))!==norm(gTitle(g))?' ('+gCzech(g)+')':''}`
+    +`${d.rating?' · ★ '+d.rating.toFixed(1):''}${d.minP?' · '+d.minP+(d.maxP&&d.maxP!==d.minP?'–'+d.maxP:'')+' players':''}`
+    +`${d.time?' · '+d.time+' min':''}`;
+  try{
+    const file=await gameCard(g);
+    if(file&&navigator.canShare&&navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],text,title:gTitle(g)});
+      return;
+    }
+  }catch(e){ if(e&&e.name==='AbortError')return; }
+  try{
+    if(navigator.share){ await navigator.share({title:gTitle(g),text,url:link}); return; }
+  }catch(e){ if(e&&e.name==='AbortError')return; }
+  try{ await navigator.clipboard.writeText(text+'\n'+link); toast('Copied to the clipboard'); }
+  catch(e){ toast('Sharing is not available here'); }
+}
+function loadImg(src){
+  return new Promise(res=>{
+    const im=new Image(); im.crossOrigin='anonymous';
+    im.onload=()=>res(im); im.onerror=()=>res(null); im.src=src;
+  });
+}
+async function gameCard(g){
+  const d=bggOf(g)||{}, W=1080, H=1350;
+  const c=document.createElement('canvas'); c.width=W; c.height=H;
+  const x=c.getContext('2d');
+  x.fillStyle='#04060f'; x.fillRect(0,0,W,H);
+  for(let i=0;i<220;i++){
+    x.globalAlpha=Math.random()*.7+.1; x.fillStyle=Math.random()<.15?'#ffcf6e':'#dfe6ff';
+    x.beginPath(); x.arc(Math.random()*W,Math.random()*H,Math.random()*1.9+.4,0,6.283); x.fill();
+  }
+  x.globalAlpha=1;
+  const gr=x.createRadialGradient(W*.8,-80,20,W*.8,-80,900);
+  gr.addColorStop(0,'rgba(138,123,255,.3)'); gr.addColorStop(1,'rgba(138,123,255,0)');
+  x.fillStyle=gr; x.fillRect(0,0,W,H);
+  const art=d.img||d.thumb;
+  const im=art?await loadImg(art):null;
+  const bx=90,by=150,bw=W-180,bh=620;
+  x.save(); roundRect(x,bx,by,bw,bh,28); x.clip();
+  if(im){
+    const s=Math.max(bw/im.width,bh/im.height);
+    x.drawImage(im,bx+(bw-im.width*s)/2,by+(bh-im.height*s)/2,im.width*s,im.height*s);
+  }else{
+    const hue=hueOf(gTitle(g));
+    const pg=x.createRadialGradient(bx+bw*.38,by+bh*.32,20,bx+bw/2,by+bh/2,bw*.7);
+    pg.addColorStop(0,`hsl(${hue} 70% 72%)`); pg.addColorStop(1,`hsl(${hue} 70% 20%)`);
+    x.fillStyle=pg; x.fillRect(bx,by,bw,bh);
+  }
+  x.restore();
+  x.strokeStyle='rgba(140,160,255,.35)'; x.lineWidth=2; roundRect(x,bx,by,bw,bh,28); x.stroke();
+  x.fillStyle='#ffcf6e'; x.font='600 30px -apple-system,Segoe UI,Roboto,sans-serif';
+  x.fillText('BOARD GAME GALAXY', 90, 100);
+  x.fillStyle='#e9edff'; x.font='800 62px -apple-system,Segoe UI,Roboto,sans-serif';
+  const title=wrap(x,gTitle(g),W-180,2);
+  title.forEach((l,i)=>x.fillText(l,90,860+i*72));
+  let y=880+title.length*72;
+  const cz=gCzech(g);
+  if(cz&&norm(cz)!==norm(gTitle(g))){ x.fillStyle='#98a0c6'; x.font='400 36px -apple-system,Segoe UI,Roboto,sans-serif';
+    x.fillText(wrap(x,cz,W-180,1)[0],90,y); y+=58; }
+  const bits=[];
+  if(d.rating)bits.push('★ '+d.rating.toFixed(1));
+  if(d.minP)bits.push('👥 '+d.minP+(d.maxP&&d.maxP!==d.minP?'–'+d.maxP:''));
+  if(d.time)bits.push('⏱ '+d.time+' min');
+  if(d.year)bits.push(String(d.year));
+  x.fillStyle='#e9edff'; x.font='500 34px -apple-system,Segoe UI,Roboto,sans-serif';
+  x.fillText(bits.join('   ·   '),90,y+34);
+  x.fillStyle='#6a7199'; x.font='400 26px -apple-system,Segoe UI,Roboto,sans-serif';
+  x.fillText('Ušákova sbírka',90,H-70);
+  const blob=await new Promise(r=>c.toBlob(r,'image/png',.92)).catch(()=>null);
+  if(!blob)return null;
+  return new File([blob],(norm(gTitle(g)).replace(/ /g,'-')||'game')+'.png',{type:'image/png'});
+}
+function roundRect(x,a,b,w,h,r){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);
+  x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath();}
+function wrap(x,text,max,lines){
+  const words=String(text).split(' '),out=[];let line='';
+  for(const w of words){
+    const t=line?line+' '+w:w;
+    if(x.measureText(t).width>max&&line){out.push(line);line=w;if(out.length===lines-1&&words.indexOf(w)<words.length-1){}}
+    else line=t;
+    if(out.length>=lines)break;
+  }
+  if(line&&out.length<lines)out.push(line);
+  return out.length?out:[String(text)];
+}
+async function shareCollection(){
+  const url='https://smao41-online.github.io/Board-Games/app/';
+  const text=`Ušákova sbírka — ${GAMES.length} board games`;
+  try{ if(navigator.share){await navigator.share({title:'Board Game Galaxy',text,url});return;} }catch(e){ if(e&&e.name==='AbortError')return; }
+  try{ await navigator.clipboard.writeText(text+'\n'+url); toast('Link copied'); }catch(e){ toast('Could not share'); }
+}
+
+/* ===================== publish ===================== */
+function cleanPub(g){const o={};for(const k of['t','c','l','p','a','n','u','b','au','bc'])if(g[k]!=null&&g[k]!=='')o[k]=g[k];return o.t?o:null;}
+function publishPayload(){
+  const add={collection:(userStore.C||[]).map(cleanPub).filter(Boolean),
+             wishlist:(userStore.W||[]).map(cleanPub).filter(Boolean)};
+  /* attach any barcode this phone learned for a game being published */
+  const bcFor=t=>{const k=norm(t);for(const code in bcIndex)if(bcIndex[code].src==='local'&&norm(bcIndex[code].t)===k)return code;return '';};
+  for(const list of [add.collection,add.wishlist]) for(const g of list){const c=bcFor(g.t); if(c)g.bc=c;}
+  const fix=[];
+  for(const key in overrides){
+    const o=overrides[key]; if(!o||(!o.uf&&!o.tf))continue;
+    const g=[...GAMES,...WISHLIST].find(x=>norm(x.t)===key);
+    if(!g||g.us)continue;
+    const f={t:g.t};
+    if(o.uf&&o.id!=null)f.b=o.id;
+    if(o.tf&&o.g){if(o.g.t)f.nt=o.g.t;if(o.g.c!=null)f.c=o.g.c;if(o.g.n!=null)f.n=o.g.n;if(o.g.au!=null)f.au=o.g.au;}
+    const c=bcFor(g.t); if(c)f.bc=c;
+    if(f.b!=null||f.nt||f.c!=null||f.n!=null||f.au!=null||f.bc)fix.push(f);
+  }
+  return {add,fix};
+}
+function openPublish(){
+  const p=publishPayload(), n=p.add.collection.length+p.add.wishlist.length;
+  if(!n&&!p.fix.length){ sheet(sheetHead('🚀 Publish')+'<div class="note">Nothing waiting. Games you add or edit on this phone show up here.</div>'); return; }
+  const pretty=JSON.stringify(p,null,1);
+  const title='[publish] '+n+' game(s), '+p.fix.length+' fix(es)';
+  const body='Sent from the Galaxy app.\n\n```json\n'+pretty+'\n```';
+  const url='https://github.com/'+REPO+'/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);
+  const big=url.length>7000;
+  sheet(`${sheetHead('🚀 Publish')}
+    <div class="cz">${n} new game(s) · ${p.fix.length} correction(s)</div>
+    <div class="warn">A GitHub page opens with everything filled in. Press <b>Submit new issue</b> there — that is the only button you need.<br>
+      Then wait about 5 minutes: the robot adds them and fetches the BoardGameGeek data, and replies on that page with what it found.</div>
+    ${big?'<div class="warn bad">This batch is too large for a pre-filled page. Copy the text below, then paste it into the issue description.</div>'
+         :''}
+    <div class="acts">
+      <button class="btn" id="pCopy">📋 Copy the JSON</button>
+      <button class="btn primary" id="pGo">Open GitHub</button>
+    </div>
+    <div class="note">After the robot replies, press ⟳ at the top to pull the enriched data back in.</div>`);
+  $('pCopy').onclick=async()=>{try{await navigator.clipboard.writeText('```json\n'+pretty+'\n```');toast('Copied — paste it into the issue');}catch(e){toast('Copy failed');}};
+  $('pGo').onclick=()=>window.open(big?('https://github.com/'+REPO+'/issues/new?title='+encodeURIComponent(title)):url,'_blank','noopener');
+}
+
+/* ===================== save for offline =====================
+   The shop case: no wi-fi, two bars, and the whole collection has to be there.
+   The data file is small and the service worker already keeps it. The box art
+   is the bulk — ~700 pictures at roughly 12 KB each — and nothing but a
+   deliberate, one-off download can honestly promise it will be there later.
+   Chunked, resumable, and it says what it costs before it starts. */
+const LS_PACK='galaxy.pack.v1';
+let packInfo=lsGet(LS_PACK,null);
+const DATA_CACHE='galaxy-data-v1';
+function artUrls(){
+  const out=new Set();
+  for(const g of [...GAMES,...WISHLIST]){const d=bggOf(g);if(d&&d.thumb)out.add(d.thumb);}
+  return [...out];
+}
+async function cachedArtCount(){
+  try{ const c=await caches.open(DATA_CACHE);
+    return (await c.keys()).filter(r=>/geekdo-images\.com/.test(r.url)).length; }
+  catch(e){ return 0; }
+}
+async function savePack(){
+  if(!('caches' in window)){ sheet(sheetHead('⬇️ Save for offline')
+    +'<div class="warn">This browser cannot store the collection offline. On iPhone, add the app to the home screen from Safari first.</div>'); return; }
+  const urls=artUrls();
+  const mb=Math.max(1,Math.round(urls.length*12/1024));
+  sheet(sheetHead('⬇️ Save for offline')
+    +`<div class="note" style="line-height:1.7">Puts the collection <b>and every box picture</b> on this phone, so the galaxy opens with no signal at all.
+        <br><br><b>${urls.length}</b> pictures, about <b>${mb} MB</b>. Best on wi-fi — but it can be stopped and resumed, and it never fetches a picture that is already saved.</div>
+      <div class="warn" id="packLine">Starting…</div>
+      <div class="acts"><button class="btn wide" id="packStop">Stop</button></div>`);
+  let stopped=false;
+  $('packStop').onclick=()=>{stopped=true;};
+  const line=t=>{const el=$('packLine'); if(el)el.innerHTML=t; return !!el;};
+
+  /* iOS evicts ordinary caches when storage runs short; persistent storage is
+     only granted to an installed app, which is the one we care about. */
+  try{ if(navigator.storage&&navigator.storage.persist)await navigator.storage.persist(); }catch(e){}
+
+  const cache=await caches.open(DATA_CACHE);
+  line('Saving the collection…');
+  for(const f of ['games.json','bgg.json']){
+    for(const base of DATA_SOURCES){
+      try{ const r=await fetch(base+f,{signal:AbortSignal.timeout(30000)});
+        if(r.ok){ await cache.put(base+f,r.clone()); break; } }catch(e){}
+    }
+  }
+
+  let i=0,done=0,fail=0,quota=false;
+  const t0=Date.now();
+  async function worker(){
+    while(i<urls.length&&!stopped&&!quota){
+      const u=urls[i++];
+      try{
+        if(!(await cache.match(u))){
+          let r=null;
+          try{ r=await fetch(u,{mode:'cors',signal:AbortSignal.timeout(20000)}); }catch(e){}
+          if(!r||!r.ok){ try{ r=await fetch(u,{mode:'no-cors',signal:AbortSignal.timeout(20000)}); }catch(e){ r=null; } }
+          if(r&&(r.ok||r.type==='opaque')) await cache.put(u,r.clone());
+          else fail++;
+        }
+        done++;
+      }catch(e){
+        if(String(e&&e.name)==='QuotaExceededError')quota=true; else fail++;
+      }
+      if(done%8===0&&!line(`Saving pictures… <b>${done}</b> of ${urls.length}${fail?` · ${fail} unavailable`:''}`))stopped=true;
+    }
+  }
+  await Promise.all([0,1,2,3,4,5].map(worker));
+
+  const have=await cachedArtCount();
+  packInfo={when:Date.now(),n:have,of:urls.length,fail:fail};
+  lsSet(LS_PACK,packInfo);
+  buildMore();
+  const secs=Math.round((Date.now()-t0)/1000);
+  line(quota
+      ?`⚠️ This phone ran out of room with <b>${have}</b> of ${urls.length} pictures saved. Everything still works — the rest show as planets.`
+    :stopped?`Stopped with <b>${have}</b> of ${urls.length} pictures saved. Run it again any time to carry on.`
+    :`✅ Saved — <b>${have}</b> of ${urls.length} pictures, in ${secs}s.${fail?` ${fail} were not available from BoardGameGeek.`:''}<br>The galaxy now opens with no signal at all.`);
+  const st=$('packStop'); if(st)st.textContent='Done';
+}
+
+/* ===================== more ===================== */
+function buildMore(){
+  if(!$('moreList'))return;        /* the snapshot build has no ⋯ menu */
+  const added=(userStore.C||[]).length+(userStore.W||[]).length;
+  const fixes=Object.values(overrides).filter(o=>o&&(o.uf||o.tf)).length;
+  const codes=Object.keys(bcIndex).length;
+  const rows=[
+    ['🚀','Publish to the shared database',(added+fixes)?`${added} new · ${fixes} edited`:'nothing waiting','pub'],
+    ['↗','Share the collection','link to this app','sharecol'],
+    ['⬇️','Save for offline',packInfo?`${packInfo.n} pictures saved · ${new Date(packInfo.when).toISOString().slice(0,10)}`:'for the shop — do it on wi-fi','pack'],
+    ['⟳','Refresh from the database',dataWhen?('data '+dataWhen.slice(0,10)):'never','refresh'],
+    ['🏷','Barcodes remembered',codes?codes+' on this phone':'none yet','codes'],
+    ['📲','Install on the home screen','full screen, works offline','install'],
+    ['🩺','Diagnostics','camera, storage, connection','diag'],
+  ];
+  $('moreList').innerHTML=rows.map(([i,t,s,k])=>
+    `<button class="rowbtn" data-k="${k}"><b>${i} ${esc(t)}</b><span>${esc(s)}</span></button>`).join('');
+  $('dataNote').innerHTML=`The phone and the PC galaxy read the same database. Anything you publish here reaches both.`;
+}
+$('moreList').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  const k=b.dataset.k;
+  if(k==='pub')openPublish();
+  else if(k==='pack')savePack();
+  else if(k==='sharecol')shareCollection();
+  else if(k==='refresh')$('btnRefresh').click();
+  else if(k==='codes')showCodes();
+  else if(k==='install')showInstall();
+  else if(k==='diag')showDiag();
+});
+function showCodes(){
+  const keys=Object.keys(bcIndex);
+  sheet(sheetHead('🏷 Barcodes')+(keys.length
+    ?`<div class="note">Scanned once, remembered for good. Local ones travel to everyone else when you publish.</div>
+      <div class="rowlist">${keys.map(c=>`<div class="rowbtn"><b>${esc(bcIndex[c].t)}</b><span class="mono">${esc(c)}</span></div>`).join('')}</div>
+      <div class="acts" style="margin-top:12px"><button class="btn danger wide" id="bcClear">Forget all barcodes</button></div>`
+    :'<div class="note">None yet. Scan a box and confirm the game once — after that the barcode is recognised instantly, even offline.</div>'));
+  if(keys.length)$('bcClear').onclick=()=>{ if(confirm('Forget every remembered barcode?')){bcIndex={};lsSet(LS_BC,bcIndex);closeSheet();buildMore();toast('Cleared');} };
+}
+function showInstall(){
+  const standalone=window.navigator.standalone||window.matchMedia('(display-mode: standalone)').matches;
+  sheet(sheetHead('📲 Install')+(standalone
+    ?'<div class="warn ok">Already installed — you are running it from the home screen.</div>'
+    :`<div class="note" style="font-size:13px;line-height:1.7">
+        In <b>Safari</b> (it must be Safari, not Chrome):<br>
+        1. Tap the <b>Share</b> button at the bottom<br>
+        2. Scroll to <b>Add to Home Screen</b><br>
+        3. Tap <b>Add</b><br><br>
+        It then opens full screen with its own icon, keeps working without signal, and the camera behaves like a normal app.</div>`));
+}
+async function showDiag(){
+  const out=[];
+  out.push(['Served over https', location.protocol==='https:'?'yes':'NO — the camera will not work']);
+  out.push(['Camera API', (navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)?'available':'missing']);
+  out.push(['Barcode engine', ('BarcodeDetector' in window)?'built into the browser':(window.ZXing?'bundled scanner':'MISSING')]);
+  out.push(['Share sheet', navigator.share?(navigator.canShare?'with images':'links only'):'not available']);
+  out.push(['Offline cache', ('serviceWorker' in navigator)?(navigator.serviceWorker.controller?'active':'registering'):'unsupported']);
+  out.push(['Installed', (window.navigator.standalone||matchMedia('(display-mode: standalone)').matches)?'yes':'running in Safari']);
+  out.push(['Games loaded', GAMES.length+' + '+WISHLIST.length+' wishlist']);
+  out.push(['BGG records', Object.keys(things).length]);
+  out.push(['Data generated', dataWhen||'—']);
+  out.push(['Connection', navigator.onLine?((navigator.connection&&navigator.connection.effectiveType)||'online'):'OFFLINE']);
+  const art=await cachedArtCount();
+  out.push(['Box art saved here', art?art+' of '+artUrls().length+' pictures':'none — use ⬇️ Save for offline']);
+  try{
+    if(navigator.storage&&navigator.storage.estimate){
+      const e=await navigator.storage.estimate();
+      out.push(['Storage used', Math.round((e.usage||0)/1048576)+' MB of '+Math.round((e.quota||0)/1048576)+' MB']);
+    }
+    if(navigator.storage&&navigator.storage.persisted)
+      out.push(['Storage kept safe', (await navigator.storage.persisted())?'yes':'no — iOS may clear it if the phone fills up']);
+  }catch(e){}
+  sheet(sheetHead('🩺 Diagnostics')+'<div class="rowlist">'
+    +out.map(([k,v])=>`<div class="rowbtn"><b>${esc(k)}</b><span>${esc(v)}</span></div>`).join('')+'</div>');
+}
+
+/* ===================== navigation ===================== */
+function showView(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id===id));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===id));
+  const galaxy=id==='vGalaxy';
+  $('q').parentElement.style.display=galaxy?'block':'none';
+  $('filters').style.display=galaxy?'flex':'none';
+  const fab=$('fab'); if(fab)fab.style.display=(id==='vMore')?'none':'grid';
+  if(id!=='vScan')stopCam();
+  if(id==='vTonight'){buildPickers();buildGenres();tonight();}
+  if(id==='vMore')buildMore();
+  document.querySelector('main').scrollTop=0;
+}
+document.querySelector('nav').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(b)showView(b.dataset.v);
+});
+
+/* ===================== starfield ===================== */
+(function(){
+  const c=$('stars'),x=c.getContext('2d');let st=[],w,h;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function seed(){
+    w=c.width=innerWidth*devicePixelRatio; h=c.height=innerHeight*devicePixelRatio;
+    c.style.width=innerWidth+'px'; c.style.height=innerHeight+'px';
+    st=[]; const n=Math.min(170,Math.round(innerWidth*innerHeight/7000));
+    for(let i=0;i<n;i++){const d=Math.random();
+      st.push({x:Math.random()*w,y:Math.random()*h,r:(d*1.3+.25)*devicePixelRatio,
+        a:.16+d*.6,v:(d*.09+.012)*devicePixelRatio,g:Math.random()<.13});}
+  }
+  function draw(){
+    x.clearRect(0,0,w,h);
+    for(const s of st){
+      if(!reduce){s.x-=s.v;if(s.x<-2)s.x=w+2;}
+      x.globalAlpha=s.a; x.fillStyle=s.g?'#ffcf6e':'#dfe6ff';
+      x.beginPath();x.arc(s.x,s.y,s.r,0,6.283);x.fill();
+    }
+    x.globalAlpha=1; requestAnimationFrame(draw);
+  }
+  seed(); draw(); addEventListener('resize',seed);
+})();
+
+/* ===================== offline-snapshot trimming =====================
+   A shared snapshot is read-only and talks to nothing, so the parts that add,
+   edit or fetch are removed outright rather than left to fail. */
+function applyOfflineBuild(){
+  if(!OFFLINE)return;
+  document.body.classList.add('offline-build');
+  $('fab').remove();                                   /* no adding by hand */
+  const more=document.querySelector('nav button[data-v="vMore"]');
+  if(more)more.remove();                               /* no menu */
+  const mv=$('vMore'); if(mv)mv.remove();
+  $('btnRefresh').remove();                            /* nothing to refresh */
+  const mt=$('mTitle'); if(mt)mt.remove();              /* title reading needs a download */
+  const mb=$('mBar'); if(mb&&mb.parentElement)mb.parentElement.remove();
+  const sh=$('btnShoot'); if(sh)sh.remove();
+  const hsub=$('hsub'); if(hsub)hsub.textContent='Ušákova sbírka · snapshot';
+  const info=document.createElement('button');
+  info.className='iconbtn'; info.id='btnAbout'; info.textContent='ⓘ';
+  info.title='About this app';
+  document.querySelector('header').appendChild(info);
+  info.onclick=showAbout;
+}
+function showAbout(){
+  const standalone=window.navigator.standalone||matchMedia('(display-mode: standalone)').matches;
+  sheet(sheetHead('🪐 About')
+    +`<div class="note" style="font-size:13px;line-height:1.7">
+        <b>Board Game Galaxy</b> — a snapshot of a private board game collection
+        (${GAMES.length} games, ${WISHLIST.length} on the wishlist), taken ${esc((dataWhen||'').slice(0,10)||'recently')}.
+        <br><br>Everything is stored inside the app: it reads no database and sends nothing anywhere.
+        Box art is loaded from BoardGameGeek's public image servers when you are online.
+        <br><br><b>Scan</b> tells you whether a game is in this collection — handy in a shop.
+        <br><b>Tonight</b> suggests what fits your table.
+      </div>
+      <div class="acts" style="margin-top:12px"><button class="btn wide" id="abPack">⬇️ Save the pictures for offline</button></div>`
+    +(standalone?'<div class="warn ok" style="margin-top:12px">Installed — running from your home screen.</div>'
+      :`<div class="warn" style="margin-top:12px">📲 To keep it: in <b>Safari</b>, tap <b>Share</b> → <b>Add to Home Screen</b>. It then opens full screen and works with no signal.</div>`));
+  const ab=$('abPack'); if(ab)ab.onclick=savePack;
+}
+
+/* ===================== boot ===================== */
+if('serviceWorker' in navigator){
+  addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+  /* The cached collection is served first and refreshed behind it. When that
+     refresh turns up something new, pull it in at once — it is already on the
+     phone by then, so this costs nothing. */
+  let pulling=false;
+  navigator.serviceWorker.addEventListener('message',async e=>{
+    if(!e.data||e.data.type!=='data-updated'||OFFLINE||pulling)return;
+    pulling=true;
+    if(await loadData(false))toast('🆕 Newer data from the database');
+    pulling=false;
+  });
+}
+applyOfflineBuild();
+loadData(false);
+</script>
+</body>
+</html>
