@@ -88,6 +88,32 @@ optional: **Actions → Publish a build** with `project=board-game-galaxy`,
 `version=<date>`, `source_repo=Smao41-online/Public-Release`,
 `source_path=board-game-galaxy`.
 
+## What it costs on mobile data
+
+Measured on an emulated iPhone against a server that behaves like GitHub Pages
+(gzip + ETag), with a 400 kbit/s, 400 ms link:
+
+| | |
+|---|---|
+| First install | ~860 KB — the app (≈480 KB, mostly the barcode decoder) plus the collection (games.json 27 KB + bgg.json 348 KB, gzipped) |
+| **Every later open** | **~600 bytes.** Six conditional requests, all answered "not modified". The collection is served from the cache instantly. |
+| A screenful of box art | ~24 pictures × ~12 KB ≈ 290 KB, once — then cached for good |
+| The whole collection's art | ~8.5 MB (698 pictures), only if you ask for it with ⬇️ Save for offline |
+| With no signal at all | 0 bytes. Everything that is cached still opens. |
+
+Before this was fixed, every single open re-downloaded the full 375 KB of data
+with `no-store` and no timeout, which on a weak signal both delayed the app and
+starved the box art of bandwidth — the galaxy appeared, most pictures did not.
+The service worker now serves the cached copy first and revalidates behind it
+(`stale-while-revalidate`), and tells the page when something actually changed
+so it refreshes itself. ⟳ still forces a full fetch.
+
+**⬇️ Save for offline** (⋯ menu, or the ⓘ About sheet in the snapshot build)
+downloads every box picture and the data files deliberately, with a progress
+count. It is resumable, skips what is already saved, asks iOS for persistent
+storage, and stops cleanly if the phone runs out of room. That is what makes
+the shop case work — no signal, full collection, pictures and all.
+
 ## Known limits
 
 - **The camera needs https.** Opening `index.html` from a file on disk cannot work —

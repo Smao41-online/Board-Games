@@ -350,11 +350,25 @@ function bggOf(g){
 function hueOf(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))%360;return h;}
 /* Box art can fail: offline, a dead URL, or an image host that is unreachable.
    Fall back to the procedural planet rather than leaving an empty hole. */
+let artMisses=0;
 function artFail(img,hue){
+  artMisses++;
   const d=document.createElement('div'); d.className='planet';
   d.style.background=`radial-gradient(circle at 34% 30%,hsl(${hue} 70% 78%),hsl(${hue} 65% 42%) 60%,hsl(${hue} 70% 22%))`;
   if(img.parentElement)img.replaceWith(d);
 }
+/* The big picture on a game's page is a different file from the small one on
+   the card. Offline — or on a connection too weak for it — fall back to the
+   small one, which is almost certainly already cached, before giving up. */
+function artSwap(img,hue){
+  const alt=img.dataset.alt;
+  if(alt&&!img.dataset.tried&&alt!==img.getAttribute('src')){img.dataset.tried='1';img.src=alt;return;}
+  artFail(img,hue);
+}
+/* A picture that failed on a dead connection is not broken — it was never
+   fetched. When signal comes back, draw the grid again so they load. */
+addEventListener('online',()=>{ if(artMisses){artMisses=0;render();} toast('↺ Back online'); });
+addEventListener('offline',()=>{ render(); toast('⚡ Offline — showing what is saved on this phone'); });
 function playerRange(p){
   if(!p)return null;
   const m=String(p).match(/(\d+)\s*[–—-]\s*(\d+)/);
@@ -366,10 +380,14 @@ function toast(msg,ms){const t=$('toast');t.textContent=msg;t.classList.add('sho
   clearTimeout(t._k);t._k=setTimeout(()=>t.classList.remove('show'),ms||2600);}
 
 /* ===================== data ===================== */
-async function grab(file){
+/* No `no-store` and never without a timeout. The service worker answers from
+   its cache at once and refreshes behind us, so a normal launch costs nothing
+   and a weak connection cannot hang it; ⟳ (force) insists on the network. */
+async function grab(file,force){
   for(const base of DATA_SOURCES){
     try{
-      const r=await fetch(base+file,{cache:'no-store'});
+      const r=await fetch(base+file+(force?'?fresh=1&t='+Date.now():''),
+        {cache:force?'reload':'default',signal:AbortSignal.timeout(force?20000:9000)});
       if(r.ok)return await r.json();
     }catch(e){}
   }
@@ -403,7 +421,7 @@ async function loadData(force){
   const snap=lsGet(LS_SNAP,null);
   if(snap&&!force){ GAMES=snap.c; WISHLIST=snap.w; idMap=snap.ids; things=snap.things; dataWhen=snap.when;
     applyLocal(); buildFilters(); render(); }
-  const [games,bgg]=await Promise.all([grab('games.json'),grab('bgg.json')]);
+  const [games,bgg]=await Promise.all([grab('games.json',force),grab('bgg.json',force)]);
   if(!games||!bgg){ if(!snap){$('count').textContent='⚠️ No data yet — connect once so the collection can download.';} return false; }
   GAMES=games.collection||[]; WISHLIST=games.wishlist||[];
   idMap=bgg.ids||{}; things=bgg.things||{}; dataWhen=bgg.generated||'';
@@ -542,7 +560,7 @@ function cardHTML(g,i){
   const players=g.p||(d.minP?(d.minP===d.maxP?d.minP:d.minP+'–'+d.maxP):'');
   return `<div class="card" data-i="${i}">
     <div class="thumb">
-      ${art?`<img loading="lazy" src="${esc(art)}" alt="" onerror="artFail(this,${hue})">`
+      ${art?`<img loading="lazy" decoding="async" src="${esc(art)}" alt="" onerror="artFail(this,${hue})">`
            :`<div class="planet" style="background:radial-gradient(circle at 34% 30%,hsl(${hue} 70% 78%),hsl(${hue} 65% 42%) 60%,hsl(${hue} 70% 22%))"></div>`}
       ${g.l?`<span class="badge b-lang">${esc(g.l)}</span>`:''}
       ${d.rating?`<span class="badge b-rate">★ ${d.rating.toFixed(1)}</span>`:''}
@@ -555,13 +573,30 @@ function cardHTML(g,i){
     </div>
   </div>`;
 }
+/* Which filters are hiding things — the empty grid has to say so. Switching to
+   the wishlist with a language or player filter still set from the collection
+   empties it completely, which reads exactly like "the wishlist did not load". */
+function activeFilters(){
+  const f=[];
+  if($('q').value.trim())f.push('search “'+$('q').value.trim()+'”');
+  if($('fLang').value)f.push('language '+$('fLang').value);
+  if($('fPlayers').value)f.push($('fPlayers').value+(+$('fPlayers').value===8?'+':'')+' players');
+  return f;
+}
+function clearFilters(){ $('q').value=''; $('fLang').value=''; $('fPlayers').value=''; render(); }
 function render(){
   const src=tab==='C'?GAMES:WISHLIST;
   currentList=sortGames(src.filter(matches));
+  const f=activeFilters();
   $('grid').innerHTML=currentList.length?currentList.map(cardHTML).join('')
-    :'<div class="empty" style="grid-column:1/-1">Nothing in this sector…</div>';
+    :(src.length
+      ?`<div class="empty" style="grid-column:1/-1">Nothing here with ${esc(f.join(' + ')||'these settings')}.
+          ${f.length?'<div class="acts" style="margin-top:12px"><button class="btn" id="clrF">Clear the filters</button></div>':''}</div>`
+      :`<div class="empty" style="grid-column:1/-1">Nothing loaded yet${navigator.onLine?'':' — and you are offline'}.</div>`);
+  const cf=$('clrF'); if(cf)cf.onclick=clearFilters;
   $('count').textContent=`${currentList.length} of ${src.length} ${tab==='C'?'games':'wishlist items'}`
-    +(dataWhen?` · data ${dataWhen.slice(0,10)}`:'');
+    +(dataWhen?` · data ${dataWhen.slice(0,10)}`:'')
+    +(navigator.onLine?'':' · ⚡ offline');
 }
 $('grid').addEventListener('click',e=>{
   const c=e.target.closest('.card'); if(!c)return;
@@ -627,7 +662,7 @@ function openGame(g){
     ${sheetHead('','<button class="iconbtn" id="gPrev" aria-label="Previous game">‹</button>'
       +'<span class="pos">'+(pos>=0?(pos+1)+' / '+currentList.length:'')+'</span>'
       +'<button class="iconbtn" id="gNext" aria-label="Next game">›</button>')}
-    <div class="hero">${art?`<img src="${esc(art)}" alt="" onerror="artFail(this,${hue})">`
+    <div class="hero">${art?`<img src="${esc(art)}" data-alt="${esc(d.thumb||'')}" alt="" onerror="artSwap(this,${hue})">`
       :`<div class="planet" style="width:46%;background:radial-gradient(circle at 34% 30%,hsl(${hue} 70% 78%),hsl(${hue} 65% 42%) 60%,hsl(${hue} 70% 22%))"></div>`}</div>
     <h2>${esc(gTitle(g))}</h2>
     ${gCzech(g)&&norm(gCzech(g))!==norm(gTitle(g))?`<div class="cz">${esc(gCzech(g))}</div>`:''}
@@ -1312,14 +1347,96 @@ function openPublish(){
   $('pGo').onclick=()=>window.open(big?('https://github.com/'+REPO+'/issues/new?title='+encodeURIComponent(title)):url,'_blank','noopener');
 }
 
+/* ===================== save for offline =====================
+   The shop case: no wi-fi, two bars, and the whole collection has to be there.
+   The data file is small and the service worker already keeps it. The box art
+   is the bulk — ~700 pictures at roughly 12 KB each — and nothing but a
+   deliberate, one-off download can honestly promise it will be there later.
+   Chunked, resumable, and it says what it costs before it starts. */
+const LS_PACK='galaxy.pack.v1';
+let packInfo=lsGet(LS_PACK,null);
+const DATA_CACHE='galaxy-data-v1';
+function artUrls(){
+  const out=new Set();
+  for(const g of [...GAMES,...WISHLIST]){const d=bggOf(g);if(d&&d.thumb)out.add(d.thumb);}
+  return [...out];
+}
+async function cachedArtCount(){
+  try{ const c=await caches.open(DATA_CACHE);
+    return (await c.keys()).filter(r=>/geekdo-images\.com/.test(r.url)).length; }
+  catch(e){ return 0; }
+}
+async function savePack(){
+  if(!('caches' in window)){ sheet(sheetHead('⬇️ Save for offline')
+    +'<div class="warn">This browser cannot store the collection offline. On iPhone, add the app to the home screen from Safari first.</div>'); return; }
+  const urls=artUrls();
+  const mb=Math.max(1,Math.round(urls.length*12/1024));
+  sheet(sheetHead('⬇️ Save for offline')
+    +`<div class="note" style="line-height:1.7">Puts the collection <b>and every box picture</b> on this phone, so the galaxy opens with no signal at all.
+        <br><br><b>${urls.length}</b> pictures, about <b>${mb} MB</b>. Best on wi-fi — but it can be stopped and resumed, and it never fetches a picture that is already saved.</div>
+      <div class="warn" id="packLine">Starting…</div>
+      <div class="acts"><button class="btn wide" id="packStop">Stop</button></div>`);
+  let stopped=false;
+  $('packStop').onclick=()=>{stopped=true;};
+  const line=t=>{const el=$('packLine'); if(el)el.innerHTML=t; return !!el;};
+
+  /* iOS evicts ordinary caches when storage runs short; persistent storage is
+     only granted to an installed app, which is the one we care about. */
+  try{ if(navigator.storage&&navigator.storage.persist)await navigator.storage.persist(); }catch(e){}
+
+  const cache=await caches.open(DATA_CACHE);
+  line('Saving the collection…');
+  for(const f of ['games.json','bgg.json']){
+    for(const base of DATA_SOURCES){
+      try{ const r=await fetch(base+f,{signal:AbortSignal.timeout(30000)});
+        if(r.ok){ await cache.put(base+f,r.clone()); break; } }catch(e){}
+    }
+  }
+
+  let i=0,done=0,fail=0,quota=false;
+  const t0=Date.now();
+  async function worker(){
+    while(i<urls.length&&!stopped&&!quota){
+      const u=urls[i++];
+      try{
+        if(!(await cache.match(u))){
+          let r=null;
+          try{ r=await fetch(u,{mode:'cors',signal:AbortSignal.timeout(20000)}); }catch(e){}
+          if(!r||!r.ok){ try{ r=await fetch(u,{mode:'no-cors',signal:AbortSignal.timeout(20000)}); }catch(e){ r=null; } }
+          if(r&&(r.ok||r.type==='opaque')) await cache.put(u,r.clone());
+          else fail++;
+        }
+        done++;
+      }catch(e){
+        if(String(e&&e.name)==='QuotaExceededError')quota=true; else fail++;
+      }
+      if(done%8===0&&!line(`Saving pictures… <b>${done}</b> of ${urls.length}${fail?` · ${fail} unavailable`:''}`))stopped=true;
+    }
+  }
+  await Promise.all([0,1,2,3,4,5].map(worker));
+
+  const have=await cachedArtCount();
+  packInfo={when:Date.now(),n:have,of:urls.length,fail:fail};
+  lsSet(LS_PACK,packInfo);
+  buildMore();
+  const secs=Math.round((Date.now()-t0)/1000);
+  line(quota
+      ?`⚠️ This phone ran out of room with <b>${have}</b> of ${urls.length} pictures saved. Everything still works — the rest show as planets.`
+    :stopped?`Stopped with <b>${have}</b> of ${urls.length} pictures saved. Run it again any time to carry on.`
+    :`✅ Saved — <b>${have}</b> of ${urls.length} pictures, in ${secs}s.${fail?` ${fail} were not available from BoardGameGeek.`:''}<br>The galaxy now opens with no signal at all.`);
+  const st=$('packStop'); if(st)st.textContent='Done';
+}
+
 /* ===================== more ===================== */
 function buildMore(){
+  if(!$('moreList'))return;        /* the snapshot build has no ⋯ menu */
   const added=(userStore.C||[]).length+(userStore.W||[]).length;
   const fixes=Object.values(overrides).filter(o=>o&&(o.uf||o.tf)).length;
   const codes=Object.keys(bcIndex).length;
   const rows=[
     ['🚀','Publish to the shared database',(added+fixes)?`${added} new · ${fixes} edited`:'nothing waiting','pub'],
     ['↗','Share the collection','link to this app','sharecol'],
+    ['⬇️','Save for offline',packInfo?`${packInfo.n} pictures saved · ${new Date(packInfo.when).toISOString().slice(0,10)}`:'for the shop — do it on wi-fi','pack'],
     ['⟳','Refresh from the database',dataWhen?('data '+dataWhen.slice(0,10)):'never','refresh'],
     ['🏷','Barcodes remembered',codes?codes+' on this phone':'none yet','codes'],
     ['📲','Install on the home screen','full screen, works offline','install'],
@@ -1333,6 +1450,7 @@ $('moreList').addEventListener('click',e=>{
   const b=e.target.closest('button'); if(!b)return;
   const k=b.dataset.k;
   if(k==='pub')openPublish();
+  else if(k==='pack')savePack();
   else if(k==='sharecol')shareCollection();
   else if(k==='refresh')$('btnRefresh').click();
   else if(k==='codes')showCodes();
@@ -1370,6 +1488,17 @@ async function showDiag(){
   out.push(['Games loaded', GAMES.length+' + '+WISHLIST.length+' wishlist']);
   out.push(['BGG records', Object.keys(things).length]);
   out.push(['Data generated', dataWhen||'—']);
+  out.push(['Connection', navigator.onLine?((navigator.connection&&navigator.connection.effectiveType)||'online'):'OFFLINE']);
+  const art=await cachedArtCount();
+  out.push(['Box art saved here', art?art+' of '+artUrls().length+' pictures':'none — use ⬇️ Save for offline']);
+  try{
+    if(navigator.storage&&navigator.storage.estimate){
+      const e=await navigator.storage.estimate();
+      out.push(['Storage used', Math.round((e.usage||0)/1048576)+' MB of '+Math.round((e.quota||0)/1048576)+' MB']);
+    }
+    if(navigator.storage&&navigator.storage.persisted)
+      out.push(['Storage kept safe', (await navigator.storage.persisted())?'yes':'no — iOS may clear it if the phone fills up']);
+  }catch(e){}
   sheet(sheetHead('🩺 Diagnostics')+'<div class="rowlist">'
     +out.map(([k,v])=>`<div class="rowbtn"><b>${esc(k)}</b><span>${esc(v)}</span></div>`).join('')+'</div>');
 }
@@ -1446,14 +1575,27 @@ function showAbout(){
         Box art is loaded from BoardGameGeek's public image servers when you are online.
         <br><br><b>Scan</b> tells you whether a game is in this collection — handy in a shop.
         <br><b>Tonight</b> suggests what fits your table.
-      </div>`
+      </div>
+      <div class="acts" style="margin-top:12px"><button class="btn wide" id="abPack">⬇️ Save the pictures for offline</button></div>`
     +(standalone?'<div class="warn ok" style="margin-top:12px">Installed — running from your home screen.</div>'
       :`<div class="warn" style="margin-top:12px">📲 To keep it: in <b>Safari</b>, tap <b>Share</b> → <b>Add to Home Screen</b>. It then opens full screen and works with no signal.</div>`));
+  const ab=$('abPack'); if(ab)ab.onclick=savePack;
 }
 
 /* ===================== boot ===================== */
-if('serviceWorker' in navigator)
+if('serviceWorker' in navigator){
   addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+  /* The cached collection is served first and refreshed behind it. When that
+     refresh turns up something new, pull it in at once — it is already on the
+     phone by then, so this costs nothing. */
+  let pulling=false;
+  navigator.serviceWorker.addEventListener('message',async e=>{
+    if(!e.data||e.data.type!=='data-updated'||OFFLINE||pulling)return;
+    pulling=true;
+    if(await loadData(false))toast('🆕 Newer data from the database');
+    pulling=false;
+  });
+}
 applyOfflineBuild();
 loadData(false);
 </script>
